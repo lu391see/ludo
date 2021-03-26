@@ -1,3 +1,12 @@
+# Scala Metals
+.metals/
+.bloop/
+.ammonite/
+metals.sbt
+
+# vscode
+.vscode/
+
 # Mac
 .DS_Store
 
