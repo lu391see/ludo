@@ -1,4 +1,4 @@
-package de.htwg.se.madn.model
+package de.htwg.se.ludo.model
 import org.scalatest.{Matchers, WordSpec}
 
 class PlayerSpec extends WordSpec with Matchers {
