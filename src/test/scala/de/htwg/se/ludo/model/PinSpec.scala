@@ -1,4 +1,4 @@
-package de.htwg.se.madn.model
+package de.htwg.se.ludo.model
 
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers
