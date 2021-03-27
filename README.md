@@ -4,6 +4,8 @@ This is the german version* of the english board game ludo which originally goes
 
 #### * Without tactial or strategical variations
 
+![Mensch ärgere dich nicht](./assets/mädn1929.jpg)
+
 ## How's the game played
 The players throw game dice in turn and can advance any of their pieces in the game by the thrown number of dots on the die.
 
