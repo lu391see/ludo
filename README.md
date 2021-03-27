@@ -2,6 +2,8 @@
 
 This is the german version* of the english board game ludo which originally goes back to an old indian game called pachisi. It's germany's most popular parlour game.
 
+#### * Without tactial or strategical variations
+
 ## How's the game played
 The players throw game dice in turn and can advance any of their pieces in the game by the thrown number of dots on the die.
 
@@ -16,5 +18,3 @@ Pieces can jump over other pieces, and throw out pieces from other players (into
 
 ## Goal
 The first player with all of their pieces in their "home" row wins the game.
-
-#### * Without tactial or strategical variations
