@@ -42,11 +42,6 @@ object Ludo {
       input = scala.io.StdIn.readLine()
       game = tui.processInputLine(input, game, players(turn_counter), dice)
 
-//      if(players(turn_counter).hasWon) {
-//        println(players(turn_counter).name + " has won!!")
-//        input = "q" //spiel beenden
-//      }
-
       turn_counter += 1
       if(turn_counter == player_counter) {
         turn_counter = turn_counter - player_counter
