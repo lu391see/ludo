@@ -1,7 +1,9 @@
 package de.htwg.se.ludo.model
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.wordspec.AnyWordSpec
+import org.scalatest.matchers.should.Matchers
+// import org.scalatest.{Matchers, WordSpec}
 
-class FieldSpec extends WordSpec with Matchers {
+class FieldSpec extends AnyWordSpec with Matchers {
   "Matrix is an immutable data type that contains a two-dimentional Vector of Cells."
   "A Matrix" when {
     "empty " should {
