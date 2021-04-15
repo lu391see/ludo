@@ -24,6 +24,10 @@ class CellSpec extends AnyWordSpec with Matchers{
     "be set" in {
       nonEmptyCell.isSet should be(true)
     }
+    "number should be String" in {
+      nonEmptyCell.toString.isInstanceOf[String] should be(true)
+    }
+
     "show number in String" in {
       nonEmptyCell.toString.matches("/s5/s")
     }
