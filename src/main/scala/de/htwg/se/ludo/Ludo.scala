@@ -1,20 +1,22 @@
 package de.htwg.se.ludo
 import model._
 
+import scala.io.StdIn.readLine
+
 object Ludo {
 
   def main(args: Array[String]): Unit = {
 
-    val playerarraysize = scala.io.StdIn.readLine("""
+    val playerAmount: Int = readLine("""
         |Welcome to Ludo aka 'Mensch Aergere Dich Nicht'!
         |How many players want to play?
-        |Type between 1-4: """.stripMargin)
+        |Type between 1-4: """.stripMargin).toInt
 
-    val players: Array[Player] = new Array[Player](playerarraysize.toInt)
+    val players: Array[Player] = new Array[Player](playerAmount)
     var setup_str: String = "Hello"
 
-    for (player_counter <- 1 until  playerarraysize.toInt + 1) {
-      val player_name : String = scala.io.StdIn.readLine(s"Player $player_counter, type your name: ")
+    for (player_counter <- 1 until  playerAmount + 1) {
+      val player_name : String = readLine(s"Player $player_counter, type your name: ")
       players(player_counter - 1) = Player(player_name, player_counter)
       setup_str += ", " + players(player_counter - 1).name
     }
@@ -22,7 +24,7 @@ object Ludo {
     val game = new Field[Cell](40, Cell(0))
     println(setup_str)
 
-    var turn_counter = 0
+    var turnCounter = 0
 
     var input: String = ""
 
@@ -31,15 +33,13 @@ object Ludo {
       println(s"""
             |Current Game Status:
             |${game.toString}
-            |==> ${players(turn_counter).name} can walk ${dice.t1} please choose a pin (1-4)!""".stripMargin)
+            |==> ${players(turnCounter).name} can walk ${dice.t1} please choose a pin (1-4)!""".stripMargin)
 
-      input = scala.io.StdIn.readLine()
+      input = readLine()
       // TODO: input needs to be processed
 
-      turn_counter += 1
-      if(turn_counter == playerarraysize.toInt) {
-        turn_counter = 0
-      }
+      turnCounter += 1
+      turnCounter %= playerAmount
     }
   }
 }
