@@ -12,7 +12,7 @@ class FieldSpec extends AnyWordSpec with Matchers {
         matrix.size should be(2)
       }
       "for test purposes only be created with a Vector of Vectors" in {
-        val testMatrix = Field(List(Cell(0)))
+        val testMatrix = Field(Vector(Cell(0)))
         testMatrix.size should be(1)
       }
     }
