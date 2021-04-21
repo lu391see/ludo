@@ -1,11 +1,11 @@
 package de.htwg.se.ludo.model
 
-case class Field[T](spots: List[T]) {
-  def this(size: Int, filling: T) = this(List.tabulate(size) { row => filling })
+case class Field[T](spots: Vector[T]) {
+  def this(size: Int, filling: T) = this(Vector.tabulate(size) { row => filling })
 
   val size: Int = spots.size
 
-  def fill(filling:T):Field[T] = copy(List.tabulate(size){row => filling})
+  def fill(filling:T):Field[T] = copy(Vector.tabulate(size){row => filling})
 
   def cell(spot: Int): T = spots(spot)
 
