@@ -7,17 +7,19 @@ case class Player(name: String, team: Int) {
 
   var hasWon :Boolean = false
 
-  val pin1 = Pin(team * 10 + 1)
+  val pin1: Pin = Pin(team * 10 + 1)
   pin1.addPosition(defaultPosition)
 
-  val pin2 = Pin(team * 10 + 2)
+  val pin2: Pin = Pin(team * 10 + 2)
   pin2.addPosition(defaultPosition)
 
-  val pin3 = Pin(team * 10 + 3)
+  val pin3: Pin = Pin(team * 10 + 3)
   pin3.addPosition(defaultPosition)
 
-  val pin4 = Pin(team * 10 + 4)
+  val pin4: Pin = Pin(team * 10 + 4)
   pin4.addPosition(defaultPosition)
+
+  val playerPins = Vector(pin1, pin2, pin3, pin4)
 
   override def toString: String = {
     "Player " + team + ": " + name

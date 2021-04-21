@@ -1,52 +1,48 @@
 package de.htwg.se.ludo
 import de.htwg.se.ludo.view.Tui
-import javax.swing.plaf.TextUI
 import model._
 
+import scala.io.StdIn.readLine
+
 object Ludo {
+
   def main(args: Array[String]): Unit = {
-    val playerarraysize = scala.io.StdIn.readLine(
-      """
+
+    val playerAmount: Int = readLine("""
         |Welcome to Ludo aka 'Mensch Aergere Dich Nicht'!
         |How many players want to play?
-        |Type between 1-4: """.stripMargin)
+        |Type between 1-4: """.stripMargin).toInt
 
-    val players:Array[Player] = new Array[Player](playerarraysize.toInt)
+    val players: Array[Player] = new Array[Player](playerAmount)
     var setup_str: String = "Hello"
 
-    var player_counter: Int = 1
-    for (i <- 0 until  playerarraysize.toInt) {
-      val player_name: String = scala.io.StdIn.readLine(s"Player $player_counter, type your name: ")
+    for (player_counter <- 1 until  playerAmount + 1) {
+      val player_name : String = readLine(s"Player $player_counter, type your name: ")
       players(player_counter - 1) = Player(player_name, player_counter)
       setup_str += ", " + players(player_counter - 1).name
-      player_counter += 1
     }
-    player_counter -= 1
 
-    var game = new Field[Cell](40, Cell(0))
+    var game = Game(new Field(40, Cell(0)), players.toVector)
+    //var game = new Field[Cell](40, Cell(0))
     val tui = new Tui
     println(setup_str)
 
-    var turn_counter = 0
+    var turnCounter = 0
 
     var input: String = ""
-
 
     while(input != "q") {
       val dice = Dice()
       println(s"""
             |Current Game Status:
-            |${game.toString}
-            |==> ${players(turn_counter).name} can walk ${dice.t1} please choose a pin (1-4)!""".stripMargin)
+            |${game.field.toString}
+            |==> ${players(turnCounter).name} can walk ${dice.t1} please choose a pin (1-4)!""".stripMargin)
 
-      input = scala.io.StdIn.readLine()
-      game = tui.processInputLine(input, game, players(turn_counter), dice)
+      input = readLine()
+      game = tui.processInputLine(input, game, players(turnCounter), dice)
 
-      turn_counter += 1
-      if(turn_counter == player_counter) {
-        turn_counter = turn_counter - player_counter
-      }
-
+      turnCounter += 1
+      turnCounter %= playerAmount
     }
   }
 }
