@@ -5,7 +5,7 @@ case class Player(name: String, team: Int) {
   //def this(name: String) = this(name, team, defaultPosition, false)
   val defaultPosition : Int = (team-1) * 10
 
-  var hasWon :Boolean = false
+  var hasWon: Boolean = false
 
   val pin1: Pin = Pin(team * 10 + 1)
   pin1.addPosition(defaultPosition)

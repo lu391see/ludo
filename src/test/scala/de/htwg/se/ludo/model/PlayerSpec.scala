@@ -1,7 +1,9 @@
 package de.htwg.se.ludo.model
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.wordspec.AnyWordSpec
+import org.scalatest.matchers.should.Matchers
+// import org.scalatest.{Matchers, WordSpec}
 
-class PlayerSpec extends WordSpec with Matchers {
+class PlayerSpec extends AnyWordSpec with Matchers {
   "A Player" when {
     "set to Lukas" should {
       val player = Player("Lukas", 1)

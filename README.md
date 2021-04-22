@@ -19,7 +19,7 @@ Throwing a six means bringing a piece into the game and throwing the dice again.
 
 If a piece cannot be brought into the game then any other piece in the game must be moved by the thrown number, if that is possible. A commonly played variation allows a player who has no pieces in the circle of fields to have three tries to throw a six.<br>
 
-Pieces can jump over other pieces, and throw out pieces from other players (into that player's "out" area) if they land on them. A player cannot throw out his own pieces, though he can advance further than the last field in the "home" row. A player can be thrown out if he is on his "start" field.
+Pieces can jump over other pieces, and throw out pieces from other players (into that player's "out" area) if they land on them. A player cannot throw out his own pieces, and he cannot advance further than the last field in the "home" row. A player can be thrown out if he is on his "start" field.
 
 ## Goal
 The first player with all of their pieces in their "home" row wins the game.

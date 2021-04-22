@@ -6,5 +6,4 @@ case class Cell(value:Int) {
   override def toString: String = {
     "[" + value.toString + "]" replace("[0]", "[ ]")
   }
-
 }

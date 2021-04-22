@@ -1,8 +1,9 @@
 package de.htwg.se.ludo.model
 import org.scalatest.wordspec.AnyWordSpec
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.matchers.should.Matchers
+// import org.scalatest.{Matchers, WordSpec}
 
-class CellSpec extends WordSpec with Matchers{
+class CellSpec extends AnyWordSpec with Matchers{
   "A Cell" when { "not set to any value " should{
     val emptyCell = Cell(0)
     "have value 0" in {
@@ -23,6 +24,10 @@ class CellSpec extends WordSpec with Matchers{
     "be set" in {
       nonEmptyCell.isSet should be(true)
     }
+    "number should be String" in {
+      nonEmptyCell.toString.isInstanceOf[String] should be(true)
+    }
+
     "show number in String" in {
       nonEmptyCell.toString.matches("/s5/s")
     }
