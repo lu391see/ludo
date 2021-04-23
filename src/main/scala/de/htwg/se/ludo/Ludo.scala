@@ -32,11 +32,11 @@ object Ludo {
     var input: String = ""
 
     while(input != "q") {
-      val dice = Dice()
+      val dice = RandomDice()
       println(s"""
             |Current Game Status:
             |${game.field.toString}
-            |==> ${players(turnCounter).name} can walk ${dice.t1} please choose a pin (1-4)!""".stripMargin)
+            |==> ${players(turnCounter).name} can walk ${dice.throwDice()} please choose a pin (1-4)!""".stripMargin)
 
       input = readLine()
       game = tui.processInputLine(input, game, players(turnCounter), dice)

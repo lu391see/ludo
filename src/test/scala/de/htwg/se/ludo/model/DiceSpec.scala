@@ -6,10 +6,11 @@ import org.scalatest.matchers.should.Matchers
 class DiceSpec extends AnyWordSpec with Matchers{
   "A Dice " when {
     "thrown" should {
-      val dice = Dice()
+      val dice = RandomDice()
       "have a value between 1 and 6" in {
-        dice.t1.isInstanceOf[Int]
-        dice.t1.toString matches "1|2|3|4|5|6"
+        val diceValue = dice.throwDice()
+        diceValue.isInstanceOf[Int]
+        diceValue.toString matches "1|2|3|4|5|6"
       }
     }
   }
