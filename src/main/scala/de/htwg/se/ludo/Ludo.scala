@@ -31,7 +31,7 @@ object Ludo {
 
     var input: String = ""
 
-    while(input != "q") {
+    while(true) {
       val dice = RandomDice()
       println(s"""
             |Current Game Status:
@@ -39,6 +39,9 @@ object Ludo {
             |==> ${players(turnCounter).name} can walk ${dice.throwDice()} please choose a pin (1-4)!""".stripMargin)
 
       input = readLine()
+      if (input == "q") {
+        return
+      }
       game = tui.processInputLine(input, game, players(turnCounter), dice)
 
       turnCounter += 1
