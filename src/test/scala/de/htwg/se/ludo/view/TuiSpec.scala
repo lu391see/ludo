@@ -1,8 +1,8 @@
-package de.htwg.se.ludo.model
+package de.htwg.se.ludo.view
 
-import de.htwg.se.ludo.view.Tui
-import org.scalatest.wordspec.AnyWordSpec
+import de.htwg.se.ludo.model._
 import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 
 class TuiSpec extends AnyWordSpec with Matchers {
   "A TUI processing pins with a dice of 4" should {
