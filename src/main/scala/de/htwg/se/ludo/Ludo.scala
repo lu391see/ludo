@@ -13,19 +13,12 @@ object Ludo {
         |How many players want to play?
         |Type between 1-4: """.stripMargin).toInt
 
-    val players: Array[Player] = new Array[Player](playerAmount)
-    var setup_str: String = "Hello"
-
-    for (player_counter <- 1 until  playerAmount + 1) {
-      val player_name : String = readLine(s"Player $player_counter, type your name: ")
-      players(player_counter - 1) = Player(player_name, player_counter)
-      setup_str += ", " + players(player_counter - 1).name
+    val players: Vector[Player] = Vector.tabulate(playerAmount) {
+      n => Player(readLine(s"Player ${n + 1}, type your name: "), n + 1)
     }
 
-    var game = Game(new Field(40, Cell(0)), players.toVector)
-    //var game = new Field[Cell](40, Cell(0))
+    var game = Game(new Field(40, Cell(0)), players)
     val tui = new Tui
-    println(setup_str)
 
     var turnCounter = 0
 
