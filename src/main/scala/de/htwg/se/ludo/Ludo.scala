@@ -1,4 +1,5 @@
 package de.htwg.se.ludo
+import de.htwg.se.ludo.controller.Controller
 import de.htwg.se.ludo.view.Tui
 import model._
 
@@ -17,8 +18,9 @@ object Ludo {
       n => Player(readLine(s"Player ${n + 1}, type your name: "), n + 1)
     }
 
-    var game = Game(new Field(40, Cell(0)), players)
-    val tui = new Tui
+    val controller = new Controller(Game(new Field(40, Cell(0)), players))
+    val tui = new Tui(controller)
+    controller.notifyObservers()
 
     var turnCounter = 0
 
@@ -26,16 +28,13 @@ object Ludo {
 
     while(true) {
       val dice = RandomDice()
-      println(s"""
-            |Current Game Status:
-            |${game.field.toString}
-            |==> ${players(turnCounter).name} can walk ${dice.throwDice()} please choose a pin (1-4)!""".stripMargin)
+      println(s"==> ${players(turnCounter).name} can walk ${dice.throwDice()} please choose a pin (1-4)!")
 
       input = readLine()
       if (input == "q") {
         return
       }
-      game = tui.processInputLine(input, game, players(turnCounter), dice)
+      tui.processInputLine(input, players(turnCounter), dice)
 
       turnCounter += 1
       turnCounter %= playerAmount
