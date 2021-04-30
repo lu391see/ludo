@@ -3,7 +3,7 @@ import scala.util.Random
 
 
 class Dice(t1: Int) {
-  def throwDice() = t1
+  def throwDice(): Int = t1
 }
 
 case class RandomDice() extends Dice(Random.nextInt(6) + 1) {
