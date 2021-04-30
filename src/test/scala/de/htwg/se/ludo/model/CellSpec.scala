@@ -5,9 +5,9 @@ import org.scalatest.matchers.should.Matchers
 
 class CellSpec extends AnyWordSpec with Matchers{
   "A Cell" when { "not set to any value " should{
-    val emptyCell = Cell(0)
-    "have value 0" in {
-      emptyCell.value should be(0)
+    val emptyCell = EmptyCell()
+    "have empty value" in {
+      emptyCell.getValue should be("")
     }
     "not be set" in {
       emptyCell.isSet should be(false)
@@ -17,9 +17,9 @@ class CellSpec extends AnyWordSpec with Matchers{
     }
   }
   "set to a specific value" should {
-    val nonEmptyCell = Cell(5)
+    val nonEmptyCell = new Cell("Y1")
     "return that value" in {
-      nonEmptyCell.value should be(5)
+      nonEmptyCell.getValue should be("Y1")
     }
     "be set" in {
       nonEmptyCell.isSet should be(true)

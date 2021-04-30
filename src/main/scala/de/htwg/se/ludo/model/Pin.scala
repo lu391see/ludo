@@ -1,13 +1,15 @@
 package de.htwg.se.ludo.model
 
-case class Pin (index: Int){
-  var position:Int = 0;
-
-  def addPosition(add: Int): Unit = {
-    position = position + add
-    if (position > 39) {
-      position -= 40
-    }
+case class Pin (id: String, position: Int){
+  def move(pos: Int): Pin = {
+    Pin(id, pos)
   }
 
+  def finish(homePosition: Int): Pin = {
+    move(homePosition + index())
+  }
+
+  def index(): Int = {
+    id.substring(1).toInt - 1
+  }
 }

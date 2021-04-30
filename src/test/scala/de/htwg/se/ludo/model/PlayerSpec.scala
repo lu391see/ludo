@@ -6,7 +6,7 @@ import org.scalatest.matchers.should.Matchers
 class PlayerSpec extends AnyWordSpec with Matchers {
   "A Player" when {
     "set to Lukas" should {
-      val player = Player("Lukas", 1)
+      val player = Player("Lukas", Team('Y', 0, 15, 55))
       "have a name" in {
         player.name should be("Lukas")
       }
@@ -18,11 +18,10 @@ class PlayerSpec extends AnyWordSpec with Matchers {
       }
       "have 4 pins with number in front of index" in {
         player.team should be(1)
-        player.pin1.index should be(11)
-        player.pin1.position should be(0)
-        //player.pin1 should be (Pin(11))
-        player.pin2.index should be(12)
-        player.pin4.index should be(14)
+        player.team.id(0) should be("Y1")
+        player.team.position(0) should be(0)
+        player.team.id(0) should be("Y2")
+        player.team.id(0) should be("Y4")
       }
     }
   }

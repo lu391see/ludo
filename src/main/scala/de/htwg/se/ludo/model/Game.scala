@@ -1,16 +1,74 @@
 package de.htwg.se.ludo.model
 
-case class Game(field: Field[Cell], players: Vector[Player]) {
+case class Game(board: Field, players: Vector[Player]) {
+  def base(): Game = {
+    var changed = board
+    players.foreach(player => {
+     player.team.pins.foreach(pin => changed = changed.replaceCell(pin.position, new Cell(pin.id)))
+    })
+    Game(changed, players)
+  }
 
-  def draw_pin(player: Player, pin: Int, dice_roll: Int): Game = {
-    if(player.playerPins(pin).position + dice_roll < player.defaultPosition + field.size) {
-      val removed_game = Game(field.replaceCell(player.playerPins(pin).position, Cell(0)), players)
-      player.playerPins(pin).addPosition(dice_roll)
-      Game(removed_game.field.replaceCell(player.playerPins(pin).position, Cell(player.playerPins(pin).index)), players)
+  def draw(player: Player, pin: Int, dice_roll: Int): Game = {
+    if (!player.team.isSpawned(pin)) {
+      trySix(player, dice_roll)
+      if (player.successfulSixRoll) {
+        player.successfulSixRoll = false
+        return spawn(player, pin)
+      }
+    } else if (!player.team.isFinished(pin)) {
+      var changed = this
+      if (hasEnemyPinAhead(player, pin, dice_roll)) {
+        changed = beat(enemyPinPosition(player, pin, dice_roll))
+      }
+      return changed.move(player, pin, dice_roll)
     }
-    else {
-      player.hasWon = true
-      Game(field.replaceCell(player.playerPins(pin).position, Cell(0)), players)
+    this
+  }
+
+  def beat(pos: Int): Game = {
+    Game(board.replaceCell(pos, EmptyCell()), players)
+  }
+
+  def hasEnemyPinAhead(player: Player, pin: Int, dice_roll: Int): Boolean = {
+    val potentialEnemyCell =
+      board.cell(enemyPinPosition(player, pin, dice_roll))
+    potentialEnemyCell.isSet && potentialEnemyCell.getValue.charAt(
+      0
+    ) != player.team.color
+  }
+
+  def enemyPinPosition(player: Player, pin: Int, dice_roll: Int): Int = {
+    player.team.position(pin) + dice_roll
+  }
+
+  def trySix(player: Player, dice_roll: Int): Unit = {
+    if (dice_roll == 6) {
+      player.successfulSixRoll = true
     }
+  }
+
+  def spawn(player: Player, pin: Int): Game = {
+    val spawned = Game(board.replaceCell(player.team.position(pin), EmptyCell()), players)
+    player.spawn(pin)
+    Game(spawned.board.replaceCell(player.team.position(pin), new Cell(player.team.id(pin))), players)
+  }
+
+  def move(player: Player, pin: Int, pos: Int): Game = {
+    val pinPosition = player.team.position(pin)
+    if (pinPosition + pos < player.team.homePosition) {
+      val changed = Game(board.replaceCell(pinPosition, EmptyCell()), players)
+      val newPos = pinPosition + pos
+      player.move(pin, newPos)
+      Game(changed.board.replaceCell(newPos, new Cell(player.team.id(pin))), players)
+    } else {
+      finish(player, pin)
+    }
+  }
+
+  def finish(player: Player, pin: Int): Game = {
+    val changed = Game(board.replaceCell(player.team.position(pin), EmptyCell()), players)
+    player.finish(pin)
+    Game(changed.board.replaceCell(player.team.position(pin), new Cell(player.team.id(pin))), players)
   }
 }

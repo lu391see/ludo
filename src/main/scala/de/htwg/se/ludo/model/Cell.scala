@@ -1,9 +1,13 @@
 package de.htwg.se.ludo.model
 
-case class Cell(value:Int) {
-  def isSet:Boolean = value != 0
+class Cell(value: String) {
+  def isSet:Boolean = value != ""
+
+  def getValue:String = value
 
   override def toString: String = {
-    "[" + value.toString + "]" replace("[0]", "[ ]")
+    "[" + value + "]"
   }
 }
+
+case class EmptyCell() extends Cell("")
