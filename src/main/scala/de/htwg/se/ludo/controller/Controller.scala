@@ -9,7 +9,7 @@ class Controller(var game: Game) extends Observable{
     notifyObservers()
   }
 
-  def gameToString: String = game.toString
+  def gameToString: String = game.field.toString
 
   def draw(player: Player, pin: Int, dice_roll: Int): Unit = {
     game = game.draw_pin(player, pin, dice_roll)
