@@ -1,4 +1,4 @@
-package de.htwg.se.ludo.view
+package de.htwg.se.ludo.aview
 
 import de.htwg.se.ludo.controller.Controller
 import de.htwg.se.ludo.model.{Dice, Player}

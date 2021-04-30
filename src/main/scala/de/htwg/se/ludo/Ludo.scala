@@ -1,6 +1,6 @@
 package de.htwg.se.ludo
 import de.htwg.se.ludo.controller.Controller
-import de.htwg.se.ludo.view.Tui
+import de.htwg.se.ludo.aview.Tui
 import model._
 
 import scala.io.StdIn.readLine
