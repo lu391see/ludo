@@ -1,4 +1,4 @@
-package de.htwg.se.ludo.view
+package de.htwg.se.ludo.aview
 
 import de.htwg.se.ludo.controller.Controller
 import de.htwg.se.ludo.model.{Dice, Player}
@@ -17,5 +17,5 @@ class Tui(controller: Controller) extends Observer {
     }
   }
 
-  override def update(): Unit = println("Current Game Status:" + controller.gameToString)
+  override def update: Boolean = { println("Current Game Status:" + controller.gameToString); true}
 }

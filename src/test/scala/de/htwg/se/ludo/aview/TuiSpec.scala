@@ -1,4 +1,4 @@
-package de.htwg.se.ludo.view
+package de.htwg.se.ludo.aview
 
 import de.htwg.se.ludo.model._
 import de.htwg.se.ludo.controller._
