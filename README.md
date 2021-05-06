@@ -1,4 +1,4 @@
-# ludo - Mensch ärgere dich nicht
+# ludo - Mensch ärgere dich nicht [![Build Status](https://travis-ci.com/lu391see/ludo.svg?branch=SE-06-TravisCI)](https://travis-ci.com/lu391see/ludo)
 
 This is the german version* of the english board game ludo which originally goes back to an old indian game called pachisi. It's germany's most popular parlour game.
 
