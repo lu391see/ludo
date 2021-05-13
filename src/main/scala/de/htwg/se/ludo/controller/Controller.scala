@@ -1,6 +1,6 @@
 package de.htwg.se.ludo.controller
 
-import de.htwg.se.ludo.model.{Board, EmptyCell, Game, Player, PlayerBuilder, RandomDice, Team}
+import de.htwg.se.ludo.model.{AllPinWinStrategy, Board, EmptyCell, Game, OnePinWinStrategy, Player, PlayerBuilder, RandomDice, Team}
 import de.htwg.se.ludo.util.Observable
 
 class Controller() extends Observable {
@@ -51,5 +51,12 @@ class Controller() extends Observable {
 
   def nextPlayer(): Unit = {
     currentPlayer = players((players.indexOf(currentPlayer) + 1) % players.size)
+  }
+
+  def setWinStrategy(winStrategy: String): Unit = {
+    winStrategy match  {
+      case "one" => game.setWinStrategy(OnePinWinStrategy())
+      case _ => game.setWinStrategy(AllPinWinStrategy())
+    }
   }
 }

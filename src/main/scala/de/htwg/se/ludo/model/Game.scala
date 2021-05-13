@@ -1,6 +1,14 @@
 package de.htwg.se.ludo.model
 
+import de.htwg.se.ludo.util.WinStrategy
+
 case class Game(board: Board, players: Vector[Player]) {
+  var winStrategy: WinStrategy = _
+
+  def setWinStrategy(winStrategy: WinStrategy): Unit = {
+    this.winStrategy = winStrategy
+  }
+
   def base(): Game = {
     var changed = board
     players.foreach(player => {
