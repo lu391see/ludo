@@ -1,5 +1,6 @@
 package de.htwg.se.ludo
-import de.htwg.se.ludo.view.Tui
+import de.htwg.se.ludo.controller.Controller
+import de.htwg.se.ludo.aview.Tui
 import model._
 
 import scala.io.StdIn.readLine
@@ -32,8 +33,12 @@ object Ludo {
     val board = new Board(fields, EmptyCell(), totalPins)
     var game = Game(board, players).base()
     val tui = new Tui
+    val controller = new Controller(Game(new Field(40, Cell(0)), players))
+    val tui = new Tui(controller)
+    controller.notifyObservers()
 
     var turnCounter = 0
+
     var input: String = ""
 
     while (true) {
@@ -48,6 +53,7 @@ object Ludo {
             |${game.board.toString}
             |==> ${player.name} can walk ${dice
         .throwDice()} please choose a pin (1-4)!""".stripMargin)
+      println(s"==> ${players(turnCounter).name} can walk ${dice.throwDice()} please choose a pin (1-4)!")
 
       input = readLine()
       if (input == "q") {
@@ -57,6 +63,7 @@ object Ludo {
         input = readLine("No valid Pin, try again!\n")
       }
       game = tui.processInputLine(input, game, player, dice)
+      tui.processInputLine(input, players(turnCounter), dice)
 
       turnCounter += 1
       turnCounter %= playerAmount
