@@ -1,12 +1,11 @@
 package de.htwg.se.ludo.model
 
-case class Team(
-    color: Char,
-    basePosition: Int,
-    startPosition: Int,
-    homePosition: Int
+class Team(
+    val color: Char,
+    val basePosition: Int,
+    val startPosition: Int,
+    val homePosition: Int
 ) {
-
   var pins: Vector[Pin] = Vector.tabulate(4) { i =>
     Pin(color + (i + 1).toString, basePosition + i)
   }
@@ -44,3 +43,5 @@ case class Team(
     pins(pin).id
   }
 }
+
+case class EmptyTeam() extends Team('Y', 0, 0, 0)
