@@ -3,21 +3,21 @@ import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers
 // import org.scalatest.{Matchers, WordSpec}
 
-class FieldSpec extends AnyWordSpec with Matchers {
+class BoardSpec extends AnyWordSpec with Matchers {
   "Matrix is an immutable data type that contains a two-dimentional Vector of Cells."
   "A Matrix" when {
     "empty " should {
-      "be created by using a dimention and a sample cell" in {
-        val matrix = new Field(2, EmptyCell())
+      "be created by using a demension and a sample cell" in {
+        val matrix = new Board(2, EmptyCell(), 4)
         matrix.size should be(2)
       }
       "for test purposes only be created with a Vector of Vectors" in {
-        val testMatrix = Field(Vector(EmptyCell()))
+        val testMatrix = Board(Vector(EmptyCell()), 4)
         testMatrix.size should be(1)
       }
     }
     "filled" should {
-      val matrix = new Field(2, new Cell("Y1"))
+      val matrix = new Board(2, new Cell("Y1"), 4)
       "give access to its cells" in {
         matrix.cell(0) should be(new Cell("Y1"))
         matrix.cell(1) should be(new Cell("Y1"))

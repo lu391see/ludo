@@ -28,7 +28,12 @@ case class Team(
   }
 
   def isFinished(pin: Int): Boolean = {
-    pins(pin).position >= homePosition
+    // TODO
+    pins(pin).position >= homePosition - basePosition - 1
+  }
+
+  def isAtEndOfBoard(pin: Int): Boolean = {
+    pins(pin).position == homePosition - basePosition - 1
   }
 
   def position(pin: Int): Int = {

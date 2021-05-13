@@ -8,7 +8,7 @@ class TuiSpec extends AnyWordSpec with Matchers {
   "A TUI processing pins with a dice of 4" should {
     val players: Array[Player] = new Array[Player](1)
     players(0) = Player("", Team('Y', 0, 15, 55))
-    var game = Game(new Field(71, EmptyCell()), players.toVector)
+    var game = Game(new Board(71, EmptyCell(), 4), players.toVector)
     val tui = new Tui
     val first_player = players(0)
     val diceFour = new Dice(4)

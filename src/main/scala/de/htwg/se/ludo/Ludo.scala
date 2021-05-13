@@ -7,12 +7,15 @@ import scala.io.StdIn.readLine
 object Ludo {
 
   def main(args: Array[String]): Unit = {
+    val fields = 72
+    val maxPlayers = 4
+    val totalPins = maxPlayers * 4
 
     val teams = Vector(
-      Team('Y', 0, 15, 55),
-      Team('G', 4, 25, 59),
-      Team('R', 8, 35, 63),
-      Team('B', 12, 45, 67)
+      Team('Y', 0, 16, 56),
+      Team('G', 4, 26, 60),
+      Team('R', 8, 36, 64),
+      Team('B', 12, 46, 68)
     )
 
     val playerAmount: Int = readLine(
@@ -26,7 +29,7 @@ object Ludo {
       Player(readLine(s"Player ${n + 1}, type your name: "), teams(n))
     }
 
-    val board = new Field(71, EmptyCell())
+    val board = new Board(fields, EmptyCell(), totalPins)
     var game = Game(board, players).base()
     val tui = new Tui
 

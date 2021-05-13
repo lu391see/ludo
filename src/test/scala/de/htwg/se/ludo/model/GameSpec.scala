@@ -9,7 +9,7 @@ class GameSpec extends AnyWordSpec with Matchers {
       val players: Array[Player] = new Array[Player](1)
       players(0) = Player("", Team('Y', 0, 15, 55))
       val empty_cell = EmptyCell()
-      val game = Game(new Field(71, empty_cell), players.toVector)
+      val game = Game(new Board(71, empty_cell, 4), players.toVector)
       val first_player = players(0)
       val first_pin = 0
       val dice_roll = 4
@@ -35,7 +35,7 @@ class GameSpec extends AnyWordSpec with Matchers {
       val players: Array[Player] = new Array[Player](1)
       players(0) = Player("", Team('Y', 0, 15, 55))
       val empty_cell = EmptyCell()
-      val game = Game(new Field(40, EmptyCell()), players.toVector)
+      val game = Game(new Board(40, EmptyCell(), 4), players.toVector)
       val first_player = players(0)
 
       val first_pin = 0

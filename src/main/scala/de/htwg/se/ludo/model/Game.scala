@@ -1,6 +1,6 @@
 package de.htwg.se.ludo.model
 
-case class Game(board: Field, players: Vector[Player]) {
+case class Game(board: Board, players: Vector[Player]) {
   def base(): Game = {
     var changed = board
     players.foreach(player => {
@@ -19,8 +19,10 @@ case class Game(board: Field, players: Vector[Player]) {
     } else if (!player.team.isFinished(pin)) {
       var changed = this
       if (hasEnemyPinAhead(player, pin, dice_roll)) {
+        println("beating enemy")
         changed = beat(enemyPinPosition(player, pin, dice_roll))
       }
+      println("moving")
       return changed.move(player, pin, dice_roll)
     }
     this
@@ -56,9 +58,10 @@ case class Game(board: Field, players: Vector[Player]) {
 
   def move(player: Player, pin: Int, pos: Int): Game = {
     val pinPosition = player.team.position(pin)
-    if (pinPosition + pos < player.team.homePosition) {
+    val newPos = pinPosition + pos
+    if (newPos < player.team.homePosition) {
       val changed = Game(board.replaceCell(pinPosition, EmptyCell()), players)
-      val newPos = pinPosition + pos
+
       player.move(pin, newPos)
       Game(changed.board.replaceCell(newPos, new Cell(player.team.id(pin))), players)
     } else {
