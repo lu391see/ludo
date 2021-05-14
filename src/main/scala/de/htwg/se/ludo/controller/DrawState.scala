@@ -6,6 +6,7 @@ case class DrawState (controller: Controller) extends State[GameState] {
   override def handle(input: String, n: GameState): Unit = {
     if (input == "n") {
       n.nextState(SetupState(controller))
+      return
     }
 
     val pin = input.toInt
