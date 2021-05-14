@@ -4,10 +4,10 @@ import de.htwg.se.ludo.util.State
 
 case class DrawState (controller: Controller) extends State[GameState] {
   override def handle(input: String, n: GameState): Unit = {
-    if (input == "n") {
+    /*if (input == "n") {
       n.nextState(SetupState(controller))
       return
-    }
+    }*/
 
     val pin = input.toInt
     if(pin < 1 || pin > 4) {
