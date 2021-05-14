@@ -8,23 +8,25 @@ class BoardSpec extends AnyWordSpec with Matchers {
   "A Matrix" when {
     "empty " should {
       "be created by using a demension and a sample cell" in {
-        val matrix = new Board(2, EmptyCell(), 4)
+        val matrix = new Board(2, Cell(""), 0)
         matrix.size should be(2)
       }
       "for test purposes only be created with a Vector of Vectors" in {
-        val testMatrix = Board(Vector(EmptyCell()), 4)
+        val testMatrix = Board(Vector(Cell("")), 0)
         testMatrix.size should be(1)
       }
     }
     "filled" should {
-      val matrix = new Board(2, new Cell("Y1"), 4)
+      val cell = new Cell("Y1")
+      val matrix = new Board(2, cell, 0)
       "give access to its cells" in {
-        matrix.cell(0) should be(new Cell("Y1"))
-        matrix.cell(1) should be(new Cell("Y1"))
+        matrix.cell(0).toString should be("[Y1]")
+        matrix.cell(1) should be(cell)
       }
       "replace cells and return a new data structure" in {
-        val returnedMatrix = matrix.replaceCell(0, new Cell("Y2"))
-        matrix.cell(0) should be(new Cell("Y1"))
+        val newcell = new Cell("Y2")
+        val returnedMatrix = matrix.replaceCell(0, newcell)
+        matrix.cell(0) should be(cell)
         returnedMatrix.cell(0) should be(new Cell("Y2"))
         returnedMatrix.cell(1) should be(new Cell("Y1"))
       }
@@ -34,7 +36,7 @@ class BoardSpec extends AnyWordSpec with Matchers {
         returnedMatrix.cell(1) should be(new Cell("B1"))
       }
       "String contain only 5s" in {
-        matrix.toString contains "[5]"
+        matrix.toString contains "[B1]"
       }
     }
   }
