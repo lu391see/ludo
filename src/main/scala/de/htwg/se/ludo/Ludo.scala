@@ -22,6 +22,7 @@ object Ludo {
 
     while (true) {
       input = readLine()
+      if (input == "q") {return}
       ui.processInput(input)
     }
   }
