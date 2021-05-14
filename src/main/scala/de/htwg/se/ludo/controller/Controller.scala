@@ -35,7 +35,7 @@ class Controller() extends Observable {
 
   def roll(): Unit = {
     pips = RandomDice().pips
-    println("player " + currentPlayer + " throwed " + pips)
+    println(currentPlayer + " throwed " + pips)
   }
 
   def draw(pin: Int): Unit = {
@@ -54,6 +54,7 @@ class Controller() extends Observable {
   }
 
   def setWinStrategy(winStrategy: String): Unit = {
+    // TODO should not be callable in SetupState
     winStrategy match  {
       case "one" => game.setWinStrategy(OnePinWinStrategy())
       case _ => game.setWinStrategy(AllPinWinStrategy())
