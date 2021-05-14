@@ -8,7 +8,7 @@ class DiceSpec extends AnyWordSpec with Matchers{
     "thrown" should {
       val dice = RandomDice()
       "have a value between 1 and 6" in {
-        val diceValue = dice.throwDice()
+        val diceValue = dice.pips
         diceValue.isInstanceOf[Int]
         diceValue.toString matches "1|2|3|4|5|6"
       }

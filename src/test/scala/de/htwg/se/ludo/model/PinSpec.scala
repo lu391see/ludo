@@ -1,7 +1,6 @@
 package de.htwg.se.ludo.model
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers
-// import org.scalatest.{Matchers, WordSpec}
 
 class PinSpec extends AnyWordSpec with Matchers{
   "A Pin" when {

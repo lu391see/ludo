@@ -9,7 +9,7 @@ class GameSpec extends AnyWordSpec with Matchers {
   "A Game" when {
     "started with 2 players" should {
       "run  without exceptions" in {
-        val in = new ByteArrayInputStream("2\nPlayer_name1\nplayer_name2\n1\n2\n2\n1\nq\n".getBytes)
+        val in = new ByteArrayInputStream("Player_name1\nplayer_name2\n1\n2\n2\n1\nq\n".getBytes)
         Console.withIn(in) {
           noException should be thrownBy Ludo.main(Array())
         }
