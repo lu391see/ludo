@@ -9,7 +9,6 @@ class TUI(controller: Controller) extends UI with Observer {
 
   override def processInput(input: String): Unit = {
     input match {
-      case "q" => System.exit(0)
       case "one" => controller.setWinStrategy("one") // won when one pin arrived in home
       case "all" => controller.setWinStrategy("all") // won when all 4 pins arrived in home
       case _   => controller.execute(input)

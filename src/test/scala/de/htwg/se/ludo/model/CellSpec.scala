@@ -1,11 +1,10 @@
 package de.htwg.se.ludo.model
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers
-// import org.scalatest.{Matchers, WordSpec}
 
 class CellSpec extends AnyWordSpec with Matchers{
   "A Cell" when { "not set to any value " should{
-    val emptyCell = EmptyCell()
+    val emptyCell = Cell("")
     "have empty value" in {
       emptyCell.getValue should be("")
     }

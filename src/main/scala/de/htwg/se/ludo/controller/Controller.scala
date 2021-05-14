@@ -1,6 +1,6 @@
 package de.htwg.se.ludo.controller
 
-import de.htwg.se.ludo.model.{AllPinWinStrategy, Board, EmptyCell, Game, OnePinWinStrategy, Player, PlayerBuilder, RandomDice, Team}
+import de.htwg.se.ludo.model.{AllPinWinStrategy, Cell, Board, Game, OnePinWinStrategy, Player, PlayerBuilder, RandomDice, Team}
 import de.htwg.se.ludo.util.Observable
 
 class Controller() extends Observable {
@@ -10,7 +10,7 @@ class Controller() extends Observable {
   var players: Vector[Player] = Vector.empty
   val fields = 72
   val maxPlayers = 4
-  val totalPins = maxPlayers * 4
+  val totalPins: Int = maxPlayers * 4
   val teams = Vector(
     new Team('Y', 0, 16, 56),
     new Team('G', 4, 26, 60),
@@ -26,7 +26,7 @@ class Controller() extends Observable {
   }
 
   def newGame(): Unit = {
-    val board = new Board(fields, EmptyCell(), totalPins)
+    val board = new Board(fields, Cell(""), totalPins)
     game = Game(board, players).base()
     notifyObservers()
   }

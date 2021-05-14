@@ -4,6 +4,7 @@ import de.htwg.se.ludo.util.WinStrategy
 
 case class Game(board: Board, players: Vector[Player]) {
   var winStrategy: WinStrategy = _
+  val emptyCell: Cell = Cell("")
 
   def setWinStrategy(winStrategy: WinStrategy): Unit = {
     this.winStrategy = winStrategy
@@ -37,7 +38,7 @@ case class Game(board: Board, players: Vector[Player]) {
   }
 
   def beat(pos: Int): Game = {
-    Game(board.replaceCell(pos, EmptyCell()), players)
+    Game(board.replaceCell(pos, Cell("")), players)
   }
 
   def hasEnemyPinAhead(player: Player, pin: Int, dice_roll: Int): Boolean = {
@@ -59,7 +60,7 @@ case class Game(board: Board, players: Vector[Player]) {
   }
 
   def spawn(player: Player, pin: Int): Game = {
-    val spawned = Game(board.replaceCell(player.team.position(pin), EmptyCell()), players)
+    val spawned = Game(board.replaceCell(player.team.position(pin), emptyCell), players)
     player.spawn(pin)
     Game(spawned.board.replaceCell(player.team.position(pin), new Cell(player.team.id(pin))), players)
   }
@@ -68,7 +69,7 @@ case class Game(board: Board, players: Vector[Player]) {
     val pinPosition = player.team.position(pin)
     val newPos = pinPosition + pos
     if (newPos < player.team.homePosition) {
-      val changed = Game(board.replaceCell(pinPosition, EmptyCell()), players)
+      val changed = Game(board.replaceCell(pinPosition, emptyCell), players)
 
       player.move(pin, newPos)
       Game(changed.board.replaceCell(newPos, new Cell(player.team.id(pin))), players)
@@ -78,7 +79,7 @@ case class Game(board: Board, players: Vector[Player]) {
   }
 
   def finish(player: Player, pin: Int): Game = {
-    val changed = Game(board.replaceCell(player.team.position(pin), EmptyCell()), players)
+    val changed = Game(board.replaceCell(player.team.position(pin), emptyCell), players)
     player.finish(pin)
     Game(changed.board.replaceCell(player.team.position(pin), new Cell(player.team.id(pin))), players)
   }
