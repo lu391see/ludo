@@ -22,6 +22,6 @@ case class Player(name: String, team: Team) {
   }
 
   override def toString: String = {
-    name
+    s"Player 1: '${name}'"
   }
 }
