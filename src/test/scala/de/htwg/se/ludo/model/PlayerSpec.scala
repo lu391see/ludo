@@ -10,7 +10,7 @@ class PlayerSpec extends AnyWordSpec with Matchers {
         player.name should be("Lukas")
       }
       "have a nice String representation" in {
-        player.toString should be("Player 1: Lukas")
+        player.toString should be("Player 1: 'Lukas'")
       }
       "not be able to move for now" in {
         player.successfulSixRoll should be (false)
