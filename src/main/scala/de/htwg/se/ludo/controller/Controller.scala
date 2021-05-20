@@ -48,10 +48,10 @@ class Controller() extends Observable {
     undoManager.doStep(new AddPlayerCommand(name, team, this))
   }
 
-
-
   def setWinStrategy(winStrategy: String): Unit = {
-    // TODO should not be callable in SetupState
+   if(gameState.state.getClass.getSimpleName == "SetupState") {
+     throw new IllegalArgumentException("error: can not set win strategy at the beginning please try again!")
+   }
     winStrategy match  {
       case "one" => game.setWinStrategy(OnePinWinStrategy())
       case _ => game.setWinStrategy(AllPinWinStrategy())
