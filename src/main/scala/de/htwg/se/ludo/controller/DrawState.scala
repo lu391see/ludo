@@ -18,7 +18,10 @@ case class DrawState(controller: Controller) extends State[GameState] {
         }
         controller.draw(pin-1)
       }
-      case None =>
+      case None => {
+        println("please choose a valid pin")
+        return
+      }
     }
 
     controller.game.nextPlayer()
