@@ -4,11 +4,16 @@ import de.htwg.se.ludo.util.WinStrategy
 
 case class Game(board: Board, players: Vector[Player]) {
   var winStrategy: WinStrategy = AllPinWinStrategy()
+  var currentPlayer: Player = _
   val emptyCell: Cell = Cell("")
 
   def setWinStrategy(winStrategy: WinStrategy): Unit = {
     println("changed strategy")
     this.winStrategy = winStrategy
+  }
+
+  def nextPlayer(): Unit = {
+    currentPlayer = players((players.indexOf(currentPlayer) + 1) % players.size)
   }
 
   def base(): Game = {

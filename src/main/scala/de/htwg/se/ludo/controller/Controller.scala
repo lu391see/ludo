@@ -8,7 +8,6 @@ class Controller() extends Observable {
   var gameState: GameState = GameState(this)
   private val undoManager = new UndoManager
 
-  var currentPlayer: Player = _
   var game: Game = _
   var players: Vector[Player] = Vector.empty
   val fields = 72
@@ -38,21 +37,18 @@ class Controller() extends Observable {
 
   def roll(): Unit = {
     pips = RandomDice().pips
-    println(currentPlayer + " throwed " + pips)
+    println(game.currentPlayer + " throwed " + pips)
   }
 
   def draw(pin: Int): Unit = {
-    game = game.draw(currentPlayer, pin, pips)
-    notifyObservers()
+    undoManager.doStep(new DrawCommand(pin, this))
   }
 
   def addPlayer(name: String, team: Team): Unit = {
     undoManager.doStep(new AddPlayerCommand(name, team, this))
   }
 
-  def nextPlayer(): Unit = {
-    currentPlayer = players((players.indexOf(currentPlayer) + 1) % players.size)
-  }
+
 
   def setWinStrategy(winStrategy: String): Unit = {
     // TODO should not be callable in SetupState
@@ -62,12 +58,12 @@ class Controller() extends Observable {
     }
   }
 
-  def undo: Unit = {
+  def undo(): Unit = {
     undoManager.undoStep()
-    //notifyObservers()
+    //notifyObservers() this is only useful during the game, hence it's only used in DrawCommand
   }
 
-  def redo: Unit = {
+  def redo(): Unit = {
     undoManager.redoStep()
     //notifyObservers()
   }
