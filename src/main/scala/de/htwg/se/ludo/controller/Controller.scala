@@ -4,11 +4,12 @@ import de.htwg.se.ludo.model.{AllPinWinStrategy, Cell, Board, Game, OnePinWinStr
 import de.htwg.se.ludo.util.{Observable, UndoManager}
 
 class Controller() extends Observable {
-
+  var currentPlayer: Player = _
+  var game: Game = _
   var gameState: GameState = GameState(this)
+
   private val undoManager = new UndoManager
 
-  var game: Game = _
   var players: Vector[Player] = Vector.empty
   val fields = 72
   val maxPlayers = 4
@@ -37,7 +38,7 @@ class Controller() extends Observable {
 
   def roll(): Unit = {
     pips = RandomDice().pips
-    println(game.currentPlayer + " throwed " + pips)
+    println(currentPlayer + " throwed " + pips)
   }
 
   def draw(pin: Int): Unit = {
@@ -48,7 +49,9 @@ class Controller() extends Observable {
     undoManager.doStep(new AddPlayerCommand(name, team, this))
   }
 
-
+  def nextPlayer(): Unit = {
+    currentPlayer = players((players.indexOf(currentPlayer) + 1) % players.size)
+  }
 
   def setWinStrategy(winStrategy: String): Unit = {
     // TODO should not be callable in SetupState
