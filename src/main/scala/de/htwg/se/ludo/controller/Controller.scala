@@ -1,11 +1,14 @@
 package de.htwg.se.ludo.controller
 
 import de.htwg.se.ludo.model.{AllPinWinStrategy, Cell, Board, Game, OnePinWinStrategy, Player, PlayerBuilder, RandomDice, Team}
-import de.htwg.se.ludo.util.Observable
+import de.htwg.se.ludo.util.{Observable, UndoManager}
 
 class Controller() extends Observable {
-  var currentPlayer: Player = _
+
   var gameState: GameState = GameState(this)
+  private val undoManager = new UndoManager
+
+  var currentPlayer: Player = _
   var game: Game = _
   var players: Vector[Player] = Vector.empty
   val fields = 72
@@ -44,9 +47,7 @@ class Controller() extends Observable {
   }
 
   def addPlayer(name: String, team: Team): Unit = {
-    val builder = PlayerBuilder()
-    val player = builder.setPlayerName(name).setPlayerTeam(team).build()
-    players = players.appended(player)
+    undoManager.doStep(new AddPlayerCommand(name, team, this))
   }
 
   def nextPlayer(): Unit = {
@@ -59,5 +60,15 @@ class Controller() extends Observable {
       case "one" => game.setWinStrategy(OnePinWinStrategy())
       case _ => game.setWinStrategy(AllPinWinStrategy())
     }
+  }
+
+  def undo: Unit = {
+    undoManager.undoStep()
+    //notifyObservers()
+  }
+
+  def redo: Unit = {
+    undoManager.redoStep()
+    //notifyObservers()
   }
 }

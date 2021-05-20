@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.com/lu391see/ludo.svg?branch=dev)](https://travis-ci.com/lu391see/ludo)
-[![Coverage Status](https://coveralls.io/repos/github/lu391see/ludo/badge.svg?branch=dev)](https://coveralls.io/github/lu391see/ludo?branch=dev)
+[![Build Status](https://travis-ci.com/lu391see/ludo.svg?branch=SE-08-Undo_OptionTry)](https://travis-ci.com/lu391see/ludo)
+[![Coverage Status](https://coveralls.io/repos/github/lu391see/ludo/badge.svg?branch=SE-08-Undo_OptionTry)](https://coveralls.io/github/lu391see/ludo?branch=SE-08-Undo_OptionTry)
 [![Hits-of-Code](https://hitsofcode.com/github/lu391see/ludo)](https://hitsofcode.com/github/lu391see/ludo/view)
 ![GitHub](https://img.shields.io/github/license/lu391see/ludo)
 
