@@ -7,6 +7,7 @@ class Controller() extends Observable {
   var currentPlayer: Player = _
   var game: Game = _
   var gameState: GameState = GameState(this)
+  var pips: Int = 0
 
   private val undoManager = new UndoManager
 
@@ -20,8 +21,6 @@ class Controller() extends Observable {
     new Team('R', 8, 36, 64),
     new Team('B', 12, 46, 68)
   )
-
-  var pips = 0
 
   def execute(input: String): Boolean = {
     gameState.handle(input)
@@ -37,6 +36,7 @@ class Controller() extends Observable {
   def gameToString: String = game.board.toString
 
   def roll(): Unit = {
+    // undoManager.doStep(new RollCommand(this))
     pips = RandomDice().pips
     println(currentPlayer + " throwed " + pips)
   }
