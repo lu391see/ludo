@@ -4,11 +4,13 @@ import de.htwg.se.ludo.model.{AllPinWinStrategy, Cell, Board, Game, OnePinWinStr
 import de.htwg.se.ludo.util.{Observable, UndoManager}
 
 class Controller() extends Observable {
-
+  var currentPlayer: Option[Player] = None
+  var game: Option[Game] = None
   var gameState: GameState = GameState(this)
+  var pips: Int = 0
+
   private val undoManager = new UndoManager
 
-  var game: Game = _
   var players: Vector[Player] = Vector.empty
   val fields = 72
   val maxPlayers = 4
@@ -20,8 +22,6 @@ class Controller() extends Observable {
     new Team('B', 12, 46, 68)
   )
 
-  var pips = 0
-
   def execute(input: String): Boolean = {
     gameState.handle(input)
     true
@@ -29,15 +29,22 @@ class Controller() extends Observable {
 
   def newGame(): Unit = {
     val board = new Board(fields, Cell(""), totalPins)
-    game = Game(board, players).base()
+    game = Some(Game(board, players).base())
     notifyObservers()
   }
 
-  def gameToString: String = game.board.toString
+  def gameToString: String = game match {
+    case Some(g) => g.board.toString
+    case None => "\nGame Board not yet initialized!\n"
+  }
 
   def roll(): Unit = {
+    // undoManager.doStep(new RollCommand(this))
     pips = RandomDice().pips
-    println(game.currentPlayer + " throwed " + pips)
+    currentPlayer match {
+      case Some(c) => println(c + " throwed " + pips)
+      case None =>
+    }
   }
 
   def draw(pin: Int): Unit = {
@@ -48,14 +55,22 @@ class Controller() extends Observable {
     undoManager.doStep(new AddPlayerCommand(name, team, this))
   }
 
-
+  def nextPlayer(): Unit = {
+    currentPlayer match {
+      case Some(c) => currentPlayer = Some(players((players.indexOf(c) + 1) % players.size))
+      case None =>
+    }
+  }
 
   def setWinStrategy(winStrategy: String): Unit = {
-    // TODO should not be callable in SetupState
-    winStrategy match  {
-      case "one" => game.setWinStrategy(OnePinWinStrategy())
-      case _ => game.setWinStrategy(AllPinWinStrategy())
-    }
+   game match {
+     case Some(g) => winStrategy match {
+       case "one" => g.setWinStrategy(OnePinWinStrategy())
+       case _ => g.setWinStrategy(AllPinWinStrategy())
+     }
+     case None => println("error: can not set win strategy at the beginning please try again!")
+
+   }
   }
 
   def undo(): Unit = {
