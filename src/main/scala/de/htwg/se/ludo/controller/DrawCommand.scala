@@ -14,7 +14,7 @@ class DrawCommand(pin: Int, controller: Controller) extends Command {
   )
 
   override def doStep: Unit = {
-    memento = (controller.game, controller.currentPlayer, controller.gameState, controller.pips)
+    memento = (controller.game, controller.currentPlayer, controller.gameState, controller.pips, getPins)
     controller.game = controller.game.draw(controller.currentPlayer, pin, controller.pips)
     controller.notifyObservers()
   }
