@@ -8,13 +8,13 @@ class RollCommand(controller: Controller) extends Command {
   override def doStep: Unit = {
     memento = controller.pips
     controller.pips = RandomDice().pips
-    println(controller.currentPlayer + " throwed " + controller.pips)
+    println(controller.currentPlayer.get + " throwed " + controller.pips)
   }
 
   override def undoStep: Unit = {
     val new_memento = controller.pips
     controller.pips = memento
-    println(controller.currentPlayer + " throwed " + controller.pips)
+    println(controller.currentPlayer.get + " throwed " + controller.pips)
     memento = new_memento
   }
 

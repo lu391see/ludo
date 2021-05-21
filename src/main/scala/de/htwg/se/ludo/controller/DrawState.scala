@@ -25,7 +25,7 @@ case class DrawState(controller: Controller) extends State[GameState] {
     }
 
     controller.nextPlayer()
-    println(controller.currentPlayer + " is next. Press any key to throw a Dice")
+    println(controller.currentPlayer.get + " is next. Press any key to throw a Dice")
     n.nextState(RollState(controller))
   }
 
