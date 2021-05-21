@@ -5,7 +5,7 @@ import de.htwg.se.ludo.util.{Observable, UndoManager}
 
 class Controller() extends Observable {
   var currentPlayer: Player = _
-  var game: Game = _
+  var game: Option[Game] = None
   var gameState: GameState = GameState(this)
   var pips: Int = 0
 
@@ -29,11 +29,14 @@ class Controller() extends Observable {
 
   def newGame(): Unit = {
     val board = new Board(fields, Cell(""), totalPins)
-    game = Game(board, players).base()
+    game = Some(Game(board, players).base())
     notifyObservers()
   }
 
-  def gameToString: String = game.board.toString
+  def gameToString: String = game match {
+    case Some(g) => g.board.toString
+    case None => "\nGame Board not yet initialized!\n"
+  }
 
   def roll(): Unit = {
     // undoManager.doStep(new RollCommand(this))
@@ -54,13 +57,15 @@ class Controller() extends Observable {
   }
 
   def setWinStrategy(winStrategy: String): Unit = {
-   if(gameState.state.getClass.getSimpleName == "SetupState") {
-     throw new IllegalArgumentException("error: can not set win strategy at the beginning please try again!")
+   game match {
+     case Some(g) => winStrategy match {
+       case "one" => g.setWinStrategy(OnePinWinStrategy())
+       case _ => g.setWinStrategy(AllPinWinStrategy())
+     }
+     case None => println("error: can not set win strategy at the beginning please try again!")
+
    }
-    winStrategy match  {
-      case "one" => game.setWinStrategy(OnePinWinStrategy())
-      case _ => game.setWinStrategy(AllPinWinStrategy())
-    }
+
   }
 
   def undo(): Unit = {

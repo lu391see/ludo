@@ -5,7 +5,7 @@ import de.htwg.se.ludo.util.Command
 
 class DrawCommand(pin: Int, controller: Controller) extends Command {
 
-  var memento: (Game, Player, GameState, Int, Vector[Pin]) = (
+  var memento: (Option[Game], Player, GameState, Int, Vector[Pin]) = (
     controller.game,
     controller.currentPlayer,
     controller.gameState,
@@ -15,7 +15,10 @@ class DrawCommand(pin: Int, controller: Controller) extends Command {
 
   override def doStep: Unit = {
     memento = (controller.game, controller.currentPlayer, controller.gameState, controller.pips, getPins)
-    controller.game = controller.game.draw(controller.currentPlayer, pin, controller.pips)
+    controller.game match {
+      case Some(g) => g.draw(controller.currentPlayer, pin, controller.pips)
+      case None => println("\nDraw command couldn't be processed without initialized Game!\n")
+    }
     controller.notifyObservers()
   }
 
