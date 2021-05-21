@@ -1,5 +1,5 @@
-package de.htwg.se.ludo.controller
 
+import de.htwg.se.ludo.controller.Controller
 import de.htwg.se.ludo.model.RandomDice
 import de.htwg.se.ludo.util.Command
 
