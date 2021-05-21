@@ -4,7 +4,7 @@ import de.htwg.se.ludo.model.{AllPinWinStrategy, Cell, Board, Game, OnePinWinStr
 import de.htwg.se.ludo.util.{Observable, UndoManager}
 
 class Controller() extends Observable {
-  var currentPlayer: Player = _
+  var currentPlayer: Option[Player] = None
   var game: Option[Game] = None
   var gameState: GameState = GameState(this)
   var pips: Int = 0
@@ -41,7 +41,10 @@ class Controller() extends Observable {
   def roll(): Unit = {
     // undoManager.doStep(new RollCommand(this))
     pips = RandomDice().pips
-    println(currentPlayer + " throwed " + pips)
+    currentPlayer match {
+      case Some(c) => println(c + " throwed " + pips)
+      case None =>
+    }
   }
 
   def draw(pin: Int): Unit = {
@@ -53,7 +56,10 @@ class Controller() extends Observable {
   }
 
   def nextPlayer(): Unit = {
-    currentPlayer = players((players.indexOf(currentPlayer) + 1) % players.size)
+    currentPlayer match {
+      case Some(c) => currentPlayer = Some(players((players.indexOf(c) + 1) % players.size))
+      case None =>
+    }
   }
 
   def setWinStrategy(winStrategy: String): Unit = {
@@ -65,7 +71,6 @@ class Controller() extends Observable {
      case None => println("error: can not set win strategy at the beginning please try again!")
 
    }
-
   }
 
   def undo(): Unit = {
