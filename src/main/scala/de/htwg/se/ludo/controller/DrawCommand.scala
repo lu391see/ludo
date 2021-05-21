@@ -16,7 +16,7 @@ class DrawCommand(pin: Int, controller: Controller) extends Command {
   override def doStep: Unit = {
     memento = (controller.game, controller.currentPlayer, controller.gameState, controller.pips, getPins)
     controller.game match {
-      case Some(g) => g.draw(controller.currentPlayer, pin, controller.pips)
+      case Some(g) => controller.game = Some(g.draw(controller.currentPlayer.get, pin, controller.pips))
       case None => println("\nDraw command couldn't be processed without initialized Game!\n")
     }
     controller.notifyObservers()
