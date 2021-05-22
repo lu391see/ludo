@@ -29,7 +29,7 @@ class Controller() extends Observable {
 
   def newGame(): Unit = {
     val board = new Board(fields, Cell(""), totalPins)
-    game = Some(Game(board, players).base())
+    game = Some(Game(board, players).spawnedPins())
     notifyObservers()
   }
 

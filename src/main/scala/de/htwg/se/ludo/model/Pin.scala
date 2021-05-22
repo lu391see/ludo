@@ -9,6 +9,10 @@ case class Pin (id: String, position: Int){
     move(homePosition + index())
   }
 
+  def base(basePosition: Int): Pin = {
+    move(basePosition + index())
+  }
+
   def index(): Int = {
     id.substring(1).toInt - 1
   }

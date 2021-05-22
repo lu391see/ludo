@@ -1,7 +1,7 @@
 package de.htwg.se.ludo.model
 
 case class Player(name: String, team: Team) {
-  var successfulSixRoll = false
+  var sixRolled = false
   // TODO
   var hasFirstCycle = false
 
@@ -22,6 +22,6 @@ case class Player(name: String, team: Team) {
   }
 
   override def toString: String = {
-    s"Player ${team.color}: '${name}'"
+    s"Player '${name}'"
   }
 }
