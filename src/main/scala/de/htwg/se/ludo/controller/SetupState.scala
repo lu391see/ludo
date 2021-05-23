@@ -7,6 +7,10 @@ import scala.io.StdIn.readLine
 case class SetupState(controller: Controller) extends State[GameState] {
   override def handle(input: String, n: GameState): Unit = {
     if (controller.players.size == controller.maxPlayers || input.contains("start")) {
+      if (controller.players.size == 1) {
+        println("please add another player")
+        return
+      }
       controller.currentPlayer match {
         case Some(_) =>
         case None => controller.currentPlayer = Some(controller.players(0))
@@ -16,7 +20,8 @@ case class SetupState(controller: Controller) extends State[GameState] {
       println(
         controller.currentPlayer.get + " begins\nThrow dice with any input"
       )
-    } else {
+    }
+    else {
       controller.addPlayer(input, controller.teams(controller.players.size))
     }
   }
