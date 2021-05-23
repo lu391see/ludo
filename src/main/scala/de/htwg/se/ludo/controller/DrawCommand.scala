@@ -1,52 +1,46 @@
 package de.htwg.se.ludo.controller
 
-import de.htwg.se.ludo.model.{Game, Pin, Player}
 import de.htwg.se.ludo.util.Command
 
 class DrawCommand(pin: Int, controller: Controller) extends Command {
 
-  var memento: (Option[Game], Option[Player], GameState, Int, Vector[Pin]) = (
-    controller.game,
-    controller.currentPlayer,
-    controller.gameState,
-    controller.pips,
-    getPins
-  )
+  var saveGame: SaveGame = currentSaveGame
 
   override def doStep: Unit = {
-    memento = (controller.game, controller.currentPlayer, controller.gameState, controller.pips, getPins)
+    saveGame = currentSaveGame
     controller.game match {
-      case Some(g) => controller.game = Some(g.draw(controller.currentPlayer.get, pin, controller.pips))
-      case None => println("\nDraw command couldn't be processed without initialized Game!\n")
+      case Some(g) =>
+        controller.game = Some(
+          g.draw(controller.currentPlayer.get, pin, controller.pips)
+        )
+      case None =>
+        println(
+          "\nCouldn't draw because the game was not initialized!\n"
+        )
     }
     controller.notifyObservers()
   }
 
   override def undoStep: Unit = {
-    val new_memento = (controller.game, controller.currentPlayer, controller.gameState, controller.pips, getPins)
+    val newSaveGame = currentSaveGame
 
-    controller.game = memento._1
-    controller.currentPlayer = memento._2
-    controller.gameState = memento._3
-    controller.pips = memento._4
-    controller.players.foreach { player =>
-      if (player == controller.currentPlayer.get) {
-        player.team.pins = memento._5
-      }
-    }
-    memento = new_memento
+    controller.game = saveGame.game
+    controller.players = saveGame.players
+    controller.currentPlayer = saveGame.currentPlayer
+    controller.gameState = saveGame.gameState
+    controller.pips = saveGame.pips
+    saveGame = newSaveGame
+
     controller.notifyObservers()
   }
 
   override def redoStep: Unit = undoStep
 
-  private def getPins: Vector[Pin] = {
-    var pins: Vector[Pin] = Vector.empty
-    controller.players.foreach { player =>
-      if (player == controller.currentPlayer.get) {
-        pins = player.team.pins
-      }
-    }
-    pins
-  }
+  def currentSaveGame: SaveGame = SaveGame(
+    controller.game,
+    controller.players,
+    controller.currentPlayer,
+    controller.gameState,
+    controller.pips
+  )
 }
