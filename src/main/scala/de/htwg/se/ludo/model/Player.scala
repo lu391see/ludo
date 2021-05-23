@@ -15,10 +15,6 @@ case class Player(name: String, team: Team) {
     team.finishPin(pin)
   }
 
-  def hasWon(): Boolean = {
-    team.pins.forall(pin => team.isFinished(team.pins.indexOf(pin)))
-  }
-
   override def toString: String = {
     s"Player '${name}'"
   }

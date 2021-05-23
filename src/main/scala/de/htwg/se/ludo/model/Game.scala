@@ -1,15 +1,7 @@
 package de.htwg.se.ludo.model
 
-import de.htwg.se.ludo.util.WinStrategy
-
 case class Game(board: Board, players: Vector[Player]) {
-  var winStrategy: WinStrategy = AllPinWinStrategy()
   val emptyCell: Cell = Cell("")
-
-  def setWinStrategy(winStrategy: WinStrategy): Unit = {
-    println("changed strategy")
-    this.winStrategy = winStrategy
-  }
 
   def spawnedPins(): Game = {
     var changed = board

@@ -20,6 +20,11 @@ case class DrawState(controller: Controller) extends State[GameState] {
       }
     }
 
+    if(controller.isWon) {
+      println("Congratulations " + controller.currentPlayer + " has won the game!")
+      System.exit(0)
+    }
+
     controller.nextPlayer()
     println(controller.currentPlayer.get + " is next. Press any key to throw a Dice")
     n.nextState(RollState(controller))
