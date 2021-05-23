@@ -17,6 +17,10 @@ case class SetupState(controller: Controller) extends State[GameState] {
         controller.currentPlayer.get + " begins\nThrow dice with any input"
       )
     } else {
+      if(input.isEmpty) {
+        println("Please enter a player name!")
+        return
+      }
       controller.addPlayer(input, controller.teams(controller.players.size))
     }
   }
