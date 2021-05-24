@@ -1,6 +1,6 @@
 package de.htwg.se.ludo.model
 
-case class Cell(value: String) {
+sealed case class Cell(value: String) {
   def isSet:Boolean = value != ""
 
   def getValue:String = value
@@ -10,4 +10,4 @@ case class Cell(value: String) {
   }
 }
 
-//case class EmptyCell() extends Cell("")
+object EmptyCell extends Cell("")
