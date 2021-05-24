@@ -1,24 +1,25 @@
 package de.htwg.se.ludo.controller
 
+import de.htwg.se.ludo.model.{FirstPlayerMessage, InvalidCurrentPlayerAtSetupMessage, PlayerConstraints, RollDiceMessage}
 import de.htwg.se.ludo.util.State
-
-import scala.io.StdIn.readLine
 
 case class SetupState(controller: Controller) extends State[GameState] {
   override def handle(input: String, n: GameState): Unit = {
-    if (controller.players.size == controller.maxPlayers || input.contains("start")) {
+    if (shouldStartTheGame(input)) {
       controller.currentPlayer match {
-        case Some(_) =>
+        case Some(_) => InvalidCurrentPlayerAtSetupMessage.print()
         case None => controller.currentPlayer = Some(controller.players(0))
       }
       controller.newGame()
+      FirstPlayerMessage(controller.currentPlayer.get).print()
+      RollDiceMessage.print()
       n.nextState(RollState(controller))
-      println(
-        controller.currentPlayer.get + " begins\nThrow dice with any input"
-      )
     } else {
-      controller.addPlayer(input, controller.teams(controller.players.size))
+      controller.addNewPlayer(input)
     }
   }
 
+  def shouldStartTheGame(input: String): Boolean = {
+    controller.players.size == PlayerConstraints.maxPlayers || input.contains("start")
+  }
 }
