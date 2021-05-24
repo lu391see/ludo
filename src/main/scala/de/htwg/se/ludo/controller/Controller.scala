@@ -1,18 +1,15 @@
 package de.htwg.se.ludo.controller
 
-import de.htwg.se.ludo.model.{Board, BoardConstraints, Game, GameBoardUninitializedMessage, NextPlayerMessage, NoCurrentPlayerMessage, Player, PlayerConstraints, PlayerRolledDiceMessage, RandomDice, Team}
-import de.htwg.se.ludo.util.{Observable, UndoManager}
+import de.htwg.se.ludo.model.{AllPinWinStrategy, Board, BoardConstraints, Game, GameBoardUninitializedMessage, NextPlayerMessage, NoCurrentPlayerMessage, OnePinWinStrategy, Player, PlayerConstraints, PlayerRolledDiceMessage, RandomDice, Team}
+import de.htwg.se.ludo.util.{Observable, UndoManager, WinStrategy}
 
 class Controller() extends Observable {
   var currentPlayer: Option[Player] = None
   var game: Option[Game] = None
   var gameState: GameState = GameState(this)
   var pips: Int = 0
-  var winStrategy: WinStrategy = AllPinWinStrategy()
-
-  private val undoManager = new UndoManager
-
   var players: Vector[Player] = Vector.empty
+  var winStrategy: WinStrategy = AllPinWinStrategy()
 
   private val undoManager = new UndoManager
 
@@ -52,25 +49,12 @@ class Controller() extends Observable {
   }
 
   def drawPin(pin: Int): Unit = {
+    undoManager.doStep(new DrawCommand(pin, this))
+  }
   def isWon: Boolean = {
     winStrategy.hasWon(currentPlayer.get)
   }
 
-  def draw(pin: Int): Unit = {
-    undoManager.doStep(new DrawCommand(pin, this))
-  }
-
-  def addPlayer(name: String, team: Team): Unit = {
-    undoManager.doStep(new AddPlayerCommand(name, team, this))
-  }
-
-  def nextPlayer(): Unit = {
-    currentPlayer match {
-      case Some(c) =>
-        currentPlayer = Some(players((players.indexOf(c) + 1) % players.size))
-      case None =>
-    }
-  }
 
   def setWinStrategy(strategy: String): Unit = {
     game match {
@@ -85,16 +69,6 @@ class Controller() extends Observable {
         )
     }
   }
-
-  def undo(): Unit = {
-    undoManager.undoStep()
-  }
-
-  def redo(): Unit = {
-    undoManager.redoStep()
-  }
-
-  def setWinStrategy(winStrategy: String): Unit = {}
 
   override def toString: String =
     game match {

@@ -18,3 +18,4 @@ case object InvalidCurrentPlayerAtSetupMessage extends Message("There should be 
 case class FirstPlayerMessage(player: Player) extends Message(player + " begins.")
 case class NextPlayerMessage(player: Player) extends Message(player + " is next.")
 case class PlayerRolledDiceMessage(player: Player, pips: Int) extends Message(player + " rolled " + pips + ".")
+case class PlayerWonGameMessage(player: Player) extends Message("Congratulations " + player + " has won the game!")
