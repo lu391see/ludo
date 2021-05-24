@@ -1,5 +1,6 @@
 package de.htwg.se.ludo.controller
 
+import de.htwg.se.ludo.model.{Game, GameBoardUninitializedMessage, Pin, Player}
 import de.htwg.se.ludo.util.Command
 
 class DrawCommand(pin: Int, controller: Controller) extends Command {
