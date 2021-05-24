@@ -13,18 +13,18 @@ class TUI(controller: Controller) extends UI with Observer {
     input match {
       case "one" => Try {controller.setWinStrategy("one") } match {
         case Failure(e) => println(e.getMessage)
-      }// won when one pin arrived in home
+      }
       case "all" => Try {controller.setWinStrategy("all") } match {
         case Failure(e) => println(e.getMessage)
-      } // won when all 4 pins arrived in home
+      }
       case "z" => controller.undo()
       case "y" => controller.redo()
-      case _   => controller.execute(input)
+      case _   => controller.handleInput(input)
     }
   }
 
   override def update(): Boolean = {
-    println("Current Game Status:\n" + controller.gameToString)
+    println("Current Game Status:\n" + controller.toString)
     true
   }
 }

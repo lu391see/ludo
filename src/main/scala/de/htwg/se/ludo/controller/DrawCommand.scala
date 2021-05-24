@@ -1,6 +1,6 @@
 package de.htwg.se.ludo.controller
 
-import de.htwg.se.ludo.model.{Game, Pin, Player}
+import de.htwg.se.ludo.model.{Game, GameBoardUninitializedMessage, Pin, Player}
 import de.htwg.se.ludo.util.Command
 
 class DrawCommand(pin: Int, controller: Controller) extends Command {
@@ -17,7 +17,7 @@ class DrawCommand(pin: Int, controller: Controller) extends Command {
     memento = (controller.game, controller.currentPlayer, controller.gameState, controller.pips, getPins)
     controller.game match {
       case Some(g) => controller.game = Some(g.draw(controller.currentPlayer.get, pin, controller.pips))
-      case None => println("\nDraw command couldn't be processed without initialized Game!\n")
+      case None => GameBoardUninitializedMessage.print()
     }
     controller.notifyObservers()
   }
