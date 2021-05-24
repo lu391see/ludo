@@ -15,6 +15,7 @@ case object GameBoardUninitializedMessage extends Message("There is no game boar
 case object RollDiceMessage extends Message("Press any key to roll a dice.")
 case object NoCurrentPlayerMessage extends Message("There is no current player selected.")
 case object InvalidCurrentPlayerAtSetupMessage extends Message("There should be no current player selected at the setup.")
+case class PinIsAlreadyBasedMessage(pin: Int) extends Message("The " + pin + " pin is in its base and you didn't roll a 6. Please choose a different pin.")
 case class FirstPlayerMessage(player: Player) extends Message(player + " begins.")
 case class NextPlayerMessage(player: Player) extends Message(player + " is next.")
 case class PlayerRolledDiceMessage(player: Player, pips: Int) extends Message(player + " rolled " + pips + ".")
