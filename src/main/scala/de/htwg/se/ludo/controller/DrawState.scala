@@ -1,5 +1,6 @@
 package de.htwg.se.ludo.controller
 
+import de.htwg.se.ludo.model.{ChoosePinMessage, RollDiceMessage}
 import de.htwg.se.ludo.util.State
 
 import scala.util.{Failure, Success, Try}
@@ -7,22 +8,26 @@ import scala.util.{Failure, Success, Try}
 case class DrawState(controller: Controller) extends State[GameState] {
   override def handle(input: String, n: GameState): Unit = {
     toInt(input) match {
-      case Success(pin) => {
-        if(pin < 1 || pin > 4) {
-          println("please choose a valid pin")
+      case Success(pin) =>
+        if (invalidPin(pin)) {
+          ChoosePinMessage.print()
           return
         }
-        controller.draw(pin-1)
-      }
-      case Failure(_) => {
-        println("please choose a valid pin")
+        controller.drawPin(pin - 1)
+
+      case Failure(_) =>
+        ChoosePinMessage.print()
         return
-      }
+
     }
 
-    controller.nextPlayer()
-    println(controller.currentPlayer.get + " is next. Press any key to throw a Dice")
+    controller.switchPlayer()
+    RollDiceMessage.print()
     n.nextState(RollState(controller))
+  }
+
+  def invalidPin(pin: Int): Boolean = {
+    pin < 1 || pin > 4
   }
 
   def toInt(input: String): Try[Int] = {

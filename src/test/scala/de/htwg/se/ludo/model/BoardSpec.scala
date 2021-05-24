@@ -30,11 +30,6 @@ class BoardSpec extends AnyWordSpec with Matchers {
         returnedMatrix.cell(0) should be(new Cell("Y2"))
         returnedMatrix.cell(1) should be(new Cell("Y1"))
       }
-      "be filled using fill operation" in {
-        val returnedMatrix = matrix.fill(new Cell("B1"))
-        returnedMatrix.cell(0) should be(new Cell("B1"))
-        returnedMatrix.cell(1) should be(new Cell("B1"))
-      }
       "String contain only 5s" in {
         matrix.toString contains "[B1]"
       }
