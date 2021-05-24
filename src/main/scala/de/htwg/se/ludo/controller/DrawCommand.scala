@@ -1,6 +1,6 @@
 package de.htwg.se.ludo.controller
 
-import de.htwg.se.ludo.model.{Game, GameBoardUninitializedMessage, Pin, Player}
+import de.htwg.se.ludo.model.GameBoardUninitializedMessage
 import de.htwg.se.ludo.util.Command
 
 class DrawCommand(pin: Int, controller: Controller) extends Command {
@@ -15,9 +15,7 @@ class DrawCommand(pin: Int, controller: Controller) extends Command {
           g.draw(controller.currentPlayer.get, pin, controller.pips)
         )
       case None =>
-        println(
-          "\nCouldn't draw because the game was not initialized!\n"
-        )
+        GameBoardUninitializedMessage.print()
     }
     controller.notifyObservers()
   }
@@ -37,11 +35,12 @@ class DrawCommand(pin: Int, controller: Controller) extends Command {
 
   override def redoStep: Unit = undoStep
 
-  def currentSaveGame: SaveGame = SaveGame(
-    controller.game,
-    controller.players,
-    controller.currentPlayer,
-    controller.gameState,
-    controller.pips
-  )
+  def currentSaveGame: SaveGame =
+    SaveGame(
+      controller.game,
+      controller.players,
+      controller.currentPlayer,
+      controller.gameState,
+      controller.pips
+    )
 }
