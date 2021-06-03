@@ -10,6 +10,7 @@ sealed abstract class Message(message: String) {
   }
 }
 
+case object EmptyMessage extends Message("")
 case object ChoosePinMessage extends Message("Please choose a pin [1-4].")
 case object GameBoardUninitializedMessage extends Message("There is no game board yet.")
 case object RollDiceMessage extends Message("Press any key to roll a dice.")

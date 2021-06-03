@@ -17,9 +17,8 @@ class DrawCommand(pin: Int, controller: Controller) extends Command {
     memento = (controller.game, controller.currentPlayer, controller.gameState, controller.pips, getPins)
     controller.game match {
       case Some(g) => controller.game = Some(g.draw(controller.currentPlayer.get, pin, controller.pips))
-      case None => GameBoardUninitializedMessage.print()
+      case None => controller.newMessage(GameBoardUninitializedMessage)
     }
-    controller.notifyObservers()
   }
 
   override def undoStep: Unit = {
@@ -35,7 +34,6 @@ class DrawCommand(pin: Int, controller: Controller) extends Command {
       }
     }
     memento = new_memento
-    controller.notifyObservers()
   }
 
   override def redoStep: Unit = undoStep

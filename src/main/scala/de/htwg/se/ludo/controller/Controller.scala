@@ -1,14 +1,30 @@
 package de.htwg.se.ludo.controller
 
-import de.htwg.se.ludo.model.{Board, BoardConstraints, Game, GameBoardUninitializedMessage, NextPlayerMessage, NoCurrentPlayerMessage, Player, PlayerConstraints, PlayerRolledDiceMessage, RandomDice, Team}
-import de.htwg.se.ludo.util.{Observable, UndoManager}
+import de.htwg.se.ludo.model.{
+  Board,
+  BoardConstraints,
+  EmptyMessage,
+  Game,
+  GameBoardUninitializedMessage,
+  Message,
+  NextPlayerMessage,
+  NoCurrentPlayerMessage,
+  Player,
+  PlayerConstraints,
+  PlayerRolledDiceMessage,
+  RandomDice
+}
+import de.htwg.se.ludo.util.UndoManager
 
-class Controller() extends Observable {
+import scala.swing.Publisher
+
+class Controller extends Publisher {
   var currentPlayer: Option[Player] = None
   var game: Option[Game] = None
   var gameState: GameState = GameState(this)
   var pips: Int = 0
   var players: Vector[Player] = Vector.empty
+  var message: Message = EmptyMessage
 
   private val undoManager = new UndoManager
 
@@ -23,47 +39,58 @@ class Controller() extends Observable {
       PlayerConstraints.totalPins
     )
     game = Some(Game(board, players).based())
-    notifyObservers()
+    publish(NewGame())
   }
 
   def addNewPlayer(name: String): Unit = {
-    undoManager.doStep(new AddPlayerCommand(name, PlayerConstraints.teams(players.size), this))
+    undoManager.doStep(
+      new AddPlayerCommand(name, PlayerConstraints.teams(players.size), this)
+    )
+    publish(NewPlayer())
   }
 
   def switchPlayer(): Unit = {
     currentPlayer match {
       case Some(c) =>
         currentPlayer = Some(players((players.indexOf(c) + 1) % players.size))
-        NextPlayerMessage(currentPlayer.get).print()
-      case None => NoCurrentPlayerMessage.print()
+        newMessage(NextPlayerMessage(currentPlayer.get))
+      case None => newMessage(NoCurrentPlayerMessage)
     }
   }
 
   def rollDice(): Unit = {
     pips = RandomDice().pips
-    currentPlayer match {
-      case Some(c) => PlayerRolledDiceMessage(c, pips).print()
-      case None    => NoCurrentPlayerMessage.print()
-    }
+    newMessage(currentPlayer match {
+      case Some(c) => PlayerRolledDiceMessage(c, pips)
+      case None    => NoCurrentPlayerMessage
+    })
   }
 
   def drawPin(pin: Int): Unit = {
     undoManager.doStep(new DrawCommand(pin, this))
+    publish(PinDrawn())
   }
 
   def undo(): Unit = {
     undoManager.undoStep()
+    publish(Undo())
   }
 
   def redo(): Unit = {
     undoManager.redoStep()
+    publish(Redo())
+  }
+
+  def newMessage(message: Message): Unit = {
+    this.message = message
+    publish(NewMessage())
   }
 
   def setWinStrategy(winStrategy: String): Unit = {}
 
   override def toString: String =
-    game match {
+    "Current game status: " + (game match {
       case Some(g) => g.board.toString
       case None    => GameBoardUninitializedMessage.toString
-    }
+    })
 }

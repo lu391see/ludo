@@ -10,19 +10,19 @@ case class DrawState(controller: Controller) extends State[GameState] {
     toInt(input) match {
       case Success(pin) =>
         if (invalidPin(pin)) {
-          ChoosePinMessage.print()
+          controller.newMessage(ChoosePinMessage)
           return
         }
         controller.drawPin(pin - 1)
 
       case Failure(_) =>
-        ChoosePinMessage.print()
+        controller.newMessage(ChoosePinMessage)
         return
 
     }
 
     controller.switchPlayer()
-    RollDiceMessage.print()
+    controller.newMessage(RollDiceMessage)
     n.nextState(RollState(controller))
   }
 

@@ -13,16 +13,16 @@ case class SetupState(controller: Controller) extends State[GameState] {
   override def handle(input: String, n: GameState): Unit = {
     if (shouldStartTheGame(input)) {
       if (controller.players.size == 1) {
-        AddAnotherPlayerMessage.print()
+        controller.newMessage(AddAnotherPlayerMessage)
         return
       }
       controller.currentPlayer match {
-        case Some(_) => InvalidCurrentPlayerAtSetupMessage.print()
+        case Some(_) => controller.newMessage(InvalidCurrentPlayerAtSetupMessage)
         case None    => controller.currentPlayer = Some(controller.players(0))
       }
       controller.newGame()
-      FirstPlayerMessage(controller.currentPlayer.get).print()
-      RollDiceMessage.print()
+      controller.newMessage(FirstPlayerMessage(controller.currentPlayer.get))
+      controller.newMessage(RollDiceMessage)
       n.nextState(RollState(controller))
     } else {
       controller.addNewPlayer(input)

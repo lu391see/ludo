@@ -11,7 +11,7 @@ class TuiSpec extends AnyWordSpec with Matchers {
 
     val players: Vector[Player] = Vector[Player](Player("",  new Team('Y', 0, 15, 55)))
     val controller = new Controller() // Game(new Field(40, Cell(0)), players)
-    val tui: UI = new TUI(controller)
+    val tui = new TUI(controller)
 
     val first_player = players(0)
     val diceFour = new Dice(4)

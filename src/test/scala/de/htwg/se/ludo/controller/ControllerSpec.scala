@@ -12,12 +12,6 @@ class ControllerSpec extends AnyWordSpec with Matchers {
         new Team('Y', 0, 15, 55)))
       //val game = new Game(Board(40, new Cell(" ")), players)
       val controller = new Controller()
-      val observer = new Observer {
-        var updated: Boolean = false
-        def isUpdated: Boolean = updated
-        override def update(): Boolean = {updated = true; updated}
-      }
-      controller.add(observer)
       "notify its Observer after setting a cell" in {
         //controller.draw(players(0),0,4)
         //observer.updated should be(true)
