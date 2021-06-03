@@ -2,8 +2,6 @@ package de.htwg.se.ludo.model
 
 case class Player(name: String, team: Team) {
   var sixRolled = false
-  // TODO
-  var hasFirstCycle = false
 
   def spawn(pin: Int): Unit = {
     team.spawnPin(pin)

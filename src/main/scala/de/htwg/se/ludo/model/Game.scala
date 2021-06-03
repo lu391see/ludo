@@ -103,7 +103,9 @@ case class Game(board: Board, players: Vector[Player]) {
   }
 
   def enemyPinPosition(pin: Pin, dice_roll: Int): Int = {
-    pin.position + dice_roll
+    var enemyPos = pin.position + dice_roll
+    if(enemyPos >= board.gameSize) enemyPos = (enemyPos % board.gameSize) + board.baseSize
+    enemyPos
   }
 
   def trySixRoll(player: Player, dice_roll: Int): Unit = {
@@ -132,8 +134,15 @@ case class Game(board: Board, players: Vector[Player]) {
 
   def movedPin(player: Player, pin: Int, pos: Int): Option[Game] = {
     val pinPosition = player.team.position(pin)
-    val newPos = pinPosition + pos
-    if (newPos < player.team.homePosition) {
+    var newPos = pinPosition + pos
+    if (newPos >= board.gameSize - 1) {
+      newPos = (newPos % board.gameSize) + board.baseSize
+
+      if(newPos == player.team.startPosition) {
+        return None
+      }
+    }
+    if (newPos < board.gameSize) {
       val changed = changedGame(board.replaceCell(pinPosition, emptyCell))
       player.move(pin, newPos)
       return Some(
@@ -152,7 +161,7 @@ case class Game(board: Board, players: Vector[Player]) {
     player.finish(pin)
     changedGame(
       changed.board
-        .replaceCell(pinPosition, Cell(player.team.id(pin)))
+        .replaceCell(player.team.position(pin), Cell(player.team.id(pin)))
     )
   }
 }
