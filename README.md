@@ -29,3 +29,6 @@ Pieces can jump over other pieces, and throw out pieces from other players (into
 
 ## Goal
 The first player with all of their pieces in their "home" row wins the game.
+
+## GUI
+![Mensch ärgere dich nicht](./docs/GUI.png)
