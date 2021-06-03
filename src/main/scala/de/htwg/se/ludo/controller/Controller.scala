@@ -55,6 +55,14 @@ class Controller() extends Observable {
     winStrategy.hasWon(currentPlayer.get)
   }
 
+  def undo(): Unit = {
+    undoManager.undoStep()
+  }
+
+  def redo(): Unit = {
+    undoManager.redoStep()
+  }
+
 
   def setWinStrategy(strategy: String): Unit = {
     game match {
