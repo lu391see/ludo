@@ -17,7 +17,7 @@ class TUI(controller: Controller) extends Reactor {
   listenTo(controller)
 
   reactions += {
-    case event: NewMessage                             => onNewMessage
+    case NewMessage()                             => onNewMessage
     case NewGame() | PinDrawn() | Undo() | Redo() => onBoardUpdate
   }
 

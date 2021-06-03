@@ -1,6 +1,7 @@
 package de.htwg.se.ludo
 import de.htwg.se.ludo.controller.Controller
 import de.htwg.se.ludo.aview.TUI
+import de.htwg.se.ludo.aview.gui.GUI
 
 import scala.io.StdIn.readLine
 
@@ -10,6 +11,7 @@ object Ludo {
 
     val controller = new Controller()
     val tui = new TUI(controller)
+    GUI(controller)
 
     var input: String = ""
 
@@ -21,7 +23,7 @@ object Ludo {
 
     while (true) {
       input = readLine()
-      if (input == "q") {return}
+      if (input == "q") System.exit(0)
       tui.processInput(input)
     }
   }
