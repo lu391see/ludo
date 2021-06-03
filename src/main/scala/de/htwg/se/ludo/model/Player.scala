@@ -22,6 +22,6 @@ case class Player(name: String, team: Team) {
   }
 
   override def toString: String = {
-    s"Player '${name}'"
+    s"Player ${team.color}: '${name}'"
   }
 }
