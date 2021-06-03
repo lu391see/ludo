@@ -1,7 +1,7 @@
 package de.htwg.se.ludo.model
 
 case class Player(name: String, team: Team) {
-  var successfulSixRoll = false
+  var sixRolled = false
   // TODO
   var hasFirstCycle = false
 

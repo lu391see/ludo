@@ -11,7 +11,7 @@ class GameSpec extends AnyWordSpec with Matchers {
       val empty_cell = Cell("")
       val game = Game(new Board(71, empty_cell, 4), players.toVector)
       val first_player = players(0)
-      first_player.successfulSixRoll = true
+      first_player.sixRolled = true
       val first_pin = 0
       val dice_roll = 4
       val game_changed = game.draw(first_player, first_pin, 6)

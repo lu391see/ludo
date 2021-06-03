@@ -14,6 +14,10 @@ class Team(
     pins = pins.updated(pin, pins(pin).move(startPosition))
   }
 
+  def basePin(pin: Int): Unit = {
+    pins = pins.updated(pin, pins(pin).base(basePosition))
+  }
+
   def movePin(pin: Int, pos: Int): Unit = {
     pins = pins.updated(pin, pins(pin).move(pos))
   }
@@ -33,6 +37,10 @@ class Team(
 
   def isAtEndOfBoard(pin: Int): Boolean = {
     pins(pin).position == homePosition - basePosition - 1
+  }
+
+  def findPinAtPosition(pos: Int): Int = {
+    pins.indexWhere(p => p.position == pos)
   }
 
   def position(pin: Int): Int = {
