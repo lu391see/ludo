@@ -7,5 +7,5 @@ class Field(pos: Int) extends Panel () {
   background = Color.lightGray
   preferredSize = new Dimension(75, 75)
   opaque = true
-  border = new LineBorder(Color.white, 3)
+  border = new LineBorder(Color.white, 2)
 }
