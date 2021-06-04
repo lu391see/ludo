@@ -2,6 +2,8 @@ package de.htwg.se.ludo.model
 
 import de.htwg.se.ludo.util.Builder
 
+import java.awt.Color
+
 case class Player(name: String, team: Team) {
   var sixRolled = false
 
@@ -21,8 +23,18 @@ case class Player(name: String, team: Team) {
     team.pins.forall(pin => team.isFinished(team.pins.indexOf(pin)))
   }
 
+  def toColorString(color: Color): String = {
+    color match {
+      case Color.black  => "Black"
+      case Color.red    => "Red"
+      case Color.yellow => "Yellow"
+      case Color.green  => "Green"
+      case _            => ""
+    }
+  }
+
   override def toString: String = {
-    s"Player ${team.color}: '${name}'"
+    s"Player ${toColorString(team.color)}: '${name}'"
   }
 }
 

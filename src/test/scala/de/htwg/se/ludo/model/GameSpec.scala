@@ -3,11 +3,13 @@ package de.htwg.se.ludo.model
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers
 
+import java.awt.Color
+
 class GameSpec extends AnyWordSpec with Matchers {
   "A game" when {
     "created with one player and the first pin drawn with dice roll 4" should {
       val players: Array[Player] = new Array[Player](1)
-      players(0) = Player("p1", new Team('Y', 0, 15, 55))
+      players(0) = Player("p1", new Team(Color.yellow, 0, 15, 55))
       val empty_cell = Cell("")
       val game = Game(new Board(71, empty_cell, 4), players.toVector)
       val first_player = players(0)
@@ -35,7 +37,7 @@ class GameSpec extends AnyWordSpec with Matchers {
   "A game" when {
     "created with one player and the first pin drawn continuously with dice roll 6 until the end is reached" should {
       val players: Array[Player] = new Array[Player](1)
-      players(0) = Player("", new Team('Y', 0, 16, 56))
+      players(0) = Player("", new Team(Color.yellow, 0, 16, 56))
       val empty_cell = Cell("")
       val game = Game(new Board(72, empty_cell, 4 * 4), players.toVector)
       val first_player = players(0)

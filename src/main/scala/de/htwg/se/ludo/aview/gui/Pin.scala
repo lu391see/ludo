@@ -3,7 +3,7 @@ package de.htwg.se.ludo.aview.gui
 import java.awt.{Color, Font}
 
 case class Pin(
-    override val name: String,
+    id: Int,
     color: Color,
     pos: Int
 ) extends StartField(color, pos) {

@@ -67,8 +67,17 @@ class Controller extends Publisher {
   }
 
   def drawPin(pin: Int): Unit = {
+    val curPos = currentPlayer.get.team.position(pin)
     undoManager.doStep(new DrawCommand(pin, this))
-    publish(PinDrawn())
+    val nextPos = currentPlayer.get.team.position(pin)
+    publish(
+      PinDrawn(
+        color = currentPlayer.get.team.color,
+        pinId = pin,
+        curPos,
+        nextPos
+      )
+    )
   }
 
   def undo(): Unit = {
