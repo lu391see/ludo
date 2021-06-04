@@ -73,7 +73,7 @@ class Controller extends Publisher {
     publish(
       PinDrawn(
         color = currentPlayer.get.team.color,
-        pinId = pin,
+        pinId = pin+1,
         curPos,
         nextPos
       )

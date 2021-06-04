@@ -7,7 +7,7 @@ case class BaseTeam(color: Color, basePos: Int, controller: Controller)
     extends GridPanel(2, 2) {
   listenTo(controller)
   for (i <- 1 to 4) {
-    contents += Pin(i, color, basePos + i - 1)
+    contents += Pin(i, color, basePos + i - 1, controller)
   }
   reactions += {
     case event: PinDrawn => {
@@ -26,15 +26,13 @@ case class BaseTeam(color: Color, basePos: Int, controller: Controller)
         }
         if (newPos != -1) {
           val newContents =
-            contents.updated(newPos, Pin(event.pinId, event.color, event.nextPos))
+            contents.updated(newPos, Pin(event.pinId, event.color, event.nextPos, controller))
           contents.clear()
           contents ++= newContents
         }
         //repaint
       }
-      for (content <- contents) {
-        println("BaseTeam: "+color.toString,content.name, content.background)
-      }
+
       repaint
     }
   }

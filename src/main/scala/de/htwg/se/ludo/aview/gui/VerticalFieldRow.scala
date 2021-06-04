@@ -23,7 +23,7 @@ case class VerticalFieldRow(
         contents ++= newContents
       }
       if(newPos != -1) {
-        val newContents = contents.updated(newPos, Pin(event.pinId, event.color, newPos))
+        val newContents = contents.updated(newPos, Pin(event.pinId, event.color, newPos, controller))
         contents.clear()
         contents ++= newContents
 

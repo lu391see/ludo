@@ -26,6 +26,9 @@ case class HorizontalFieldRow(
       val oldPos = contents.indexWhere(c => c.name.toInt.equals(event.curPos))
       val newPos = contents.indexWhere(c => c.name.toInt.equals(event.nextPos))
       println("HorizontalFieldRow",oldPos, newPos)
+      for (content <- contents) {
+        println(content.name, content.background)
+      }
       if(oldPos != -1) {
         var field = new Field(oldPos)
         if(oldPos == beginPos) field = startField
@@ -36,7 +39,7 @@ case class HorizontalFieldRow(
         contents ++= newContents
       }
       if(newPos != -1) {
-        val newContents = contents.updated(newPos, Pin(event.pinId, event.color, newPos))
+        val newContents = contents.updated(newPos, Pin(event.pinId, event.color, event.nextPos, controller))
         contents.clear()
         contents ++= newContents
       }
