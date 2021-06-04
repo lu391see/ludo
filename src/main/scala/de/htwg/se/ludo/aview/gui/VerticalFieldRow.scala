@@ -1,12 +1,14 @@
 package de.htwg.se.ludo.aview.gui
-import de.htwg.se.ludo.controller.PinDrawn
+import de.htwg.se.ludo.controller.{Controller, PinDrawn}
 
 import scala.swing._
 
 case class VerticalFieldRow(
     beginPos: Int,
-    endPos: Int
+    endPos: Int,
+    controller: Controller
 ) extends BoxPanel(orientation = Orientation.Vertical){
+  listenTo(controller)
   for (pos <- beginPos to endPos) {
     contents += new Field(pos)
   }
@@ -24,7 +26,9 @@ case class VerticalFieldRow(
         val newContents = contents.updated(newPos, Pin(event.pinId, event.color, newPos))
         contents.clear()
         contents ++= newContents
+
       }
+      repaint
     }
   }
 }

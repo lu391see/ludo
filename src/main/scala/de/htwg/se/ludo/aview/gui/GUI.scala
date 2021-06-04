@@ -12,7 +12,7 @@ import scala.swing._
 
 case class GUI(controller: Controller) extends MainFrame {
   val actions: Actions = Actions(controller)
-  val board: Board = Board()
+  val board: Board = Board(controller)
 
   preferredSize = new Dimension(600, 800)
 
