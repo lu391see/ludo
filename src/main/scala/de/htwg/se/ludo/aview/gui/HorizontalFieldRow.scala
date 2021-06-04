@@ -31,8 +31,8 @@ case class HorizontalFieldRow(
       }
       if(oldPos != -1) {
         var field = new Field(oldPos)
-        if(oldPos == beginPos) field = startField
-        else if(oldPos == endPos) field = otherStartField
+        if(event.curPos == beginPos) field = startField
+        else if(event.curPos == endPos) field = otherStartField
 
         val newContents = contents.updated(oldPos, field)
         contents.clear()

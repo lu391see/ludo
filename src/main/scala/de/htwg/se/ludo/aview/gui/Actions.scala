@@ -4,7 +4,7 @@ import de.htwg.se.ludo.controller.Controller
 
 import java.awt.{Color, Font}
 import javax.swing.border.LineBorder
-import scala.swing.{Button, Component, Dimension, FlowPanel}
+import scala.swing.{Button, Dimension, FlowPanel}
 
 case class Actions (controller: Controller) extends FlowPanel {
   // TODO: Test
