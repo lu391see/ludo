@@ -6,7 +6,8 @@ import scala.swing._
 case class Pin(
     id: Int,
     color: Color,
-    pos: Int
+    pos: Int,
+
 ) extends Field(pos) {
   background = color
   add(new Label {

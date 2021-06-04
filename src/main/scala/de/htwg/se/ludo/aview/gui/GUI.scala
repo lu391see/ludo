@@ -12,7 +12,9 @@ import scala.swing._
 
 case class GUI(controller: Controller) extends MainFrame {
   val actions: Actions = Actions(controller)
+  val messageBox: MessageBox = MessageBox(controller)
   val board: Board = Board(controller)
+
 
   preferredSize = new Dimension(600, 800)
 
@@ -22,7 +24,10 @@ case class GUI(controller: Controller) extends MainFrame {
   redraw
 
   contents = new BorderPanel {
-    add(actions, BorderPanel.Position.South)
+    add(new BoxPanel(orientation = Orientation.Vertical) {
+      contents += messageBox
+      contents += actions
+    }, BorderPanel.Position.South)
     add(board, BorderPanel.Position.Center)
   }
 

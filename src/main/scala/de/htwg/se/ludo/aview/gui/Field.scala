@@ -8,5 +8,6 @@ class Field(pos: Int) extends BorderPanel () {
   background = Color.lightGray
   preferredSize = new Dimension(75, 75)
   opaque = true
+  visible = true
   border = new LineBorder(Color.white, 2)
 }

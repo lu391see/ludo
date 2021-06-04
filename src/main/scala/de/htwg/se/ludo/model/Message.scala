@@ -17,6 +17,9 @@ case object RollDiceMessage extends Message("Press any key to roll a dice.")
 case object NoCurrentPlayerMessage extends Message("There is no current player selected.")
 case object InvalidCurrentPlayerAtSetupMessage extends Message("There should be no current player selected at the setup.")
 case object AddAnotherPlayerMessage extends Message("Please add another player.")
+case object WelcomeMessage extends Message("""|Welcome to Ludo aka 'Mensch Aergere Dich Nicht'!
+                                              |Type up to 4 player names and start with 'start'
+                                              |Exit at any time with 'q'""".stripMargin)
 case class FirstPlayerMessage(player: Player) extends Message(player + " begins.")
 case class NextPlayerMessage(player: Player) extends Message(player + " is next.")
 case class PlayerRolledDiceMessage(player: Player, pips: Int) extends Message(player + " rolled " + pips + ".")

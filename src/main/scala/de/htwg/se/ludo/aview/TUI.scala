@@ -18,7 +18,7 @@ class TUI(controller: Controller) extends Reactor {
 
   reactions += {
     case NewMessage()                             => onNewMessage
-    case NewGame() | PinDrawn() | Undo() | Redo() => onBoardUpdate
+    case PinDrawn(_, _, _, _) | NewGame() | Undo() | Redo() => onBoardUpdate
   }
 
   def processInput(input: String): Unit = {

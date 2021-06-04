@@ -21,9 +21,7 @@ case class BaseTeam(color: Color, basePos: Int, controller: Controller)
           val newContents = contents.updated(oldPos, new StartField(event.color, event.curPos))
           contents.clear()
           contents ++= newContents
-          for (content <- contents) {
-            println("BaseTeam: "+color.toString,content.name, content.background)
-          }
+
 
         }
         if (newPos != -1) {
@@ -33,6 +31,9 @@ case class BaseTeam(color: Color, basePos: Int, controller: Controller)
           contents ++= newContents
         }
         //repaint
+      }
+      for (content <- contents) {
+        println("BaseTeam: "+color.toString,content.name, content.background)
       }
       repaint
     }
