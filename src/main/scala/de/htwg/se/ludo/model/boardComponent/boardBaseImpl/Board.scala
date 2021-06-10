@@ -1,6 +1,8 @@
 package de.htwg.se.ludo.model.boardComponent.boardBaseImpl
 
-case class Board(spots: Vector[Cell], baseSize: Int) {
+import de.htwg.se.ludo.model.boardComponent.{BoardInterface, CellInterface}
+
+case class Board(spots: Vector[Cell], baseSize: Int) extends BoardInterface {
   def this(size: Int, filling: Cell, baseSize: Int) =
     this(Vector.tabulate(size) { _ => filling }, baseSize)
 
@@ -9,7 +11,7 @@ case class Board(spots: Vector[Cell], baseSize: Int) {
 
   def cell(spot: Int): Cell = spots(spot)
 
-  def replaceCell(spot: Int, cell: Cell): Board =
+  def replaceCell(spot: Int, cell: CellInterface): BoardInterface =
     copy(spots.updated(spot, cell))
 
   override def toString: String = {
