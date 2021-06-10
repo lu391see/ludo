@@ -157,7 +157,7 @@ case class Game(board: BoardInterface, players: Vector[Player]) extends GameInte
   }
 
   private def trySixRoll(player: Player, dice_roll: Int): Unit = {
-    if (dice_roll == 6) {
+    if (dice_roll >= 6) {
       player.sixRolled = true
     }
   }
