@@ -1,9 +1,11 @@
 package de.htwg.se.ludo.aview.gui
-import de.htwg.se.ludo.controller.{Controller, PinDrawn}
+
+import de.htwg.se.ludo.controller.PinDrawn
+import de.htwg.se.ludo.controller.controllerComponent.ControllerInterface
 
 import scala.swing._
 
-case class BaseTeam(color: Color, basePos: Int, controller: Controller)
+case class BaseTeam(color: Color, basePos: Int, controller: ControllerInterface)
     extends GridPanel(2, 2) {
   listenTo(controller)
   for (i <- 1 to 4) {

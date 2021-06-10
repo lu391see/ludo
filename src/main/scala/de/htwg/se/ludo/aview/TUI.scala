@@ -1,18 +1,12 @@
 package de.htwg.se.ludo.aview
 
-import de.htwg.se.ludo.controller.{
-  Controller,
-  NewGame,
-  NewMessage,
-  PinDrawn,
-  Redo,
-  Undo
-}
+import de.htwg.se.ludo.controller.controllerComponent.ControllerInterface
+import de.htwg.se.ludo.controller.{NewGame, NewMessage, PinDrawn, Redo, Undo}
 
 import scala.util.{Failure, Try}
 import scala.swing.Reactor
 
-class TUI(controller: Controller) extends Reactor {
+class TUI(controller: ControllerInterface) extends Reactor {
 
   listenTo(controller)
 
@@ -42,6 +36,6 @@ class TUI(controller: Controller) extends Reactor {
   }
 
   def onNewMessage(): Unit = {
-    controller.message.print()
+    controller.publishMessage()
   }
 }

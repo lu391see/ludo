@@ -1,12 +1,12 @@
 package de.htwg.se.ludo.aview.gui
 
-import de.htwg.se.ludo.controller.Controller
+import de.htwg.se.ludo.controller.controllerComponent.ControllerInterface
 
 import java.awt.{Color, Font}
 import javax.swing.border.LineBorder
 import scala.swing.{Button, Dimension, FlowPanel}
 
-case class Actions (controller: Controller) extends FlowPanel {
+case class Actions (controller: ControllerInterface) extends FlowPanel {
   // TODO: Test
   val rollButton: Button = Button("Roll") {
     controller.handleInput("")

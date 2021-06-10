@@ -1,16 +1,11 @@
 package de.htwg.se.ludo.aview.gui
 
-import de.htwg.se.ludo.controller.{
-  Controller,
-  NewGame,
-  NewMessage,
-  PinDrawn,
-  Redo,
-  Undo
-}
+import de.htwg.se.ludo.controller.controllerComponent.ControllerInterface
+import de.htwg.se.ludo.controller.{NewGame, NewMessage, PinDrawn, Redo, Undo}
+
 import scala.swing._
 
-case class GUI(controller: Controller) extends MainFrame {
+case class GUI(controller: ControllerInterface) extends MainFrame {
   val actions: Actions = Actions(controller)
   val messageBox: MessageBox = MessageBox(controller)
   val board: Board = Board(controller)
