@@ -22,14 +22,14 @@ case class HorizontalFieldRow(
   contents += otherStartField
 
   reactions += {
-    case event: PinDrawn => {
-      println(event)
+    case event: PinDrawn =>
+      // println(event)
       val oldPos = contents.indexWhere(c => c.name.toInt.equals(event.curPos))
       val newPos = contents.indexWhere(c => c.name.toInt.equals(event.nextPos))
-      println("HorizontalFieldRow",oldPos, newPos)
+      /*println("HorizontalFieldRow",oldPos, newPos)
       for (content <- contents) {
         println(content.name, content.background)
-      }
+      }*/
       if(oldPos != -1) {
         var field = new Field(oldPos)
         if(event.curPos == beginPos) field = startField
@@ -45,6 +45,5 @@ case class HorizontalFieldRow(
         contents ++= newContents
       }
       repaint
-    }
   }
 }

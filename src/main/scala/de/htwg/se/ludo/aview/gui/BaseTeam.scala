@@ -12,13 +12,13 @@ case class BaseTeam(color: Color, basePos: Int, controller: ControllerInterface)
     contents += Pin(i, color, basePos + i - 1, controller)
   }
   reactions += {
-    case event: PinDrawn => {
+    case event: PinDrawn =>
       if (event.curPos != event.nextPos) {
         val oldPos = contents.indexWhere(c => c.name.toInt.equals(event.curPos))
         val newPos =
           contents.indexWhere(c => c.name.toInt.equals(event.nextPos))
 
-        println("BaseTeam", oldPos, newPos)
+        // println("BaseTeam", oldPos, newPos)
         if (oldPos != -1) {
           val newContents = contents.updated(oldPos, new StartField(event.color, event.curPos))
           contents.clear()
@@ -36,6 +36,5 @@ case class BaseTeam(color: Color, basePos: Int, controller: ControllerInterface)
       }
 
       repaint
-    }
   }
 }
