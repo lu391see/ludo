@@ -1,13 +1,25 @@
 package de.htwg.se.ludo.model
 
+import java.awt.Color
+
 class Team(
-    val color: Char,
+    val color: Color,
     val basePosition: Int,
     val startPosition: Int,
     val homePosition: Int
 ) {
   var pins: Vector[Pin] = Vector.tabulate(4) { i =>
-    Pin(color + (i + 1).toString, basePosition + i)
+    Pin(toColorString(color, i + 1), basePosition + i)
+  }
+
+  def toColorString(color: Color, pin: Int): String = {
+    (color match {
+      case Color.black  => "B"
+      case Color.red    => "R"
+      case Color.yellow => "Y"
+      case Color.green  => "G"
+      case _            => ""
+    }) + pin.toString
   }
 
   def spawnPin(pin: Int) {
@@ -52,4 +64,4 @@ class Team(
   }
 }
 
-case class EmptyTeam() extends Team('Y', 0, 0, 0)
+case class EmptyTeam() extends Team(Color.yellow, 0, 0, 0)

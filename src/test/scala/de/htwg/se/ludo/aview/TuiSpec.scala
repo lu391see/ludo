@@ -6,12 +6,14 @@ import de.htwg.se.ludo.util.UI
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
+import java.awt.Color
+
 class TuiSpec extends AnyWordSpec with Matchers {
   "A TUI processing pins with a dice of 4" should {
 
-    val players: Vector[Player] = Vector[Player](Player("",  new Team('Y', 0, 15, 55)))
+    val players: Vector[Player] = Vector[Player](Player("",  new Team(Color.yellow, 0, 15, 55)))
     val controller = new Controller() // Game(new Field(40, Cell(0)), players)
-    val tui: UI = new TUI(controller)
+    val tui = new TUI(controller)
 
     val first_player = players(0)
     val diceFour = new Dice(4)
