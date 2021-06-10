@@ -5,7 +5,7 @@ import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.command
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.gameStates.GameState
 import de.htwg.se.ludo.controller.{Undo, NewGame, PinDrawn, NewMessage, NewPlayer, Redo} // Events
 
-import de.htwg.se.ludo.model.boardComponent.boardBaseImpl.{Board, BoardConstraints}
+import de.htwg.se.ludo.model.boardComponent.boardBaseImpl.{Board, BasicBoardConstraints}
 import de.htwg.se.ludo.model.diceComponent.dice6Impl.Dice
 import de.htwg.se.ludo.model.playerComponent.{Player, PlayerConstraints}
 import de.htwg.se.ludo.model._
@@ -29,8 +29,8 @@ class Controller extends ControllerInterface {
 
   def newGame(): Unit = {
     val board = new Board(
-      BoardConstraints.fields,
-      BoardConstraints.filling,
+      BasicBoardConstraints.fields,
+      BasicBoardConstraints.filling,
       PlayerConstraints.totalPins
     )
     game = Some(Game(board, players).based())

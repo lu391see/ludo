@@ -1,6 +1,6 @@
 package de.htwg.se.ludo.model.boardComponent.boardBaseImpl
 
-object BoardConstraints {
+object BasicBoardConstraints {
   val fields = 72
   val filling: Cell = EmptyCell
 }
