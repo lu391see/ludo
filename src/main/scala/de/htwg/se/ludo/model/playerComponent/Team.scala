@@ -1,4 +1,4 @@
-package de.htwg.se.ludo.model
+package de.htwg.se.ludo.model.playerComponent
 
 import java.awt.Color
 
@@ -59,7 +59,7 @@ class Team(
     pins(pin).position
   }
 
-  def id(pin: Int): String = {
+  def pinID(pin: Int): String = {
     pins(pin).id
   }
 }

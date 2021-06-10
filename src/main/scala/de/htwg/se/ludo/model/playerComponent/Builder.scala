@@ -1,6 +1,4 @@
-package de.htwg.se.ludo.util
-
-import de.htwg.se.ludo.model.Team
+package de.htwg.se.ludo.model.playerComponent
 
 trait Builder {
   def setPlayerName(name: String): Builder

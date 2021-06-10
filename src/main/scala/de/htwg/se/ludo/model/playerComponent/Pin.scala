@@ -1,4 +1,4 @@
-package de.htwg.se.ludo.model
+package de.htwg.se.ludo.model.playerComponent
 
 case class Pin (id: String, position: Int){
   def move(pos: Int): Pin = {

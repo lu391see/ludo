@@ -1,12 +1,8 @@
-package de.htwg.se.ludo.controller
+package de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.gameStates
 
-import de.htwg.se.ludo.model.{
-  AddAnotherPlayerMessage,
-  FirstPlayerMessage,
-  InvalidCurrentPlayerAtSetupMessage,
-  PlayerConstraints,
-  RollDiceMessage
-}
+import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.Controller
+import de.htwg.se.ludo.model._
+import de.htwg.se.ludo.model.playerComponent.PlayerConstraints
 import de.htwg.se.ludo.util.State
 
 case class SetupState(controller: Controller) extends State[GameState] {

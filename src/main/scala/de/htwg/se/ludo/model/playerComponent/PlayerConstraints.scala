@@ -1,4 +1,4 @@
-package de.htwg.se.ludo.model
+package de.htwg.se.ludo.model.playerComponent
 
 import java.awt.Color
 

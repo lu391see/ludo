@@ -1,6 +1,7 @@
-package de.htwg.se.ludo.controller
+package de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.commands
 
-import de.htwg.se.ludo.model.{PlayerBuilder, Team}
+import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.Controller
+import de.htwg.se.ludo.model.playerComponent.{PlayerBuilder, Team}
 import de.htwg.se.ludo.util.Command
 
 class AddPlayerCommand(name: String, team: Team, controller: Controller) extends Command {

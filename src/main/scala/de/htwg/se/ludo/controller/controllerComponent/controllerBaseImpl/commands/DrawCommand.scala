@@ -1,6 +1,9 @@
-package de.htwg.se.ludo.controller
+package de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.commands
 
-import de.htwg.se.ludo.model.{Game, GameBoardUninitializedMessage, Pin, Player}
+import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.Controller
+import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.gameStates.GameState
+import de.htwg.se.ludo.model.playerComponent.{Pin, Player}
+import de.htwg.se.ludo.model.{Game, GameBoardUninitializedMessage}
 import de.htwg.se.ludo.util.Command
 
 class DrawCommand(pin: Int, controller: Controller) extends Command {

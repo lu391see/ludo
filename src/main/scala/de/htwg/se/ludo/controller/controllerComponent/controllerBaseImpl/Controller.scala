@@ -1,24 +1,19 @@
-package de.htwg.se.ludo.controller
+package de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl
 
-import de.htwg.se.ludo.model.{
-  Board,
-  BoardConstraints,
-  EmptyMessage,
-  Game,
-  GameBoardUninitializedMessage,
-  Message,
-  NextPlayerMessage,
-  NoCurrentPlayerMessage,
-  Player,
-  PlayerConstraints,
-  PlayerRolledDiceMessage,
-  RandomDice
-}
+import de.htwg.se.ludo.controller.controllerComponent.ControllerInterface
+import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.commands._
+import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.gameStates.GameState
+import de.htwg.se.ludo.controller.{Undo, NewGame, PinDrawn, NewMessage, NewPlayer, Redo} // Events
+
+import de.htwg.se.ludo.model.boardComponent.boardBaseImpl.{Board, BoardConstraints}
+import de.htwg.se.ludo.model.diceComponent.dice6Impl.Dice
+import de.htwg.se.ludo.model.playerComponent.{Player, PlayerConstraints}
+import de.htwg.se.ludo.model._
+
 import de.htwg.se.ludo.util.UndoManager
 
-import scala.swing.Publisher
 
-class Controller extends Publisher {
+class Controller extends ControllerInterface {
   var currentPlayer: Option[Player] = None
   var game: Option[Game] = None
   var gameState: GameState = GameState(this)
@@ -59,7 +54,7 @@ class Controller extends Publisher {
   }
 
   def rollDice(): Unit = {
-    pips = RandomDice().pips
+    pips = Dice().pips
     newMessage(currentPlayer match {
       case Some(c) => PlayerRolledDiceMessage(c, pips)
       case None    => NoCurrentPlayerMessage
@@ -93,6 +88,14 @@ class Controller extends Publisher {
   def newMessage(message: Message): Unit = {
     this.message = message
     publish(NewMessage())
+  }
+
+  def publishMessage(): Unit = {
+    this.message.print()
+  }
+
+  def messageToString(): String = {
+    this.message.toString
   }
 
   def setWinStrategy(winStrategy: String): Unit = {}

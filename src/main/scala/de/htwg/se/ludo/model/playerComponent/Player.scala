@@ -1,6 +1,4 @@
-package de.htwg.se.ludo.model
-
-import de.htwg.se.ludo.util.Builder
+package de.htwg.se.ludo.model.playerComponent
 
 import java.awt.Color
 
@@ -40,7 +38,7 @@ case class Player(name: String, team: Team) {
 
 case class PlayerBuilder() extends Builder {
   var name: String = ""
-  var team: Team = EmptyTeam()
+  var team: Team = EmptyTeam()  // TODO: make optional instead
 
   override def setPlayerName(name: String): PlayerBuilder = {
     this.name = name
@@ -53,4 +51,6 @@ case class PlayerBuilder() extends Builder {
   }
 
   def build(): Player = Player(name, team)
+  /*team match {
+    case Some(team) => Player(name, team)*/
 }

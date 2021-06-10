@@ -1,5 +1,6 @@
-package de.htwg.se.ludo.controller
+package de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.gameStates
 
+import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.ludo.model.{ChoosePinMessage, RollDiceMessage}
 import de.htwg.se.ludo.util.State
 
