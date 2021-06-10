@@ -9,17 +9,17 @@ class Team(
     val homePosition: Int
 ) {
   var pins: Vector[Pin] = Vector.tabulate(4) { i =>
-    Pin(toColorString(color, i + 1), basePosition + i)
+    Pin(toColorString(i), basePosition + i)
   }
 
-  def toColorString(color: Color, pin: Int): String = {
-    (color match {
+  private def toColorString(pin: Int): String = {
+    (this.color match {
       case Color.black  => "B"
       case Color.red    => "R"
       case Color.yellow => "Y"
       case Color.green  => "G"
-      case _            => ""
-    }) + pin.toString
+      case _            => "-"
+    }) + (pin + 1).toString
   }
 
   def spawnPin(pin: Int) {

@@ -21,8 +21,8 @@ case class Player(name: String, team: Team) {
     team.pins.forall(pin => team.isFinished(team.pins.indexOf(pin)))
   }
 
-  def toColorString(color: Color): String = {
-    color match {
+  private def toColorString: String = {
+    this.team.color match {
       case Color.black  => "Black"
       case Color.red    => "Red"
       case Color.yellow => "Yellow"
@@ -32,7 +32,7 @@ case class Player(name: String, team: Team) {
   }
 
   override def toString: String = {
-    s"Player ${toColorString(team.color)}: '${name}'"
+    s"Player ${toColorString}: '${name}'"
   }
 }
 
