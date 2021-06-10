@@ -4,18 +4,20 @@ import de.htwg.se.ludo.controller.controllerComponent.ControllerInterface
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.commands._
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.gameStates.GameState
 import de.htwg.se.ludo.controller.{NewGame, NewMessage, NewPlayer, PinDrawn, Redo, Undo}
-import de.htwg.se.ludo.model.boardComponent.boardBaseImpl.{BasicBoardConstraints, Board}
-import de.htwg.se.ludo.model.diceComponent._
-import de.htwg.se.ludo.model.playerComponent.{Player, PlayerConstraints}
-import de.htwg.se.ludo.model._
+
 import de.htwg.se.ludo.model.boardComponent.BoardInterface
-import de.htwg.se.ludo.util.UndoManager
+import de.htwg.se.ludo.model.boardComponent.boardBaseImpl.{Board, BasicBoardConstraints}
+import de.htwg.se.ludo.model.diceComponent.DiceInterface
+import de.htwg.se.ludo.model.playerComponent.{Player, PlayerConstraints}
+import de.htwg.se.ludo.model.gameComponent.{Game, GameInterface}
+
+import de.htwg.se.ludo.util._
 
 
 class Controller extends ControllerInterface {
 
   var currentPlayer: Option[Player] = None
-  var game: Option[Game] = None
+  var game: Option[GameInterface] = None
   var gameState: GameState = GameState(this)
   var pips: Int = 0
   var players: Vector[Player] = Vector.empty
@@ -53,8 +55,7 @@ class Controller extends ControllerInterface {
     }
   }
 
-  def rollDice(): Unit = {
-    val dice: DiceInterface = dice6Impl.Dice()
+  def rollDice(dice: DiceInterface): Unit = {
     pips = dice.pips
     newMessage(currentPlayer match {
       case Some(c) => PlayerRolledDiceMessage(c, pips)

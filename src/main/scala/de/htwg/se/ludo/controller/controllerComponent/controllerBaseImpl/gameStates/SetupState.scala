@@ -1,9 +1,8 @@
 package de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.gameStates
 
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.Controller
-import de.htwg.se.ludo.model._
 import de.htwg.se.ludo.model.playerComponent.PlayerConstraints
-import de.htwg.se.ludo.util.State
+import de.htwg.se.ludo.util.{AddAnotherPlayerMessage, FirstPlayerMessage, InvalidCurrentPlayerAtSetupMessage, RollDiceMessage, State}
 
 case class SetupState(controller: Controller) extends State[GameState] {
   override def handle(input: String, n: GameState): Unit = {

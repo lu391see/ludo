@@ -1,4 +1,4 @@
-package de.htwg.se.ludo.model
+package de.htwg.se.ludo.util
 
 import de.htwg.se.ludo.model.playerComponent.Player
 

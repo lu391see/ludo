@@ -2,7 +2,7 @@ package de.htwg.se.ludo
 import de.htwg.se.ludo.aview.TUI
 import de.htwg.se.ludo.aview.gui.GUI
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.Controller
-import de.htwg.se.ludo.model.WelcomeMessage  // FIXME: shouldn't be neccessary here
+import de.htwg.se.ludo.util.WelcomeMessage
 
 import scala.io.StdIn.readLine
 
@@ -16,7 +16,7 @@ object Ludo {
 
     var input: String = ""
 
-    controller.newMessage(WelcomeMessage)
+    controller.newMessage(WelcomeMessage) // FIXME: shouldn't be neccessary here
 
     while (true) {
       input = readLine()

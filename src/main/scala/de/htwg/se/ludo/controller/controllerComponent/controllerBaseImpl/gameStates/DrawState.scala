@@ -1,9 +1,7 @@
 package de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.gameStates
 
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.Controller
-import de.htwg.se.ludo.model.{ChoosePinMessage, RollDiceMessage}
-import de.htwg.se.ludo.util.State
-
+import de.htwg.se.ludo.util.{ChoosePinMessage, RollDiceMessage, State}
 import scala.util.{Failure, Success, Try}
 
 case class DrawState(controller: Controller) extends State[GameState] {

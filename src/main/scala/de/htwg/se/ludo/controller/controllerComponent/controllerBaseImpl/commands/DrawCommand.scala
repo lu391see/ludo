@@ -3,12 +3,12 @@ package de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.comman
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.gameStates.GameState
 import de.htwg.se.ludo.model.playerComponent.{Pin, Player}
-import de.htwg.se.ludo.model.{Game, GameBoardUninitializedMessage}
-import de.htwg.se.ludo.util.Command
+import de.htwg.se.ludo.model.gameComponent.GameInterface
+import de.htwg.se.ludo.util.{Command, GameBoardUninitializedMessage}
 
 class DrawCommand(pin: Int, controller: Controller) extends Command {
 
-  var memento: (Option[Game], Option[Player], GameState, Int, Vector[Pin]) = (
+  var memento: (Option[GameInterface], Option[Player], GameState, Int, Vector[Pin]) = (
     controller.game,
     controller.currentPlayer,
     controller.gameState,

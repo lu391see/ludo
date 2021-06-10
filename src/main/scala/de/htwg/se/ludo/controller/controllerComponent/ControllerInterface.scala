@@ -1,6 +1,7 @@
 package de.htwg.se.ludo.controller.controllerComponent
 
-import de.htwg.se.ludo.model.Message
+import de.htwg.se.ludo.model.diceComponent.DiceInterface
+import de.htwg.se.ludo.util.Message
 
 import scala.swing.Publisher
 
@@ -11,7 +12,7 @@ trait ControllerInterface extends Publisher {
   def newGame(): Unit
   def addNewPlayer(name: String): Unit
   def switchPlayer(): Unit
-  def rollDice(): Unit
+  def rollDice(dice: DiceInterface): Unit
   def drawPin(pin: Int): Unit
 
   def undo(): Unit
