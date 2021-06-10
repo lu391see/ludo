@@ -15,7 +15,7 @@ class PlayerSpec extends AnyWordSpec with Matchers {
         player.name should be("Lukas")
       }
       "have a nice String representation" in {
-        player.toString should be("Player Y: 'Lukas'")
+        player.toString should be("Player Yellow: 'Lukas'")
       }
       "not be able to move for now" in {
         player.sixRolled should be (false)
@@ -23,8 +23,7 @@ class PlayerSpec extends AnyWordSpec with Matchers {
       "not set to Winner yet" in {
         player.hasWon should be(false)
       }
-      "have 4 pins with number in front of index" in {
-        player.team.color should be('Y')
+      "have 4 pins with Color-identifier in front of pin index" in {
         player.team.pinID(0) should be("Y1")
         player.team.position(0) should be(player.team.basePosition)
         player.team.pinID(1) should be("Y2")
