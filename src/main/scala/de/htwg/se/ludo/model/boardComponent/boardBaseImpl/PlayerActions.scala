@@ -1,4 +1,6 @@
-package de.htwg.se.ludo.model
+package de.htwg.se.ludo.model.boardComponent.boardBaseImpl
+
+import de.htwg.se.ludo.model.playerComponent.{Pin, Player}
 
 case class PlayerSpawn(board: Board, players: Vector[Player]) {
   def basedPins(): Board = {
@@ -14,7 +16,7 @@ case class PlayerSpawn(board: Board, players: Vector[Player]) {
   def spawnedPin(player: Player, pin: Int): Board = {
     val spawned = board.replaceCell(player.team.position(pin), EmptyCell)
     player.spawn(pin)
-    spawned.replaceCell(player.team.position(pin), Cell(player.team.id(pin)))
+    spawned.replaceCell(player.team.position(pin), Cell(player.team.pinID(pin)))
   }
 
   private def renderedPin(pos: Int, cell: Cell, board: Board): Board = {
@@ -36,7 +38,7 @@ case class PlayerMovement(board: Board) {
       val changed = board.replaceCell(pinPosition, EmptyCell)
       player.move(pin, newPos)
       return Some(
-        changed.replaceCell(newPos, Cell(player.team.id(pin)))
+        changed.replaceCell(newPos, Cell(player.team.pinID(pin)))
       )
     }
     None
@@ -96,6 +98,6 @@ case class PlayerFinish(board: Board, players: Vector[Player]) {
       board.replaceCell(pinPosition, EmptyCell)
     player.finish(pin)
     changed
-      .replaceCell(player.team.position(pin), Cell(player.team.id(pin)))
+      .replaceCell(player.team.position(pin), Cell(player.team.pinID(pin)))
   }
 }

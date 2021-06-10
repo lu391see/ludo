@@ -1,4 +1,4 @@
-package de.htwg.se.ludo.model
+package de.htwg.se.ludo.model.boardComponent.boardBaseImpl
 
 sealed case class Cell(value: String) {
   def isSet:Boolean = value != ""

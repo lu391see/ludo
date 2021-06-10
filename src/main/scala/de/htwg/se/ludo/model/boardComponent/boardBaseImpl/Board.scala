@@ -1,4 +1,4 @@
-package de.htwg.se.ludo.model
+package de.htwg.se.ludo.model.boardComponent.boardBaseImpl
 
 case class Board(spots: Vector[Cell], baseSize: Int) {
   def this(size: Int, filling: Cell, baseSize: Int) =
