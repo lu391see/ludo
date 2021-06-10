@@ -1,6 +1,7 @@
 package de.htwg.se.ludo.model.boardComponent
 
 trait BoardInterface {
+  val spots: Vector[CellInterface]
   val size: Int
   val gameSize: Int
   val baseSize: Int

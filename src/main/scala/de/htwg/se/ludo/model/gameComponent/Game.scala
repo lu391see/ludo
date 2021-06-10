@@ -1,21 +1,20 @@
-package de.htwg.se.ludo.model
+package de.htwg.se.ludo.model.gameComponent
 
 import de.htwg.se.ludo.model.boardComponent.BoardInterface
-import de.htwg.se.ludo.model.boardComponent.boardBaseImpl.{PlayerFight, PlayerFinish, PlayerMovement, PlayerSpawn}
 import de.htwg.se.ludo.model.playerComponent.Player
 
-case class Game(board: BoardInterface, players: Vector[Player]) {
+case class Game(board: BoardInterface, players: Vector[Player]) extends GameInterface {
   var playerSpawn: PlayerSpawn = PlayerSpawn(board, players)
   var playerMovement: PlayerMovement = PlayerMovement(board)
   var playerFight: PlayerFight = PlayerFight(board, players)
   var playerFinish: PlayerFinish = PlayerFinish(board, players)
 
-  def based(): Game = {
+  def based(): GameInterface = {
     playerSpawn = PlayerSpawn(board, players)
     changedGame(playerSpawn.basedPins())
   }
 
-  def draw(currentPlayer: Player, pin: Int, dice_roll: Int): Game = {
+  def draw(currentPlayer: Player, pin: Int, dice_roll: Int): GameInterface = {
     tryPinSpawn(currentPlayer: Player, pin: Int, dice_roll: Int) match {
       case Some(changed) => return changed
       case None          =>
@@ -26,11 +25,19 @@ case class Game(board: BoardInterface, players: Vector[Player]) {
     }
   }
 
-  private def tryPinSpawn(
-      player: Player,
-      pin: Int,
-      dice_roll: Int
-  ): Option[Game] = {
+  def drawnPin(player: Player, pin: Int, pos: Int): GameInterface = {
+
+    playerMovement = PlayerMovement(board)
+    playerMovement.movedPin(player: Player, pin: Int, pos: Int) match {
+      case Some(moved) => changedGame(moved)
+      case None =>
+        playerFinish = PlayerFinish(board, players)
+        changedGame(playerFinish.finishedPin(player, pin))
+    }
+  }
+
+  private def tryPinSpawn(player: Player, pin: Int, dice_roll: Int): Option[GameInterface] = {
+
     if (!player.team.isSpawned(pin)) {
       trySixRoll(player, dice_roll)
       if (player.sixRolled) {
@@ -42,13 +49,10 @@ case class Game(board: BoardInterface, players: Vector[Player]) {
     None
   }
 
-  private def tryPinMove(
-      player: Player,
-      pin: Int,
-      dice_roll: Int
-  ): Option[Game] = {
+  private def tryPinMove(player: Player, pin: Int, dice_roll: Int): Option[GameInterface] = {
+
     if (player.team.isSpawned(pin) && !player.team.isFinished(pin)) {
-      var changed = this
+      var changed: GameInterface = this
       tryEnemyPinBeat(player: Player, pin: Int, dice_roll: Int) match {
         case Some(c) => changed = c
         case None    =>
@@ -58,11 +62,8 @@ case class Game(board: BoardInterface, players: Vector[Player]) {
     None
   }
 
-  private def tryEnemyPinBeat(
-      player: Player,
-      pin: Int,
-      dice_roll: Int
-  ): Option[Game] = {
+  private def tryEnemyPinBeat(player: Player, pin: Int, dice_roll: Int): Option[GameInterface] = {
+
     playerFight = PlayerFight(board, players)
     playerFight.beatenEnemyPin(player, pin, dice_roll) match {
       case Some(beaten) => Some(changedGame(beaten))
@@ -70,17 +71,7 @@ case class Game(board: BoardInterface, players: Vector[Player]) {
     }
   }
 
-  private def drawnPin(player: Player, pin: Int, pos: Int): Game = {
-    playerMovement = PlayerMovement(board)
-    playerMovement.movedPin(player: Player, pin: Int, pos: Int) match {
-      case Some(moved) => changedGame(moved)
-      case None =>
-        playerFinish = PlayerFinish(board, players)
-        changedGame(playerFinish.finishedPin(player, pin))
-    }
-  }
-
-  private def changedGame(board: BoardInterface): Game = {
+  private def changedGame(board: BoardInterface): GameInterface = {
     Game(board, players)
   }
 
