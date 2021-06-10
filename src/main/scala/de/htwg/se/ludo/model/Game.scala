@@ -1,5 +1,8 @@
 package de.htwg.se.ludo.model
 
+import de.htwg.se.ludo.model.boardComponent.boardBaseImpl.{Board, PlayerFight, PlayerFinish, PlayerMovement, PlayerSpawn}
+import de.htwg.se.ludo.model.playerComponent.Player
+
 case class Game(board: Board, players: Vector[Player]) {
   var playerSpawn: PlayerSpawn = PlayerSpawn(board, players)
   var playerMovement: PlayerMovement = PlayerMovement(board)

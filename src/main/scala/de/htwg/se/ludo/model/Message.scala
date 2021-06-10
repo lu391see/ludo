@@ -1,5 +1,7 @@
 package de.htwg.se.ludo.model
 
+import de.htwg.se.ludo.model.playerComponent.Player
+
 sealed abstract class Message(message: String) {
   def print(): Unit = {
     println(message)

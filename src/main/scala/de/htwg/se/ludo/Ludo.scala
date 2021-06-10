@@ -1,7 +1,7 @@
 package de.htwg.se.ludo
-import de.htwg.se.ludo.controller.Controller
 import de.htwg.se.ludo.aview.TUI
 import de.htwg.se.ludo.aview.gui.GUI
+import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.ludo.model.WelcomeMessage
 
 import scala.io.StdIn.readLine
