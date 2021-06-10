@@ -1,7 +1,7 @@
 package de.htwg.se.ludo.aview.gui
 
 import de.htwg.se.ludo.controller.controllerComponent.ControllerInterface
-import de.htwg.se.ludo.model.playerComponent.PlayerConstraints
+import de.htwg.se.ludo.model.playerComponent.PlayerConstraints // FIXME: direct access from view to model
 
 import scala.swing._
 import java.awt.Color

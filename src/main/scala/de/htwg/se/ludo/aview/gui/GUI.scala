@@ -1,7 +1,6 @@
 package de.htwg.se.ludo.aview.gui
 
 import de.htwg.se.ludo.controller.controllerComponent.ControllerInterface
-import de.htwg.se.ludo.controller.{NewGame, NewMessage, PinDrawn, Redo, Undo}
 
 import scala.swing._
 
