@@ -1,9 +1,6 @@
-package de.htwg.se.ludo.controller
+package de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl
 
-import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.Controller
-import de.htwg.se.ludo.model.gameComponent.gameBaseImpl._
 import de.htwg.se.ludo.model.playerComponent.{Player, Team}
-import de.htwg.se.ludo.util.Observer
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 

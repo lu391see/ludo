@@ -1,9 +1,7 @@
-package de.htwg.se.ludo.model
+package de.htwg.se.ludo.model.playerComponent
 
-import de.htwg.se.ludo.model.playerComponent.{Player, Team}
-
-import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 
 import java.awt.Color
 
