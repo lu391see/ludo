@@ -1,5 +1,8 @@
 package de.htwg.se.ludo.model
 
+import de.htwg.se.ludo.model.boardComponent.boardBaseImpl.{Board, Cell}
+import de.htwg.se.ludo.model.playerComponent.{Player, Team}
+
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers
 
@@ -20,7 +23,7 @@ class GameSpec extends AnyWordSpec with Matchers {
         .draw(first_player, first_pin, dice_roll)
       val default_pin_position = 0
 
-      val new_cell = new Cell(first_player.team.id(first_pin))
+      val new_cell = Cell(first_player.team.pinID(first_pin))
       "have the cell with the default pin position to an empty cell" in {
         game_changed.board.spots(default_pin_position) should be(empty_cell)
       }

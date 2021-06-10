@@ -1,7 +1,9 @@
 package de.htwg.se.ludo.model
+
+import de.htwg.se.ludo.model.boardComponent.boardBaseImpl.{Board, Cell}
+
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers
-// import org.scalatest.{Matchers, WordSpec}
 
 class BoardSpec extends AnyWordSpec with Matchers {
   "Matrix is an immutable data type that contains a two-dimentional Vector of Cells."

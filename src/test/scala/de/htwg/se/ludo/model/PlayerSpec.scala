@@ -1,4 +1,7 @@
 package de.htwg.se.ludo.model
+
+import de.htwg.se.ludo.model.playerComponent.{Player, Team}
+
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers
 
@@ -22,11 +25,11 @@ class PlayerSpec extends AnyWordSpec with Matchers {
       }
       "have 4 pins with number in front of index" in {
         player.team.color should be('Y')
-        player.team.id(0) should be("Y1")
+        player.team.pinID(0) should be("Y1")
         player.team.position(0) should be(player.team.basePosition)
-        player.team.id(1) should be("Y2")
+        player.team.pinID(1) should be("Y2")
         player.team.position(1) should be(player.team.basePosition + 1)
-        player.team.id(3) should be("Y4")
+        player.team.pinID(3) should be("Y4")
       }
     }
   }

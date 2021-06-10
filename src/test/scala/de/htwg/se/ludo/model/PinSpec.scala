@@ -1,4 +1,7 @@
 package de.htwg.se.ludo.model
+
+import de.htwg.se.ludo.model.playerComponent.Pin
+
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers
 

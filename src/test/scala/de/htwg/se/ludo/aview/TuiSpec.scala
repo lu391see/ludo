@@ -1,8 +1,11 @@
 package de.htwg.se.ludo.aview
 
-import de.htwg.se.ludo.model._
-import de.htwg.se.ludo.controller._
-import de.htwg.se.ludo.util.UI
+import de.htwg.se.ludo.model.playerComponent
+import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.Controller
+import de.htwg.se.ludo.model.boardComponent.boardBaseImpl.Cell
+import de.htwg.se.ludo.model.diceComponent.dice6Impl.Dice
+import de.htwg.se.ludo.model.playerComponent.{Player, Team}
+
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
@@ -11,7 +14,7 @@ import java.awt.Color
 class TuiSpec extends AnyWordSpec with Matchers {
   "A TUI processing pins with a dice of 4" should {
 
-    val players: Vector[Player] = Vector[Player](Player("",  new Team(Color.yellow, 0, 15, 55)))
+    val players: Vector[Player] = Vector[Player](playerComponent.Player("",  new Team(Color.yellow, 0, 15, 55)))
     val controller = new Controller() // Game(new Field(40, Cell(0)), players)
     val tui = new TUI(controller)
 
