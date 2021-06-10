@@ -3,7 +3,7 @@ package de.htwg.se.ludo.model.playerComponent
 import java.awt.Color
 
 case class Player(name: String, team: Team) {
-  var sixRolled = false
+  var sixRolled: Boolean = false
 
   def spawn(pin: Int): Unit = {
     team.spawnPin(pin)
@@ -17,7 +17,7 @@ case class Player(name: String, team: Team) {
     team.finishPin(pin)
   }
 
-  def hasWon(): Boolean = {
+  def hasWon: Boolean = {
     team.pins.forall(pin => team.isFinished(team.pins.indexOf(pin)))
   }
 
@@ -32,7 +32,7 @@ case class Player(name: String, team: Team) {
   }
 
   override def toString: String = {
-    s"Player ${toColorString}: '${name}'"
+    s"Player $toColorString: '$name'"
   }
 }
 
