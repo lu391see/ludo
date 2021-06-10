@@ -4,13 +4,10 @@ import de.htwg.se.ludo.controller.controllerComponent.ControllerInterface
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.commands._
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.gameStates.GameState
 import de.htwg.se.ludo.controller.{NewGame, NewMessage, NewPlayer, PinDrawn, Redo, Undo}
-
-import de.htwg.se.ludo.model.boardComponent.BoardInterface
-import de.htwg.se.ludo.model.boardComponent.boardBaseImpl.{Board, BasicBoardConstraints}
 import de.htwg.se.ludo.model.diceComponent.DiceInterface
 import de.htwg.se.ludo.model.playerComponent.{Player, PlayerConstraints}
-import de.htwg.se.ludo.model.gameComponent.{Game, GameInterface}
-
+import de.htwg.se.ludo.model.gameComponent.{BoardInterface, GameInterface}
+import de.htwg.se.ludo.model.gameComponent.gameBaseImpl.{BasicBoardConstraints, Board, Game}
 import de.htwg.se.ludo.util._
 
 

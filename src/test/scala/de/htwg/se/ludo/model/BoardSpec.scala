@@ -1,7 +1,6 @@
 package de.htwg.se.ludo.model
 
-import de.htwg.se.ludo.model.boardComponent.boardBaseImpl.Board
-import de.htwg.se.ludo.model.gameComponent.Cell
+import de.htwg.se.ludo.model.gameComponent.gameBaseImpl.{Cell, Board}
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers
 

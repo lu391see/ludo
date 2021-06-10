@@ -3,7 +3,7 @@ package de.htwg.se.ludo.aview
 import de.htwg.se.ludo.model.playerComponent
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.ludo.model.diceComponent.dice6Impl.Dice
-import de.htwg.se.ludo.model.gameComponent.Cell
+import de.htwg.se.ludo.model.gameComponent.gameBaseImpl.Cell
 import de.htwg.se.ludo.model.playerComponent.{Player, Team}
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec

@@ -1,6 +1,6 @@
-package de.htwg.se.ludo.model.gameComponent
+package de.htwg.se.ludo.model.gameComponent.gameBaseImpl
 
-import de.htwg.se.ludo.model.boardComponent.BoardInterface
+import de.htwg.se.ludo.model.gameComponent.{BoardInterface, GameInterface}
 import de.htwg.se.ludo.model.playerComponent.{Pin, Player}
 
 case class Game(board: BoardInterface, players: Vector[Player]) extends GameInterface {
