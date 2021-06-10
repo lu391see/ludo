@@ -2,8 +2,7 @@ package de.htwg.se.ludo.model.playerComponent
 
 import java.awt.Color
 
-class Team(
-    val color: Color,
+class Team(val color: Color,
     val basePosition: Int,
     val startPosition: Int,
     val homePosition: Int
