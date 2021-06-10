@@ -1,5 +1,7 @@
 package de.htwg.se.ludo.model.boardComponent
 
+import de.htwg.se.ludo.model.playerComponent.Player
+
 trait GameInterface {
   def based(): GameInterface
   def draw(currentPlayer: Player, pin: Int, dice_roll: Int): GameInterface
