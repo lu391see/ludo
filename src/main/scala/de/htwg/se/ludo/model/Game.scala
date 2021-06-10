@@ -1,9 +1,10 @@
 package de.htwg.se.ludo.model
 
-import de.htwg.se.ludo.model.boardComponent.boardBaseImpl.{Board, PlayerFight, PlayerFinish, PlayerMovement, PlayerSpawn}
+import de.htwg.se.ludo.model.boardComponent.BoardInterface
+import de.htwg.se.ludo.model.boardComponent.boardBaseImpl.{PlayerFight, PlayerFinish, PlayerMovement, PlayerSpawn}
 import de.htwg.se.ludo.model.playerComponent.Player
 
-case class Game(board: Board, players: Vector[Player]) {
+case class Game(board: BoardInterface, players: Vector[Player]) {
   var playerSpawn: PlayerSpawn = PlayerSpawn(board, players)
   var playerMovement: PlayerMovement = PlayerMovement(board)
   var playerFight: PlayerFight = PlayerFight(board, players)
@@ -79,7 +80,7 @@ case class Game(board: Board, players: Vector[Player]) {
     }
   }
 
-  private def changedGame(board: Board): Game = {
+  private def changedGame(board: BoardInterface): Game = {
     Game(board, players)
   }
 

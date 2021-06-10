@@ -1,9 +1,11 @@
 package de.htwg.se.ludo.model.boardComponent.boardBaseImpl
 
+import de.htwg.se.ludo.model.boardComponent.BoardInterface
 import de.htwg.se.ludo.model.playerComponent.{Pin, Player}
 
-case class PlayerSpawn(board: Board, players: Vector[Player]) {
-  def basedPins(): Board = {
+case class PlayerSpawn(board: BoardInterface, players: Vector[Player]) {
+
+  def basedPins(): BoardInterface = {
     var changed = board
     players.foreach(player => {
       player.team.pins.foreach(pin =>
@@ -13,18 +15,19 @@ case class PlayerSpawn(board: Board, players: Vector[Player]) {
     changed
   }
 
-  def spawnedPin(player: Player, pin: Int): Board = {
+  def spawnedPin(player: Player, pin: Int): BoardInterface = {
     val spawned = board.replaceCell(player.team.position(pin), EmptyCell)
     player.spawn(pin)
     spawned.replaceCell(player.team.position(pin), Cell(player.team.pinID(pin)))
   }
 
-  private def renderedPin(pos: Int, cell: Cell, board: Board): Board = {
+  private def renderedPin(pos: Int, cell: Cell, board: BoardInterface): BoardInterface = {
     board.replaceCell(pos, cell)
   }
 }
-case class PlayerMovement(board: Board) {
-  def movedPin(player: Player, pin: Int, pos: Int): Option[Board] = {
+case class PlayerMovement(board: BoardInterface) {
+
+  def movedPin(player: Player, pin: Int, pos: Int): Option[BoardInterface] = {
     val pinPosition = player.team.position(pin)
     var newPos = pinPosition + pos
     if (newPos >= board.gameSize - 1) {
@@ -44,12 +47,13 @@ case class PlayerMovement(board: Board) {
     None
   }
 }
-case class PlayerFight(board: Board, players: Vector[Player]) {
+case class PlayerFight(board: BoardInterface, players: Vector[Player]) {
+
   def beatenEnemyPin(
       player: Player,
       pin: Int,
       dice_roll: Int
-  ): Option[Board] = {
+  ): Option[BoardInterface] = {
     if (hasEnemyPinAhead(player, pin, dice_roll)) {
       val playerPin = player.team.pins(pin)
       val enemyPos = enemyPinPosition(playerPin, dice_roll)
@@ -91,8 +95,9 @@ case class PlayerFight(board: Board, players: Vector[Player]) {
     enemyPos
   }
 }
-case class PlayerFinish(board: Board, players: Vector[Player]) {
-  def finishedPin(player: Player, pin: Int): Board = {
+case class PlayerFinish(board: BoardInterface, players: Vector[Player]) {
+
+  def finishedPin(player: Player, pin: Int): BoardInterface = {
     val pinPosition = player.team.position(pin)
     val changed =
       board.replaceCell(pinPosition, EmptyCell)
