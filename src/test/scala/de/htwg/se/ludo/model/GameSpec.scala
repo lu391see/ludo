@@ -1,7 +1,7 @@
 package de.htwg.se.ludo.model
 
-import de.htwg.se.ludo.model.boardComponent.boardBaseImpl.{Board, Cell}
-import de.htwg.se.ludo.model.gameComponent.Game
+import de.htwg.se.ludo.model.boardComponent.boardBaseImpl.Board
+import de.htwg.se.ludo.model.gameComponent.{Cell, Game}
 import de.htwg.se.ludo.model.playerComponent.{Player, Team}
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers

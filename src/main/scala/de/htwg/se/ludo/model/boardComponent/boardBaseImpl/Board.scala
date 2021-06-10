@@ -1,9 +1,10 @@
 package de.htwg.se.ludo.model.boardComponent.boardBaseImpl
 
-import de.htwg.se.ludo.model.boardComponent.{BoardInterface, CellInterface}
+import de.htwg.se.ludo.model.boardComponent.BoardInterface
+import de.htwg.se.ludo.model.gameComponent.CellInterface
 
 case class Board(spots: Vector[CellInterface], baseSize: Int) extends BoardInterface {
-  def this(size: Int, filling: Cell, baseSize: Int) =
+  def this(size: Int, filling: CellInterface, baseSize: Int) =
     this(Vector.tabulate(size) { _ => filling }, baseSize)
 
   val size: Int = spots.size

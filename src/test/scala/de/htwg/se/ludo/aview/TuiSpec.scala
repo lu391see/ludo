@@ -2,10 +2,9 @@ package de.htwg.se.ludo.aview
 
 import de.htwg.se.ludo.model.playerComponent
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.Controller
-import de.htwg.se.ludo.model.boardComponent.boardBaseImpl.Cell
 import de.htwg.se.ludo.model.diceComponent.dice6Impl.Dice
+import de.htwg.se.ludo.model.gameComponent.Cell
 import de.htwg.se.ludo.model.playerComponent.{Player, Team}
-
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
@@ -19,7 +18,7 @@ class TuiSpec extends AnyWordSpec with Matchers {
     val tui = new TUI(controller)
 
     val first_player = players(0)
-    val diceFour = new Dice(4)
+    val diceFour = Dice(4)
     /*
 
     "should for the first drawn pin have the fourth cell set to the pin's index" in {

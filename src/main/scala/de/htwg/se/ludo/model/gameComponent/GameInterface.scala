@@ -8,3 +8,8 @@ trait GameInterface {
   def draw(currentPlayer: Player, pin: Int, dice_roll: Int): GameInterface
   def drawnPin(player: Player, pin: Int, pos: Int): GameInterface
 }
+
+trait CellInterface {
+  def isSet:Boolean
+  def getValue:String
+}

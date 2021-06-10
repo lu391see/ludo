@@ -1,7 +1,7 @@
 package de.htwg.se.ludo.model
 
-import de.htwg.se.ludo.model.boardComponent.boardBaseImpl.{Board, Cell}
-
+import de.htwg.se.ludo.model.boardComponent.boardBaseImpl.Board
+import de.htwg.se.ludo.model.gameComponent.Cell
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers
 
@@ -19,18 +19,18 @@ class BoardSpec extends AnyWordSpec with Matchers {
       }
     }
     "filled" should {
-      val cell = new Cell("Y1")
+      val cell = Cell("Y1")
       val matrix = new Board(2, cell, 0)
       "give access to its cells" in {
         matrix.cell(0).toString should be("[Y1]")
         matrix.cell(1) should be(cell)
       }
       "replace cells and return a new data structure" in {
-        val newcell = new Cell("Y2")
+        val newcell = Cell("Y2")
         val returnedMatrix = matrix.replaceCell(0, newcell)
         matrix.cell(0) should be(cell)
-        returnedMatrix.cell(0) should be(new Cell("Y2"))
-        returnedMatrix.cell(1) should be(new Cell("Y1"))
+        returnedMatrix.cell(0) should be(Cell("Y2"))
+        returnedMatrix.cell(1) should be(Cell("Y1"))
       }
       "String contain only 5s" in {
         matrix.toString contains "[B1]"

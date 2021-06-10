@@ -1,7 +1,7 @@
 package de.htwg.se.ludo.controller
 
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.Controller
-import de.htwg.se.ludo.model.boardComponent.boardBaseImpl.{Board, Cell}
+import de.htwg.se.ludo.model.boardComponent.boardBaseImpl.Board
 import de.htwg.se.ludo.model.playerComponent.{Player, Team}
 import de.htwg.se.ludo.model.playerComponent
 import de.htwg.se.ludo.util.Observer

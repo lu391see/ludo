@@ -1,7 +1,6 @@
 package de.htwg.se.ludo.model
 
-import de.htwg.se.ludo.model.boardComponent.boardBaseImpl.Cell
-
+import de.htwg.se.ludo.model.gameComponent.Cell
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers
 
@@ -19,7 +18,7 @@ class CellSpec extends AnyWordSpec with Matchers{
     }
   }
   "set to a specific value" should {
-    val nonEmptyCell = new Cell("Y1")
+    val nonEmptyCell = Cell("Y1")
     "return that value" in {
       nonEmptyCell.getValue should be("Y1")
     }

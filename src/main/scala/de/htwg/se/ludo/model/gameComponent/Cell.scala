@@ -1,6 +1,4 @@
-package de.htwg.se.ludo.model.boardComponent.boardBaseImpl
-
-import de.htwg.se.ludo.model.boardComponent.CellInterface
+package de.htwg.se.ludo.model.gameComponent
 
 sealed case class Cell(value: String) extends CellInterface {
   def isSet:Boolean = value != ""
