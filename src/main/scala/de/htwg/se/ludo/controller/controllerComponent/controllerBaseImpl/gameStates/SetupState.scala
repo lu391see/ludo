@@ -7,7 +7,7 @@ import de.htwg.se.ludo.util.{AddAnotherPlayerMessage, FirstPlayerMessage, Invali
 case class SetupState(controller: Controller) extends State[GameState] {
   override def handle(input: String, n: GameState): Unit = {
     if (shouldStartTheGame(input)) {
-      if (controller.players.size == 1) {
+      if (controller.players.size <= 1) {
         controller.newMessage(AddAnotherPlayerMessage)
         return
       }

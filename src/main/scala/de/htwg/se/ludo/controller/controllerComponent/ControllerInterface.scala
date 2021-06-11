@@ -2,7 +2,7 @@ package de.htwg.se.ludo.controller.controllerComponent
 
 import de.htwg.se.ludo.model.diceComponent.DiceInterface
 import de.htwg.se.ludo.model.gameComponent.GameInterface
-import de.htwg.se.ludo.util.Message
+import de.htwg.se.ludo.util.{Message, WinStrategy}
 
 import scala.swing.Publisher
 
@@ -23,5 +23,5 @@ trait ControllerInterface extends Publisher {
   def newMessage(message: Message): Unit
   def publishMessage(): Unit
   def messageToString(): String
-  def setWinStrategy(winStrategy: String): Unit
+  def setWinStrategy(winStrategy: WinStrategy): Unit
 }

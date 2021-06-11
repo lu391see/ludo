@@ -1,8 +1,8 @@
 package de.htwg.se.ludo.aview
 
 import de.htwg.se.ludo.controller.controllerComponent.{ControllerInterface, NewGame, NewMessage, PinDrawn, Redo, Undo}
+import de.htwg.se.ludo.model.{AllPinWinStrategy, OnePinWinStrategy}
 
-import scala.util.{Failure, Try}
 import scala.swing.Reactor
 
 class TUI(controller: ControllerInterface) extends Reactor {
@@ -16,14 +16,8 @@ class TUI(controller: ControllerInterface) extends Reactor {
 
   def processInput(input: String): Unit = {
     input match {
-      case "one" =>
-        Try { controller.setWinStrategy("one") } match {
-          case Failure(e) => println(e.getMessage)
-        }
-      case "all" =>
-        Try { controller.setWinStrategy("all") } match {
-          case Failure(e) => println(e.getMessage)
-        }
+      case "one" => controller.setWinStrategy(OnePinWinStrategy())
+      case "all" => controller.setWinStrategy(AllPinWinStrategy())
       case "z" => controller.undo()
       case "y" => controller.redo()
       case _   => controller.handleInput(input)
