@@ -1,12 +1,13 @@
 package de.htwg.se.ludo.aview.gui
-import de.htwg.se.ludo.controller.{Controller, PinDrawn}
+import de.htwg.se.ludo.controller.PinDrawn
+import de.htwg.se.ludo.controller.controllerComponent.ControllerInterface
 
 import scala.swing._
 
 case class VerticalFieldRow(
     beginPos: Int,
     endPos: Int,
-    controller: Controller
+    controller: ControllerInterface
 ) extends BoxPanel(orientation = Orientation.Vertical){
   listenTo(controller)
   for (pos <- beginPos to endPos) {

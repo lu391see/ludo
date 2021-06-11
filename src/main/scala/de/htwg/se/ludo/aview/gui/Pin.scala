@@ -1,6 +1,6 @@
 package de.htwg.se.ludo.aview.gui
 
-import de.htwg.se.ludo.controller.Controller
+import de.htwg.se.ludo.controller.controllerComponent.ControllerInterface
 
 import java.awt.{Color, Font}
 import scala.swing._
@@ -10,7 +10,7 @@ case class Pin(
     id: Int,
     color: Color,
     pos: Int,
-    controller: Controller
+    controller: ControllerInterface
 ) extends Field(pos) {
   background = color
   add(new Label {

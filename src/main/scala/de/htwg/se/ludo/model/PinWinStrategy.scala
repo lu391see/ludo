@@ -1,5 +1,6 @@
 package de.htwg.se.ludo.model
 
+import de.htwg.se.ludo.model.playerComponent.Player
 import de.htwg.se.ludo.util.WinStrategy
 
 case class OnePinWinStrategy() extends WinStrategy {

@@ -1,11 +1,12 @@
 package de.htwg.se.ludo.aview.gui
-import de.htwg.se.ludo.controller.Controller
-import de.htwg.se.ludo.model.PlayerConstraints
+
+import de.htwg.se.ludo.controller.controllerComponent.ControllerInterface
+import de.htwg.se.ludo.model.playerComponent.PlayerConstraints // FIXME: direct access from view to model
 
 import scala.swing._
 import java.awt.Color
 
-case class Board(controller: Controller) extends BoxPanel(orientation = Orientation.Vertical) {
+case class Board(controller: ControllerInterface) extends BoxPanel(orientation = Orientation.Vertical) {
   private val teams = PlayerConstraints.teams
   contents += new BorderPanel {
     add(BaseTeam(teams(0).color, teams(0).basePosition, controller), BorderPanel.Position.West)

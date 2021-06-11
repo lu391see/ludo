@@ -1,5 +1,6 @@
 package de.htwg.se.ludo.aview.gui
-import de.htwg.se.ludo.controller.{Controller, PinDrawn}
+import de.htwg.se.ludo.controller.PinDrawn
+import de.htwg.se.ludo.controller.controllerComponent.ControllerInterface
 
 import scala.swing._
 
@@ -8,7 +9,7 @@ case class HorizontalFieldRow(
     endColor: Color,
     beginPos: Int,
     endPos: Int,
-    controller: Controller
+    controller: ControllerInterface
 ) extends BoxPanel(orientation = Orientation.Horizontal) {
   listenTo(controller)
   val startField = new StartField(color = beginColor, pos = beginPos)
@@ -21,14 +22,14 @@ case class HorizontalFieldRow(
   contents += otherStartField
 
   reactions += {
-    case event: PinDrawn => {
-      println(event)
+    case event: PinDrawn =>
+      // println(event)
       val oldPos = contents.indexWhere(c => c.name.toInt.equals(event.curPos))
       val newPos = contents.indexWhere(c => c.name.toInt.equals(event.nextPos))
-      println("HorizontalFieldRow",oldPos, newPos)
+      /*println("HorizontalFieldRow",oldPos, newPos)
       for (content <- contents) {
         println(content.name, content.background)
-      }
+      }*/
       if(oldPos != -1) {
         var field = new Field(oldPos)
         if(event.curPos == beginPos) field = startField
@@ -44,6 +45,5 @@ case class HorizontalFieldRow(
         contents ++= newContents
       }
       repaint
-    }
   }
 }

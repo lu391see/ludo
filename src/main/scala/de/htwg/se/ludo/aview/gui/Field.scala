@@ -1,4 +1,5 @@
 package de.htwg.se.ludo.aview.gui
+
 import java.awt.Color
 import javax.swing.border.LineBorder
 import scala.swing._
