@@ -1,6 +1,5 @@
 package de.htwg.se.ludo.aview.gui
-import de.htwg.se.ludo.controller.NewMessage
-import de.htwg.se.ludo.controller.controllerComponent.ControllerInterface
+import de.htwg.se.ludo.controller.controllerComponent.{ControllerInterface, NewMessage}
 
 import java.awt.Font
 import scala.swing.Swing.EmptyBorder

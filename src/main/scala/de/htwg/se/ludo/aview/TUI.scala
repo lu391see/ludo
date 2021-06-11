@@ -1,7 +1,6 @@
 package de.htwg.se.ludo.aview
 
-import de.htwg.se.ludo.controller.controllerComponent.ControllerInterface
-import de.htwg.se.ludo.controller.{NewGame, NewMessage, PinDrawn, Redo, Undo}
+import de.htwg.se.ludo.controller.controllerComponent.{ControllerInterface, NewGame, NewMessage, PinDrawn, Redo, Undo}
 
 import scala.util.{Failure, Try}
 import scala.swing.Reactor
@@ -11,8 +10,8 @@ class TUI(controller: ControllerInterface) extends Reactor {
   listenTo(controller)
 
   reactions += {
-    case NewMessage()                                       => onNewMessage
-    case PinDrawn(_, _, _, _) | NewGame() | Undo() | Redo() => onBoardUpdate
+    case NewMessage()                                       => onNewMessage()
+    case PinDrawn(_, _, _, _) | NewGame() | Undo() | Redo() => onBoardUpdate()
   }
 
   def processInput(input: String): Unit = {

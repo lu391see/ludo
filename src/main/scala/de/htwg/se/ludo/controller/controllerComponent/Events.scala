@@ -1,4 +1,4 @@
-package de.htwg.se.ludo.controller
+package de.htwg.se.ludo.controller.controllerComponent
 
 import java.awt.Color
 import scala.swing.event.Event

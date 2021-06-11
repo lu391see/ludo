@@ -1,7 +1,6 @@
 package de.htwg.se.ludo.aview.gui
 
-import de.htwg.se.ludo.controller.PinDrawn
-import de.htwg.se.ludo.controller.controllerComponent.ControllerInterface
+import de.htwg.se.ludo.controller.controllerComponent.{ControllerInterface, PinDrawn}
 
 import scala.swing._
 
