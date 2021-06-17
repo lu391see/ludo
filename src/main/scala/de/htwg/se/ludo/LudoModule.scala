@@ -20,19 +20,18 @@ class LudoModule extends AbstractModule with ScalaModule {
   val totalPins: Int = maxPlayers * 4
 
   override def configure(): Unit = {
-    // ControllerComponent
     bind[ControllerInterface].to[Controller]
 
     // GameComponent
-    bind[GameInterface].to[Game]
-    bind[BoardInterface].to[Board]
-    bind[CellInterface].to[Cell]
+    // bind[GameInterface].to[Game]
+    //bind[BoardInterface].to[Board]
+    //bind[CellInterface].to[Cell]
 
-    bind[BoardInterface].annotatedWithName("NewGame").toInstance(new Board(defaultSize, Cell(""), totalPins))
+    //bind[BoardInterface].annotatedWithName("NewGame").toInstance(new Board(defaultSize, Cell(""), totalPins))
 
     // DiceComponent
-    bind[DiceInterface].annotatedWithName("D6").toInstance(new dice6Impl.Dice)
-    bind[DiceInterface].annotatedWithName("D8").toInstance(new dice8Impl.Dice)
+    //bind[DiceInterface].annotatedWithName("D6").toInstance(new dice6Impl.Dice)
+    //bind[DiceInterface].annotatedWithName("D8").toInstance(new dice8Impl.Dice)
 
     bind[WinStrategy].annotatedWithName("OnePin").toInstance(new OnePinWinStrategy)
     bind[WinStrategy].annotatedWithName("AllPin").toInstance(new AllPinWinStrategy)

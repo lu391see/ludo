@@ -4,6 +4,8 @@ import de.htwg.se.ludo.model.playerComponent.Player
 
 trait GameInterface {
   val board: BoardInterface
+
+  def based(): GameInterface
   def draw(currentPlayer: Player, pin: Int, dice_roll: Int): GameInterface
   def drawnPin(player: Player, pin: Int, pos: Int): GameInterface
 }
