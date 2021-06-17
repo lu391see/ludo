@@ -22,7 +22,9 @@ object Ludo {
 
     while (true) {
       input = readLine()
-      if (input == "q") return
+
+      if (input == "q") System.exit(0)
+
       tui.processInput(input)
     }
   }
