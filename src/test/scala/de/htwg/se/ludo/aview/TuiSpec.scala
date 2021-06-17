@@ -1,11 +1,11 @@
 package de.htwg.se.ludo.aview
 
-import de.htwg.se.ludo.model.{AllPinWinStrategy, OnePinWinStrategy}
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.gameStates.{RollState, SetupState}
 import de.htwg.se.ludo.model.diceComponent.dice6Impl.Dice
 import de.htwg.se.ludo.model.gameComponent.gameBaseImpl.{Cell, EmptyCell}
-import de.htwg.se.ludo.util.AddAnotherPlayerMessage
+import de.htwg.se.ludo.model.{AllPinWinStrategy, OnePinWinStrategy}
+import de.htwg.se.ludo.util.{AddAnotherPlayerMessage, ChoosePinMessage, RollDiceMessage, WelcomeMessage}
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
@@ -18,7 +18,10 @@ class TuiSpec extends AnyWordSpec with Matchers {
     val mockdiceFour = Dice(4)
     val mockdiceSix = Dice(6)
 
-    "initially add players to the game " in {
+    "initially add players to the game when welcomed" in {
+      controller.newMessage(WelcomeMessage)
+      controller.message should be (WelcomeMessage)
+
       controller.gameState.state should be(SetupState(controller))
       tui.processInput("lukas")
     }
@@ -43,29 +46,44 @@ class TuiSpec extends AnyWordSpec with Matchers {
     "until start is pressed or 4 players are added" in {
       tui.processInput("start")
       controller.gameState.state should be(RollState(controller))
+      controller.message should be(RollDiceMessage)
     }
     "switch between win conditions without changing the games current state" in {
-      val currentState = controller.gameState.state
+      val same_state = controller.gameState.state
 
       tui.processInput("one")
       controller.winStrategy should be(OnePinWinStrategy())
-      controller.gameState.state should be(currentState)
+      controller.gameState.state should be(same_state)
 
       tui.processInput("all")
       controller.winStrategy should be(AllPinWinStrategy())
-      controller.gameState.state should be(currentState)
+      controller.gameState.state should be(same_state)
+    }
+    "throw a dice with any input" in {
+      controller.pips should be (0)
+      tui.processInput("any input for dice throw")
+      controller.pips should be > 0
+      controller.message should be(ChoosePinMessage)
+
+    }
+    "retry when there is an invalid pin input" in {
+      val same_player = controller.currentPlayer
+      val invalid_input = "0"
+
+      controller.rollDice(mockdiceFour)
+      controller.pips should be (4)
+
+      tui.processInput(invalid_input)
+
+      controller.currentPlayer should be(same_player)
+      controller.message should be(ChoosePinMessage)
     }
     "don't move a selected pin from base when rolled a four without previous six" in {
-      tui.processInput("any input for dice throw")
-      controller.rollDice(mockdiceFour)
-      controller.pips should be(4)
+       tui.processInput("1")
 
-      tui.processInput("1")
-
-      controller.game should be(defined)
-      controller.game.get.board.spots(controller.players(0).team.basePosition) should be(Cell(controller.players(0).team.pinID(0)))
-      controller.game.get.board.spots(controller.players(0).team.startPosition) should be(EmptyCell)
-
+        controller.game should be(defined)
+        controller.game.get.board.spots(controller.players(0).team.basePosition) should be(Cell(controller.players(0).team.pinID(0)))
+        controller.game.get.board.spots(controller.players(0).team.startPosition) should be(EmptyCell)
     }
     "switch player and move a pin from base to start field when rolled a 6" in {
       controller.currentPlayer should be(defined)

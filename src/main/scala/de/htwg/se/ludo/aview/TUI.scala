@@ -21,6 +21,7 @@ class TUI(controller: ControllerInterface) extends Reactor {
       case "z" => controller.undo()
       case "y" => controller.redo()
       case _   => controller.handleInput(input)
+      // case "" =>
     }
   }
 
