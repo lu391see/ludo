@@ -39,6 +39,7 @@ class LudoModule extends AbstractModule with ScalaModule {
     bindConstant().annotatedWith(Names.named("DefaultSize")).to(defaultSize)
     bind[CellInterface].annotatedWith(Names.named("EmptyCell")).toInstance(Cell(""))
     bindConstant().annotatedWith(Names.named("TotalPins")).to(totalPins)
+    bindConstant().annotatedWith(Names.named("MaxPlayers")).to(maxPlayers)
 
   }
 
