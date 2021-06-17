@@ -1,6 +1,14 @@
 package de.htwg.se.ludo.model.gameComponent.gameBaseImpl
 
+
 import de.htwg.se.ludo.model.gameComponent.{BoardInterface, CellInterface}
+
+// import com.google.inject.Inject
+// import com.google.inject.name.Named
+//
+// case class Board @Inject() (spots: Vector[CellInterface], baseSize: Int) extends BoardInterface {
+//  def this(@Named("DefaultSize") size: Int, @Named("EmptyCell") filling: CellInterface, @Named("TotalPins") baseSize: Int) =
+//    this(Vector.tabulate(size) { _ => filling }, baseSize)
 
 case class Board(spots: Vector[CellInterface], baseSize: Int) extends BoardInterface {
   def this(size: Int, filling: CellInterface, baseSize: Int) =

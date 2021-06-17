@@ -37,7 +37,7 @@ class LudoModule extends AbstractModule with ScalaModule {
     bind[WinStrategy].annotatedWithName("AllPin").toInstance(new AllPinWinStrategy)
 
     bindConstant().annotatedWith(Names.named("DefaultSize")).to(defaultSize)
-    bind[CellInterface].annotatedWithName("EmptyCell").toInstance(Cell(""))
+    bind[CellInterface].annotatedWith(Names.named("EmptyCell")).toInstance(Cell(""))
     bindConstant().annotatedWith(Names.named("TotalPins")).to(totalPins)
 
   }

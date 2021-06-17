@@ -34,7 +34,10 @@ class Controller @Inject() () extends ControllerInterface {
   }
 
   def newGame(): Unit = {
-    val board: BoardInterface = new Board(72, EmptyCell, 4*4)
+    val board: BoardInterface = new Board(
+      injector.instance[Int](Names.named("DefaultSize")),
+      EmptyCell,
+      injector.instance[Int](Names.named("TotalPins")))
     val game: GameInterface = Game(board, players)
     this.game = Some(game.based())
     publish(NewGame())
