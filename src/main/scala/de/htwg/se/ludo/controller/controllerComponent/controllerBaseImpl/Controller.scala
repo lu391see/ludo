@@ -1,9 +1,9 @@
 package de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl
 
-import de.htwg.se.ludo.controller.controllerComponent.ControllerInterface
+import de.htwg.se.ludo.controller.controllerComponent.{ControllerInterface, NewGame, NewMessage, NewPlayer, PinDrawn, Redo, Undo}
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.commands._
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.gameStates.GameState
-import de.htwg.se.ludo.controller.{NewGame, NewMessage, NewPlayer, PinDrawn, Redo, Undo}
+import de.htwg.se.ludo.model.OnePinWinStrategy
 import de.htwg.se.ludo.model.diceComponent.DiceInterface
 import de.htwg.se.ludo.model.playerComponent.{Player, PlayerConstraints}
 import de.htwg.se.ludo.model.gameComponent.{BoardInterface, GameInterface}
@@ -12,7 +12,7 @@ import de.htwg.se.ludo.util._
 
 
 class Controller extends ControllerInterface {
-
+  var winStrategy: WinStrategy = OnePinWinStrategy()
   var currentPlayer: Option[Player] = None
   var game: Option[GameInterface] = None
   var gameState: GameState = GameState(this)
@@ -97,7 +97,9 @@ class Controller extends ControllerInterface {
     this.message.toString
   }
 
-  def setWinStrategy(winStrategy: String): Unit = {}
+  def setWinStrategy(winStrategy: WinStrategy): Unit = {
+    this.winStrategy = winStrategy
+  }
 
   override def toString: String =
     "Current game status: " + (game match {

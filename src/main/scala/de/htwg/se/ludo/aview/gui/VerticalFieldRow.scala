@@ -1,6 +1,5 @@
 package de.htwg.se.ludo.aview.gui
-import de.htwg.se.ludo.controller.PinDrawn
-import de.htwg.se.ludo.controller.controllerComponent.ControllerInterface
+import de.htwg.se.ludo.controller.controllerComponent.{ControllerInterface, PinDrawn}
 
 import scala.swing._
 
@@ -15,7 +14,7 @@ case class VerticalFieldRow(
   }
 
   reactions += {
-    case event: PinDrawn => {
+    case event: PinDrawn =>
       val oldPos = contents.indexWhere(c => c.name.toInt.equals(event.curPos))
       val newPos = contents.indexWhere(c => c.name.toInt.equals(event.nextPos))
       if(oldPos != -1) {
@@ -30,6 +29,5 @@ case class VerticalFieldRow(
 
       }
       repaint
-    }
   }
 }
