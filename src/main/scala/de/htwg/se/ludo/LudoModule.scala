@@ -4,6 +4,7 @@ import com.google.inject.AbstractModule
 import com.google.inject.name.Names
 import de.htwg.se.ludo.controller.controllerComponent.ControllerInterface
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.Controller
+import de.htwg.se.ludo.model.diceComponent._
 import de.htwg.se.ludo.model.{AllPinWinStrategy, OnePinWinStrategy}
 import de.htwg.se.ludo.model.gameComponent.CellInterface
 import de.htwg.se.ludo.model.gameComponent.gameBaseImpl._
@@ -20,6 +21,7 @@ class LudoModule extends AbstractModule with ScalaModule {
 
   override def configure(): Unit = {
     bind[ControllerInterface].to[Controller]
+    bind[DiceInterface].to[dice6Impl.Dice]
 
     bind[WinStrategy].annotatedWithName("OnePin").toInstance(new OnePinWinStrategy)
     bind[WinStrategy].annotatedWithName("AllPin").toInstance(new AllPinWinStrategy)

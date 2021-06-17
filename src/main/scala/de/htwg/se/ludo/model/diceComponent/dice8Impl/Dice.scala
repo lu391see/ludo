@@ -5,4 +5,7 @@ import de.htwg.se.ludo.model.diceComponent.DiceInterface
 import scala.util.Random
 
 
-case class Dice(pips: Int = Random.nextInt(8) + 1) extends DiceInterface
+class Dice extends DiceInterface {
+  val pips: Int = 8
+  def throwing: Int = Random.nextInt(pips) + 1
+}

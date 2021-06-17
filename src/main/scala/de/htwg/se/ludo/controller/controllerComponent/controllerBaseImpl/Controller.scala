@@ -6,7 +6,7 @@ import de.htwg.se.ludo.LudoModule
 import de.htwg.se.ludo.controller.controllerComponent.{ControllerInterface, NewGame, NewMessage, NewPlayer, PinDrawn, Redo, Undo}
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.commands._
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.gameStates.GameState
-import de.htwg.se.ludo.model.diceComponent.dice6Impl
+import de.htwg.se.ludo.model.diceComponent.DiceInterface
 import de.htwg.se.ludo.model.gameComponent.gameBaseImpl.{Board, Game}
 import de.htwg.se.ludo.model.playerComponent.{Player, PlayerConstraints}
 import de.htwg.se.ludo.model.gameComponent.{BoardInterface, CellInterface, GameInterface}
@@ -60,8 +60,8 @@ class Controller @Inject() () extends ControllerInterface {
   }
 
   def rollDice(): Unit = {
-    val dice = dice6Impl.Dice()
-    pips = dice.pips
+    val dice = injector.getInstance(classOf[DiceInterface])
+    pips = dice.throwing
     newMessage(currentPlayer match {
       case Some(c) => PlayerRolledDiceMessage(c, pips)
       case None    => NoCurrentPlayerMessage
