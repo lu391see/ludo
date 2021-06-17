@@ -6,16 +6,15 @@ import de.htwg.se.ludo.LudoModule
 import de.htwg.se.ludo.controller.controllerComponent.{ControllerInterface, NewGame, NewMessage, NewPlayer, PinDrawn, Redo, Undo}
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.commands._
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.gameStates.GameState
-import de.htwg.se.ludo.model.OnePinWinStrategy
 import de.htwg.se.ludo.model.diceComponent.DiceInterface
+import de.htwg.se.ludo.model.gameComponent.gameBaseImpl.Game
 import de.htwg.se.ludo.model.playerComponent.{Player, PlayerConstraints}
-import de.htwg.se.ludo.model.gameComponent.{BoardInterface, GameInterface}
-import de.htwg.se.ludo.model.gameComponent.gameBaseImpl.{BasicBoardConstraints, Board, Game}
+import de.htwg.se.ludo.model.gameComponent.{BoardInterface, CellInterface, GameInterface}
 import de.htwg.se.ludo.util._
 import net.codingwell.scalaguice.InjectorExtensions.ScalaInjector
 
 
-class Controller @Inject() extends ControllerInterface {
+class Controller @Inject() () extends ControllerInterface {
 
   var currentPlayer: Option[Player] = None
   var game: Option[GameInterface] = None
@@ -27,6 +26,7 @@ class Controller @Inject() extends ControllerInterface {
   private val undoManager = new UndoManager
   val injector: Injector = Guice.createInjector(new LudoModule)
 
+  val EmptyCell: CellInterface = injector.instance[CellInterface](Names.named("EmptyCell"))
   var winStrategy: WinStrategy = injector.instance[WinStrategy](Names.named("OnePin"))
 
   def handleInput(input: String): Unit = {
@@ -34,11 +34,7 @@ class Controller @Inject() extends ControllerInterface {
   }
 
   def newGame(): Unit = {
-    val board: BoardInterface = new Board(
-      BasicBoardConstraints.fields,
-      BasicBoardConstraints.filling,
-      PlayerConstraints.totalPins
-    )
+    val board: BoardInterface = injector.instance[BoardInterface](Names.named("NewGame"))
     game = Some(Game(board, players).based())
     publish(NewGame())
   }
