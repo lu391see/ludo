@@ -1,7 +1,11 @@
 package de.htwg.se.ludo.aview
 
-import de.htwg.se.ludo.controller.controllerComponent.{ControllerInterface, NewGame, NewMessage, PinDrawn, Redo, Undo}
-import de.htwg.se.ludo.model.{AllPinWinStrategy, OnePinWinStrategy}
+import com.google.inject.name.Names
+import com.google.inject.{Guice, Injector}
+import de.htwg.se.ludo.LudoModule
+import de.htwg.se.ludo.controller.controllerComponent._
+import de.htwg.se.ludo.util.WinStrategy
+import net.codingwell.scalaguice.InjectorExtensions.ScalaInjector
 
 import scala.swing.Reactor
 
@@ -14,10 +18,12 @@ class TUI(controller: ControllerInterface) extends Reactor {
     case PinDrawn(_, _, _, _) | NewGame() | Undo() | Redo() => onBoardUpdate()
   }
 
+  val injector: Injector = Guice.createInjector(new LudoModule)
+
   def processInput(input: String): Unit = {
     input match {
-      case "one" => controller.setWinStrategy(OnePinWinStrategy())
-      case "all" => controller.setWinStrategy(AllPinWinStrategy())
+      case "one" => controller.setWinStrategy(injector.instance[WinStrategy](Names.named("OnePin")))
+      case "all" => controller.setWinStrategy(injector.instance[WinStrategy](Names.named("AllPin")))
       case "z" => controller.undo()
       case "y" => controller.redo()
       case _   => controller.handleInput(input)
