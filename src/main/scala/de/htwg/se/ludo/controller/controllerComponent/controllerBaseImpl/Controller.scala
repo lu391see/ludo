@@ -1,5 +1,8 @@
 package de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl
 
+import com.google.inject.name.Names
+import com.google.inject.{Guice, Inject, Injector}
+import de.htwg.se.ludo.LudoModule
 import de.htwg.se.ludo.controller.controllerComponent.{ControllerInterface, NewGame, NewMessage, NewPlayer, PinDrawn, Redo, Undo}
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.commands._
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.gameStates.GameState
@@ -9,10 +12,11 @@ import de.htwg.se.ludo.model.playerComponent.{Player, PlayerConstraints}
 import de.htwg.se.ludo.model.gameComponent.{BoardInterface, GameInterface}
 import de.htwg.se.ludo.model.gameComponent.gameBaseImpl.{BasicBoardConstraints, Board, Game}
 import de.htwg.se.ludo.util._
+import net.codingwell.scalaguice.InjectorExtensions.ScalaInjector
 
 
-class Controller extends ControllerInterface {
-  var winStrategy: WinStrategy = OnePinWinStrategy()
+class Controller @Inject() extends ControllerInterface {
+
   var currentPlayer: Option[Player] = None
   var game: Option[GameInterface] = None
   var gameState: GameState = GameState(this)
@@ -21,6 +25,9 @@ class Controller extends ControllerInterface {
   var message: Message = EmptyMessage
 
   private val undoManager = new UndoManager
+  val injector: Injector = Guice.createInjector(new LudoModule)
+
+  var winStrategy: WinStrategy = injector.instance[WinStrategy](Names.named("OnePin"))
 
   def handleInput(input: String): Unit = {
     gameState.handle(input)
@@ -52,7 +59,8 @@ class Controller extends ControllerInterface {
     }
   }
 
-  def rollDice(dice: DiceInterface): Unit = {
+  def rollDice(): Unit = {
+    val dice = injector.instance[DiceInterface](Names.named("D6"))
     pips = dice.pips
     newMessage(currentPlayer match {
       case Some(c) => PlayerRolledDiceMessage(c, pips)
