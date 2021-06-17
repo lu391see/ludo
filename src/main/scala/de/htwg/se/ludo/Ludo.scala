@@ -1,7 +1,9 @@
 package de.htwg.se.ludo
+import com.google.inject.Guice
 import de.htwg.se.ludo.aview.TUI
 import de.htwg.se.ludo.aview.gui.GUI
-import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.Controller
+import de.htwg.se.ludo.controller.controllerComponent.ControllerInterface
+
 import de.htwg.se.ludo.util.WelcomeMessage
 
 import scala.io.StdIn.readLine
@@ -9,8 +11,8 @@ import scala.io.StdIn.readLine
 object Ludo {
 
   def main(args: Array[String]): Unit = {
-
-    val controller = new Controller()
+    val injector = Guice.createInjector(new LudoModule)
+    val controller = injector.getInstance(classOf[ControllerInterface])
     val tui = new TUI(controller)
     GUI(controller)
 
