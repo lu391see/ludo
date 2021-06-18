@@ -1,6 +1,10 @@
 package de.htwg.se.ludo.controller
 
-import de.htwg.se.ludo.model.{ChoosePinMessage, RollDiceMessage}
+import de.htwg.se.ludo.model.{
+  ChoosePinMessage,
+  PlayerWonGameMessage,
+  RollDiceMessage
+}
 import de.htwg.se.ludo.util.State
 
 import scala.util.{Failure, Success, Try}
@@ -19,6 +23,11 @@ case class DrawState(controller: Controller) extends State[GameState] {
         ChoosePinMessage.print()
         return
 
+    }
+
+    if (controller.isWon) {
+      PlayerWonGameMessage(controller.currentPlayer.get).print()
+      System.exit(0)
     }
 
     controller.switchPlayer()
