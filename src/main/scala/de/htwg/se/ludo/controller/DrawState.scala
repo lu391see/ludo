@@ -3,7 +3,8 @@ package de.htwg.se.ludo.controller
 import de.htwg.se.ludo.model.{
   ChoosePinMessage,
   PlayerWonGameMessage,
-  RollDiceMessage
+  RollDiceMessage,
+  PinIsAlreadyFinishedMessage
 }
 import de.htwg.se.ludo.util.State
 
@@ -15,6 +16,10 @@ case class DrawState(controller: Controller) extends State[GameState] {
       case Success(pin) =>
         if (invalidPin(pin)) {
           ChoosePinMessage.print()
+          return
+        }
+        if (controller.currentPlayer.get.team.isFinished(pin - 1)) {
+          PinIsAlreadyFinishedMessage(pin).print()
           return
         }
         controller.drawPin(pin - 1)
