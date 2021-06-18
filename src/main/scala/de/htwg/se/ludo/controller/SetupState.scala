@@ -1,5 +1,6 @@
 package de.htwg.se.ludo.controller
 
+import de.htwg.se.ludo.model.{EnterPlayerNameMessage, FirstPlayerMessage, InvalidCurrentPlayerAtSetupMessage, PlayerConstraints, RollDiceMessage}
 import de.htwg.se.ludo.model.{
   AddAnotherPlayerMessage,
   FirstPlayerMessage,
@@ -25,6 +26,10 @@ case class SetupState(controller: Controller) extends State[GameState] {
       RollDiceMessage.print()
       n.nextState(RollState(controller))
     } else {
+      if(input.isEmpty) {
+        EnterPlayerNameMessage.print()
+        return
+      }
       controller.addNewPlayer(input)
     }
   }
