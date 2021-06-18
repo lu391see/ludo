@@ -15,9 +15,6 @@ class PlayerSpec extends AnyWordSpec with Matchers {
       "not be able to move for now" in {
         player.sixRolled should be (false)
       }
-      "not set to Winner yet" in {
-        player.hasWon should be(false)
-      }
       "have 4 pins with number in front of index" in {
         player.team.color should be('Y')
         player.team.id(0) should be("Y1")
