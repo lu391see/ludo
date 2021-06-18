@@ -23,14 +23,10 @@ class PlayerSpec extends AnyWordSpec with Matchers {
       }
       "have 4 pins with Color-identifier in front of pin index" in {
         player.team.pinID(0) should be("Y1")
-        "have 4 pins with number in front of index" in {
-          player.team.color should be('Y')
-          player.team.pinID(0) should be("Y1")
-          player.team.position(0) should be(player.team.basePosition)
-          player.team.pinID(1) should be("Y2")
-          player.team.position(1) should be(player.team.basePosition + 1)
-          player.team.pinID(3) should be("Y4")
-        }
+        player.team.position(0) should be(player.team.basePosition)
+        player.team.pinID(1) should be("Y2")
+        player.team.position(1) should be(player.team.basePosition + 1)
+        player.team.pinID(3) should be("Y4")
       }
     }
   }
