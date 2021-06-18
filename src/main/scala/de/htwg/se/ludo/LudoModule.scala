@@ -24,7 +24,7 @@ class LudoModule extends AbstractModule with ScalaModule {
 
     // GameComponent
     // bind[GameInterface].to[Game]
-    //bind[BoardInterface].to[Board]
+    bind[BoardInterface].to[Board]
     //bind[CellInterface].to[Cell]
 
     //bind[BoardInterface].annotatedWithName("NewGame").toInstance(new Board(defaultSize, Cell(""), totalPins))
@@ -36,7 +36,7 @@ class LudoModule extends AbstractModule with ScalaModule {
     bind[WinStrategy].annotatedWithName("OnePin").toInstance(new OnePinWinStrategy)
     bind[WinStrategy].annotatedWithName("AllPin").toInstance(new AllPinWinStrategy)
 
-    bindConstant().annotatedWith(Names.named("DefaultSize")).to(defaultSize)
+    bindConstant().annotatedWith(Names.named("Size")).to(defaultSize)
     bind[CellInterface].annotatedWith(Names.named("EmptyCell")).toInstance(Cell(""))
     bindConstant().annotatedWith(Names.named("TotalPins")).to(totalPins)
 
