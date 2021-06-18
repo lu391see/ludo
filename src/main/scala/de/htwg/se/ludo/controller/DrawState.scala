@@ -1,10 +1,10 @@
 package de.htwg.se.ludo.controller
 
-import de.htwg.se.ludo.model.{ChoosePinMessage, PinIsAlreadyFinishedMessage, RollDiceMessage}
 import de.htwg.se.ludo.model.{
   ChoosePinMessage,
   PlayerWonGameMessage,
-  RollDiceMessage
+  RollDiceMessage,
+  PinIsAlreadyFinishedMessage
 }
 import de.htwg.se.ludo.util.State
 
