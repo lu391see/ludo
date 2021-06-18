@@ -6,8 +6,8 @@ import de.htwg.se.ludo.LudoModule
 import de.htwg.se.ludo.controller.controllerComponent.{ControllerInterface, NewGame, NewMessage, NewPlayer, PinDrawn, Redo, Undo}
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.commands._
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.gameStates.GameState
+import de.htwg.se.ludo.model.gameComponent.gameBaseImpl.Game
 import de.htwg.se.ludo.model.diceComponent.DiceInterface
-import de.htwg.se.ludo.model.gameComponent.gameBaseImpl.{Board, Game}
 import de.htwg.se.ludo.model.playerComponent.{Player, PlayerConstraints}
 import de.htwg.se.ludo.model.gameComponent.{BoardInterface, CellInterface, GameInterface}
 import de.htwg.se.ludo.util._
@@ -34,10 +34,11 @@ class Controller @Inject() () extends ControllerInterface {
   }
 
   def newGame(): Unit = {
-    val board: BoardInterface = new Board(
-      injector.instance[Int](Names.named("DefaultSize")),
+    val board: BoardInterface = injector.getInstance(classOf[BoardInterface])
+      /*new Board(
+      injector.instance[Int](Names.named("Size")),
       EmptyCell,
-      injector.instance[Int](Names.named("TotalPins")))
+      injector.instance[Int](Names.named("TotalPins")))*/
     val game: GameInterface = Game(board, players)
     this.game = Some(game.based())
     publish(NewGame())
