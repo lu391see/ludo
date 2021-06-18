@@ -18,7 +18,7 @@ object Ludo {
 
     var input: String = ""
 
-    controller.newMessage(WelcomeMessage) // FIXME: shouldn't be neccessary here
+    controller.newMessage(WelcomeMessage)
 
     while (true) {
       input = readLine()
