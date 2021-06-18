@@ -11,5 +11,3 @@ sealed case class Cell(value: String) extends CellInterface {
     "[" + value + "]"
   }
 }
-
-object EmptyCell extends Cell("")

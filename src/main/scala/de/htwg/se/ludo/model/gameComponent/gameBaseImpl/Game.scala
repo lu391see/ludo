@@ -1,9 +1,10 @@
 package de.htwg.se.ludo.model.gameComponent.gameBaseImpl
 
-import de.htwg.se.ludo.model.gameComponent.{BoardInterface, GameInterface}
+import de.htwg.se.ludo.model.gameComponent.{BoardInterface, CellInterface, GameInterface}
 import de.htwg.se.ludo.model.playerComponent.{Pin, Player}
 
 case class Game(board: BoardInterface, players: Vector[Player]) extends GameInterface {
+  val EmptyCell: CellInterface = Cell("")
 
   def based(): GameInterface = {
     changedGame(basedPins())

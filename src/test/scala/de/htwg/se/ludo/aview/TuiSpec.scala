@@ -2,8 +2,7 @@ package de.htwg.se.ludo.aview
 
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.gameStates.{RollState, SetupState}
-import de.htwg.se.ludo.model.diceComponent.dice6Impl.Dice
-import de.htwg.se.ludo.model.gameComponent.gameBaseImpl.{Cell, EmptyCell}
+import de.htwg.se.ludo.model.gameComponent.gameBaseImpl.Cell
 import de.htwg.se.ludo.model.{AllPinWinStrategy, OnePinWinStrategy}
 import de.htwg.se.ludo.util.{AddAnotherPlayerMessage, ChoosePinMessage, RollDiceMessage, WelcomeMessage}
 import org.scalatest.matchers.should.Matchers
@@ -15,8 +14,7 @@ class TuiSpec extends AnyWordSpec with Matchers {
     val controller = new Controller()
     val tui = new TUI(controller)
 
-    val mockdiceFour = Dice(4)
-    val mockdiceSix = Dice(6)
+    val EmptyCell = Cell("")
 
     "initially add players to the game when welcomed" in {
       controller.newMessage(WelcomeMessage)
@@ -70,7 +68,8 @@ class TuiSpec extends AnyWordSpec with Matchers {
       val same_player = controller.currentPlayer
       val invalid_input = "0"
 
-      controller.rollDice(mockdiceFour)
+      // controller.rollDice() => 4
+      controller.pips = 4
       controller.pips should be (4)
 
       tui.processInput(invalid_input)
@@ -90,7 +89,8 @@ class TuiSpec extends AnyWordSpec with Matchers {
       controller.currentPlayer.get should be(controller.players(1))
 
       tui.processInput("any input for dice throw")
-      controller.rollDice(mockdiceSix)
+      // controller.rollDice() => 6
+      controller.pips = 6
       controller.pips should be(6)
 
       tui.processInput("3")

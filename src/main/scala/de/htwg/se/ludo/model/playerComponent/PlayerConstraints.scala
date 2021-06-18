@@ -9,7 +9,4 @@ object PlayerConstraints {
     new Team(Color.green, 8, 36, 64),
     new Team(Color.yellow, 12, 46, 68)
   )
-  val maxPlayers = 4
-  val minPlayers = 2
-  val totalPins: Int = maxPlayers * 4
 }
