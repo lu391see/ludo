@@ -93,6 +93,10 @@ class Controller @Inject() () extends ControllerInterface {
     publish(Redo())
   }
 
+  def isWon: Boolean = {
+    winStrategy.hasWon(currentPlayer.get)
+  }
+
   def newMessage(message: Message): Unit = {
     this.message = message
     publish(NewMessage())

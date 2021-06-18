@@ -16,7 +16,7 @@ class PlayerSpec extends AnyWordSpec with Matchers {
         player.toString should be("Player Yellow: 'Lukas'")
       }
       "not be able to move for now" in {
-        player.sixRolled should be (false)
+        player.sixRolled should be(false)
       }
       "not set to Winner yet" in {
         player.hasWon should be(false)
@@ -30,6 +30,4 @@ class PlayerSpec extends AnyWordSpec with Matchers {
       }
     }
   }
-
-
 }
