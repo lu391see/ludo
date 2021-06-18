@@ -1,7 +1,7 @@
 package de.htwg.se.ludo.controller
 
-import de.htwg.se.ludo.model.{Board, BoardConstraints, Game, GameBoardUninitializedMessage, NextPlayerMessage, NoCurrentPlayerMessage, Player, PlayerConstraints, PlayerRolledDiceMessage, RandomDice, Team}
-import de.htwg.se.ludo.util.{Observable, UndoManager}
+import de.htwg.se.ludo.model.{AllPinWinStrategy, Board, BoardConstraints, Game, GameBoardUninitializedMessage, NextPlayerMessage, NoCurrentPlayerMessage, OnePinWinStrategy, Player, PlayerConstraints, PlayerRolledDiceMessage, RandomDice, Team}
+import de.htwg.se.ludo.util.{Observable, UndoManager, WinStrategy}
 
 class Controller() extends Observable {
   var currentPlayer: Option[Player] = None
@@ -9,6 +9,7 @@ class Controller() extends Observable {
   var gameState: GameState = GameState(this)
   var pips: Int = 0
   var players: Vector[Player] = Vector.empty
+  var winStrategy: WinStrategy = AllPinWinStrategy()
 
   private val undoManager = new UndoManager
 
@@ -50,6 +51,9 @@ class Controller() extends Observable {
   def drawPin(pin: Int): Unit = {
     undoManager.doStep(new DrawCommand(pin, this))
   }
+  def isWon: Boolean = {
+    winStrategy.hasWon(currentPlayer.get)
+  }
 
   def undo(): Unit = {
     undoManager.undoStep()
@@ -59,7 +63,20 @@ class Controller() extends Observable {
     undoManager.redoStep()
   }
 
-  def setWinStrategy(winStrategy: String): Unit = {}
+
+  def setWinStrategy(strategy: String): Unit = {
+    game match {
+      case Some(_) =>
+        strategy match {
+          case "one" => winStrategy = OnePinWinStrategy()
+          case _     => winStrategy = AllPinWinStrategy()
+        }
+      case None =>
+        println(
+          "error: can not set win strategy at the beginning please try again!"
+        )
+    }
+  }
 
   override def toString: String =
     game match {
