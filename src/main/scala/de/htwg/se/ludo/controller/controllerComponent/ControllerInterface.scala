@@ -2,12 +2,14 @@ package de.htwg.se.ludo.controller.controllerComponent
 
 import de.htwg.se.ludo.model.diceComponent.DiceInterface
 import de.htwg.se.ludo.model.gameComponent.GameInterface
+import de.htwg.se.ludo.model.playerComponent.Team
 import de.htwg.se.ludo.util.{Message, WinStrategy}
 
 import scala.swing.Publisher
 
 trait ControllerInterface extends Publisher {
   var game: Option[GameInterface]
+  val teams: Vector[Team]
 
   def handleInput(input: String): Unit
 

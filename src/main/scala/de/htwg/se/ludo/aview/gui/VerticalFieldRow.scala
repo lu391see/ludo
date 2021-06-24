@@ -6,10 +6,12 @@ import scala.swing._
 case class VerticalFieldRow(
     beginPos: Int,
     endPos: Int,
+    reverse: Boolean,
     controller: ControllerInterface
 ) extends BoxPanel(orientation = Orientation.Vertical){
   listenTo(controller)
-  for (pos <- beginPos to endPos) {
+  val range = if(reverse) (beginPos until endPos).reverse else beginPos until endPos
+  for (pos <- range) {
     contents += new Field(pos)
   }
 

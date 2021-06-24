@@ -22,6 +22,7 @@ class Controller @Inject() () extends ControllerInterface {
   var pips: Int = 0
   var players: Vector[Player] = Vector.empty
   var message: Message = EmptyMessage
+  val teams = PlayerConstraints.teams
 
   private val undoManager = new UndoManager
   val injector: Injector = Guice.createInjector(new LudoModule)
@@ -46,7 +47,7 @@ class Controller @Inject() () extends ControllerInterface {
 
   def addNewPlayer(name: String): Unit = {
     undoManager.doStep(
-      new AddPlayerCommand(name, PlayerConstraints.teams(players.size), this)
+      new AddPlayerCommand(name, teams(players.size), this)
     )
     publish(NewPlayer())
   }
