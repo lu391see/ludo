@@ -51,8 +51,9 @@ class ControllerSpec extends AnyWordSpec with Matchers {
       }
       "after rolling a dice get into DrawState" in {
         controller.currentPlayer = Some(controller.players(0))
-        controller.rollDice()
-        controller.gameState.state should be (DrawState)
+        controller.gameState.state = RollState(controller)
+        controller.handleInput("...")
+        controller.gameState.state should be (DrawState(controller))
       }
       "beating an enemy pin when ahead" in {
       }
