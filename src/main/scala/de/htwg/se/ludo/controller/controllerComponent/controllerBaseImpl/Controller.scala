@@ -17,19 +17,19 @@ import net.codingwell.scalaguice.InjectorExtensions.ScalaInjector
 
 class Controller @Inject() () extends ControllerInterface {
 
-  var currentPlayer: Option[Player] = None
-  var game: Option[GameInterface] = None
-  var gameState: GameState = GameState(this)
-  var pips: Int = 0
-  var players: Vector[Player] = Vector.empty
-  var message: Message = EmptyMessage
-
   private val undoManager = new UndoManager
   val injector: Injector = Guice.createInjector(new LudoModule)
   val fileIo: FileIOInterface = injector.instance[FileIOInterface]
 
   val EmptyCell: CellInterface = injector.instance[CellInterface](Names.named("EmptyCell"))
   var winStrategy: WinStrategy = injector.instance[WinStrategy](Names.named("OnePin"))
+
+  var currentPlayer: Option[Player] = None
+  var game: Option[GameInterface] = None
+  var gameState: GameState = GameState(this)
+  var pips: Int = 0
+  var players: Vector[Player] = Vector.empty
+  var message: Message = EmptyMessage
 
   def handleInput(input: String): Unit = {
     gameState.handle(input)
@@ -59,8 +59,7 @@ class Controller @Inject() () extends ControllerInterface {
   }
 
   def rollDice(): Unit = {
-    val dice = injector.getInstance(classOf[DiceInterface])
-    pips = dice.throwing
+    this.pips = injector.instance[DiceInterface].throwing
     newMessage(currentPlayer match {
       case Some(c) => PlayerRolledDiceMessage(c, pips)
       case None    => NoCurrentPlayerMessage
