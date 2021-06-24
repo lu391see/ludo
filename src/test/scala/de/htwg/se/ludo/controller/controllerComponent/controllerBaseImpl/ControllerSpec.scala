@@ -49,6 +49,9 @@ class ControllerSpec extends AnyWordSpec with Matchers {
       "and return the message as string (to be used from the GUI textfield)" in {
         controller.messageToString() should be (NoCurrentPlayerMessage.toString)
       }
+      "after rolling a dice get into DrawState" in {
+
+      }
 
 
     }

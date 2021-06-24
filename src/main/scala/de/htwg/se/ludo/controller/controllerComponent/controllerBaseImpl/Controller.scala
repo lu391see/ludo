@@ -90,10 +90,6 @@ class Controller @Inject() () extends ControllerInterface {
     publish(Redo())
   }
 
-  def save(): Unit = ??? // use fileIo.save...
-
-  def load(): Unit = ??? // use fileIo.load...
-
   def isWon: Boolean = {
     winStrategy.hasWon(currentPlayer.get)
   }
@@ -120,4 +116,8 @@ class Controller @Inject() () extends ControllerInterface {
       case Some(g) => g.board.toString
       case None    => GameBoardUninitializedMessage.toString
     })
+
+  override def save(): Unit = return
+
+  override def load(): Unit = return
 }

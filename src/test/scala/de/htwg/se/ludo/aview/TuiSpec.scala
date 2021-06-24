@@ -100,7 +100,12 @@ class TuiSpec extends AnyWordSpec with Matchers {
       controller.game should be (defined)
       controller.game.get.board.spots(base_pin3) should be(EmptyCell)
       controller.game.get.board.spots(controller.players(1).team.startPosition) should be(Cell(id_pin3))
-
+    }
+    "save and load the game as implemented in controller" in {
+      val prev_controller = controller
+      tui.processInput("s") should be (prev_controller.save())
+      val next_controller = controller
+      tui.processInput("l") should be (next_controller.save())
     }
   }
 }
