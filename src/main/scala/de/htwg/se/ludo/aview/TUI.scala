@@ -26,6 +26,8 @@ class TUI(controller: ControllerInterface) extends Reactor {
       case "all" => controller.setWinStrategy(injector.instance[WinStrategy](Names.named("AllPin")))
       case "z" => controller.undo()
       case "y" => controller.redo()
+      case "s" => controller.save()
+      case "l" => controller.load()
       case _   => controller.handleInput(input)
       // case "" =>
     }

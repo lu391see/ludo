@@ -5,6 +5,7 @@ import com.google.inject.name.Names
 import de.htwg.se.ludo.controller.controllerComponent.ControllerInterface
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.ludo.model.diceComponent._
+import de.htwg.se.ludo.model.fileIoComponent._
 import de.htwg.se.ludo.model.{AllPinWinStrategy, OnePinWinStrategy}
 import de.htwg.se.ludo.model.gameComponent.{BoardInterface, CellInterface}
 import de.htwg.se.ludo.model.gameComponent.gameBaseImpl._
@@ -32,6 +33,8 @@ class LudoModule extends AbstractModule with ScalaModule {
     bindConstant().annotatedWith(Names.named("Size")).to(defaultSize)
     bindConstant().annotatedWith(Names.named("TotalPins")).to(totalPins)
     bindConstant().annotatedWith(Names.named("MaxPlayers")).to(maxPlayers)
+
+    bind[FileIOInterface].to[fileIoJsonImpl.FileIO]
 
   }
 
