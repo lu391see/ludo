@@ -41,11 +41,9 @@ case class Game(board: BoardInterface, players: Vector[Player]) extends GameInte
 
   private def finishedPin(player: Player, pin: Int): BoardInterface = {
     val pinPosition = player.team.position(pin)
-    val changed =
-      board.replaceCell(pinPosition, EmptyCell)
+    val changed = board.replaceCell(pinPosition, EmptyCell)
     player.finish(pin)
-    changed
-      .replaceCell(player.team.position(pin), Cell(player.team.pinID(pin)))
+    changed.replaceCell(player.team.position(pin), Cell(player.team.pinID(pin)))
   }
 
   private def movedPin(player: Player, pin: Int, pos: Int): Option[BoardInterface] = {

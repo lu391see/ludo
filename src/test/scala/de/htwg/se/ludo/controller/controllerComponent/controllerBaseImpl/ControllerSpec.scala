@@ -1,6 +1,6 @@
 package de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl
 
-import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.gameStates.{RollState, SetupState}
+import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.gameStates.{DrawState, RollState, SetupState}
 import de.htwg.se.ludo.util.{EnterPlayerNameMessage, NoCurrentPlayerMessage}
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
@@ -50,7 +50,11 @@ class ControllerSpec extends AnyWordSpec with Matchers {
         controller.messageToString() should be (NoCurrentPlayerMessage.toString)
       }
       "after rolling a dice get into DrawState" in {
-
+        controller.currentPlayer = Some(controller.players(0))
+        controller.rollDice()
+        controller.gameState.state should be (DrawState)
+      }
+      "beating an enemy pin when ahead" in {
       }
 
 

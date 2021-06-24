@@ -29,7 +29,6 @@ class TUI(controller: ControllerInterface) extends Reactor {
       case "s" => controller.save()
       case "l" => controller.load()
       case _   => controller.handleInput(input)
-      // case "" =>
     }
   }
 
