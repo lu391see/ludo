@@ -91,9 +91,9 @@ class Controller @Inject() () extends ControllerInterface {
     publish(Redo())
   }
 
-  def save(): Unit = ???
+  def save(): Unit = ??? // use fileIo.save...
 
-  def load(): Unit = ???
+  def load(): Unit = ??? // use fileIo.load...
 
   def isWon: Boolean = {
     winStrategy.hasWon(currentPlayer.get)
