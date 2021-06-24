@@ -51,6 +51,4 @@ case class PlayerBuilder() extends Builder {
   }
 
   def build(): Player = Player(name, team)
-  /*team match {
-    case Some(team) => Player(name, team)*/
 }
