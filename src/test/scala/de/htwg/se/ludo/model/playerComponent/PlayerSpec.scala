@@ -18,19 +18,25 @@ class PlayerSpec extends AnyWordSpec with Matchers {
       "not be able to move for now" in {
         player.sixRolled should be(false)
       }
-      /*
-      "not set to Winner yet" in {
-        player.hasWon should be(false)
+    }
+    "created by a builder" should {
+      val builder = PlayerBuilder()
+      builder.setPlayerName("Alex")
+      builder.setPlayerTeam(new Team(Color.green, 4, 26, 66))
+      val player2 = builder.build()
+      "have a name" in {
+        player2.name should be("Alex")
       }
-      "have 4 pins with Color-identifier in front of pin index" in {
-        player.team.pinID(0) should be("Y1")
-        player.team.position(0) should be(player.team.basePosition)
-        player.team.pinID(1) should be("Y2")
-        player.team.position(1) should be(player.team.basePosition + 1)
-        player.team.pinID(3) should be("Y4")
+      "have a Team and not be able to move for now" in {
+        player2.toString should be("Player G: 'Alex'")
+        player2.sixRolled should be(false)
       }
-
-       */
+    }
+    "created with an invalid Color" should {
+      "have no representation in Strings" in {
+        val player3 = Player("greyPlayer", new Team(Color.gray, 0, 0, 0))
+        player3.toString should be("Player -: 'greyPlayer'")
+      }
     }
   }
 }
