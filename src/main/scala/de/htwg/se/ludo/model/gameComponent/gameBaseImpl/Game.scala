@@ -42,10 +42,10 @@ case class Game(board: BoardInterface, players: Vector[Player])
 
   def findPinPosition(currentPlayer: Player, pinNumber: Int): Int = {
     val pin = currentPlayer.team.pins(pinNumber - 1)
-    println("pin id", pin.id)
-    println("pin number", pinNumber)
-    board.spots.filter(spot => spot.isSet).foreach(println)
-    board.spots.indexWhere(cell => cell.isSet && cell.value.eq(pin.id))
+    board.spots.indexWhere(cell => {
+      cell.isSet && cell.value == pin.id
+    })
+
   }
 
   private def tryPinSpawn(
@@ -64,7 +64,6 @@ case class Game(board: BoardInterface, players: Vector[Player])
   }
 
   private def pinIsSpawned(pinPosition: Int, teamHomePosition: Int): Boolean = {
-    println("board.baseSize", board.baseSize)
     pinPosition >= board.baseSize && pinPosition < teamHomePosition
   }
 
@@ -118,8 +117,6 @@ case class Game(board: BoardInterface, players: Vector[Player])
     val enemyPinPosition = potentialEnemyPinPosition(pinPosition, steps)
 
     if (hasEnemyPinAhead(enemyPinPosition, currentPlayerColor)) {
-      println("enemyPinPosition", enemyPinPosition)
-      println("pinPosition", pinPosition)
       val enemySpot = board.spots(enemyPinPosition)
       val enemyColor = enemySpot.color
       val enemyPinNumber = enemySpot.pinNumber
@@ -164,8 +161,6 @@ case class Game(board: BoardInterface, players: Vector[Player])
       pinPosition: Int,
       movePosition: Int
   ): BoardInterface = {
-    println("movePosition", movePosition)
-    println("pinPosition", pinPosition)
     val currentSpot = board.spots(pinPosition)
     board
       .replaceCell(pinPosition, EmptyCell)
@@ -174,7 +169,6 @@ case class Game(board: BoardInterface, players: Vector[Player])
 
   private def movePosition(pinPosition: Int, steps: Int): Int = {
     var movePos = pinPosition + steps
-    println("board.gameSize", board.gameSize)
     if (movePos >= board.gameSize) {
       movePos = (movePos % board.gameSize) + board.baseSize
     }
