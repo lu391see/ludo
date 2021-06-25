@@ -126,7 +126,7 @@ case class Game(board: BoardInterface, players: Vector[Player])
         .find(p => p.team.toColorString == enemyColor)
         .get
         .team
-        .startPosition + enemyPinNumber - 1
+        .basePosition + enemyPinNumber - 1
       return Some(
         board
           .replaceCell(enemyPinPosition, EmptyCell)
