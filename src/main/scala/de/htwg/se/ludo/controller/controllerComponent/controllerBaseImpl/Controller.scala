@@ -3,26 +3,14 @@ package de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl
 import com.google.inject.name.Names
 import com.google.inject.{Guice, Inject, Injector}
 import de.htwg.se.ludo.LudoModule
-import de.htwg.se.ludo.controller.controllerComponent.{
-  ControllerInterface,
-  NewGame,
-  NewMessage,
-  NewPlayer,
-  PinDrawn,
-  Redo,
-  Undo
-}
+import de.htwg.se.ludo.controller.controllerComponent.{ControllerInterface, NewGame, NewMessage, NewPlayer, PinDrawn, Redo, Undo}
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.commands._
-import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.gameStates.GameState
+import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.gameStates.{GameState, RollState}
 import de.htwg.se.ludo.model.gameComponent.gameBaseImpl.Game
 import de.htwg.se.ludo.model.diceComponent.DiceInterface
 import de.htwg.se.ludo.model.fileIoComponent.FileIOInterface
 import de.htwg.se.ludo.model.playerComponent.{Player, PlayerConstraints}
-import de.htwg.se.ludo.model.gameComponent.{
-  BoardInterface,
-  CellInterface,
-  GameInterface
-}
+import de.htwg.se.ludo.model.gameComponent.{BoardInterface, CellInterface, GameInterface}
 import de.htwg.se.ludo.util._
 import net.codingwell.scalaguice.InjectorExtensions.ScalaInjector
 
@@ -85,8 +73,6 @@ class Controller @Inject() () extends ControllerInterface {
     val oldBoard = game.get.board
     undoManager.doStep(new DrawCommand(pin, this))
     val newBoard = game.get.board
-    println(oldBoard.toString)
-    println(newBoard.toString)
     publish(
       PinDrawn(
         oldBoard = oldBoard,
@@ -171,7 +157,12 @@ class Controller @Inject() () extends ControllerInterface {
 
   override def load(): Unit = {
     val (game, currentPlayerIndex) = fileIo.load()
-    println(game.board.toString)
-    println(currentPlayerIndex)
+    this.game = Some(game)
+    players = game.players
+    currentPlayer = Some(players(currentPlayerIndex))
+    println(toString)
+    newMessage(RollDiceMessage)
+    gameState.state = RollState(this)
+
   }
 }
