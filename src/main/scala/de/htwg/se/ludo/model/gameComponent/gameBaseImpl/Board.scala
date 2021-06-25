@@ -25,4 +25,6 @@ case class Board (spots: Vector[CellInterface], baseSize: Int) extends BoardInte
     for { spot <- gameSize until size } yield { s += cell(spot).toString }
     s
   }
+
+
 }
