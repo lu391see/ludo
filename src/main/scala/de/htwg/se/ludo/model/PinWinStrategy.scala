@@ -9,7 +9,7 @@ case class OnePinWinStrategy() extends WinStrategy {
     player.team.pins.exists(pin =>
       board.spots.indexWhere(spot =>
         spot.isSet && spot.pinNumber == pin.number
-      ) > board.gameSize
+      ) >= player.team.homePosition
     )
   }
 }
@@ -19,7 +19,7 @@ case class AllPinWinStrategy() extends WinStrategy {
     player.team.pins.forall(pin =>
       board.spots.indexWhere(spot =>
         spot.isSet && spot.pinNumber == pin.number
-      ) > board.gameSize
+      ) >= player.team.homePosition // board.gameSize
     )
   }
 }
