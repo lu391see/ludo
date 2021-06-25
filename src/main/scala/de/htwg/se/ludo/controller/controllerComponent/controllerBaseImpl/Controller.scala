@@ -166,8 +166,12 @@ class Controller @Inject() () extends ControllerInterface {
   }
 
   override def save(): Unit = {
-    fileIo.save(currentPlayer.get, game)
+    fileIo.save(currentPlayer.get, game.get)
   }
 
-  override def load(): Unit = return
+  override def load(): Unit = {
+    val (game, currentPlayerIndex) = fileIo.load()
+    println(game.board.toString)
+    println(currentPlayerIndex)
+  }
 }

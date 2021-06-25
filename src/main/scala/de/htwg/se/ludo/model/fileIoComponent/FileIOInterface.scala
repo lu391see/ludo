@@ -5,6 +5,6 @@ import de.htwg.se.ludo.model.playerComponent.Player
 
 trait FileIOInterface {
   // todo: maybe use another structure
-  def load(): GameInterface
-  def save(currentPlayer: Player, players: Vector[Player], game: GameInterface): Unit
+  def load(): (GameInterface, Int)
+  def save(currentPlayer: Player, game: GameInterface): Unit
 }

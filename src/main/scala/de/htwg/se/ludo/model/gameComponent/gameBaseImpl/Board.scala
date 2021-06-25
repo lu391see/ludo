@@ -6,8 +6,8 @@ import com.google.inject.name.Named
 
 case class Board (spots: Vector[CellInterface], baseSize: Int) extends BoardInterface {
   @Inject()
-  def this(@Named("Size") size: Int, @Named("EmptyCell") filling: CellInterface, @Named("TotalPins") baseSize: Int) =
-    this(Vector.tabulate(size) { _ => filling }, baseSize)
+  def this(@Named("BoardSize") boardSize: Int, @Named("EmptyCell") filling: CellInterface, @Named("TotalPins") baseSize: Int) =
+    this(Vector.tabulate(boardSize) { _ => filling }, baseSize)
 
   val size: Int = spots.size
   val gameSize: Int = size - baseSize

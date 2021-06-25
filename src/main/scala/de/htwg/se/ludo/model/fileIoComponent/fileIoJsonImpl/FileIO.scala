@@ -5,9 +5,10 @@ import de.htwg.se.ludo.model.gameComponent.GameInterface
 import de.htwg.se.ludo.model.playerComponent.Player
 
 import play.api.libs.json.{JsNumber, JsValue, Json, Writes}
+import de.htwg.se.ludo.model.playerComponent.Player
 
 class FileIO extends FileIOInterface {
-  override def load(): GameInterface = ???
+  override def load(): (GameInterface, Int) = ???
 
   def gameToJson(currentPlayer: Player, players: Vector[Player], game: GameInterface) = {
     Json.obj(

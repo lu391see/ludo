@@ -14,7 +14,7 @@ import net.codingwell.scalaguice.ScalaModule
 
 class LudoModule extends AbstractModule with ScalaModule {
   // BasicBoardConstraint
-  val defaultSize: Int = 72
+  val boardSize: Int = 72
   // BasicPlayerConstraint
   val maxPlayers = 4
   val minPlayers = 2
@@ -30,11 +30,11 @@ class LudoModule extends AbstractModule with ScalaModule {
 
     bind[CellInterface].annotatedWith(Names.named("EmptyCell")).toInstance(Cell(""))
 
-    bindConstant().annotatedWith(Names.named("Size")).to(defaultSize)
+    bindConstant().annotatedWith(Names.named("BoardSize")).to(boardSize)
     bindConstant().annotatedWith(Names.named("TotalPins")).to(totalPins)
     bindConstant().annotatedWith(Names.named("MaxPlayers")).to(maxPlayers)
 
-    bind[FileIOInterface].to[fileIoJsonImpl.FileIO]
+    bind[FileIOInterface].to[fileIoXmlImpl.FileIO]
 
   }
 
