@@ -27,7 +27,7 @@ case class Game(board: BoardInterface, players: Vector[Player])
     changed
   }
 
-  def draw(currentPlayer: Player, pinNumber: Int, steps: Int): GameInterface = {
+  override def draw(currentPlayer: Player, pinNumber: Int, steps: Int): GameInterface = {
     val pinPosition = findPinPosition(currentPlayer, pinNumber)
 
     tryPinSpawn(currentPlayer, pinPosition, steps) match {

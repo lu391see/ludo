@@ -6,7 +6,7 @@ trait GameInterface {
   val board: BoardInterface
 
   def based(): GameInterface
-  def draw(currentPlayer: Player, pin: Int, dice_roll: Int): GameInterface
+  def draw(currentPlayer: Player, pinNumber: Int, steps: Int): GameInterface
   def drawnPin(player: Player, pin: Int, pos: Int): GameInterface
   def findPinPosition(currentPlayer: Player, pinNumber: Int): Int
 }
