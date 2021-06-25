@@ -48,6 +48,11 @@ case class BaseTeam(color: Color, basePos: Int, controller: ControllerInterface)
       if (oldBoard.spots(i).value != newBoard.spots(i).value)
         changedPinPositions = changedPinPositions.appended(i)
     }
+    /*
+    if(changedPinPositions(0) < changedPinPositions(1)) {
+      return Tuple2(changedPinPositions(1), changedPinPositions(1))
+    }
+     */
     Tuple2(changedPinPositions(0), changedPinPositions(1))
   }
 

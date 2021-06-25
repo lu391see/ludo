@@ -49,9 +49,6 @@ class Controller @Inject() () extends ControllerInterface {
 
   def newGame(): Unit = {
     val board: BoardInterface = injector.instance[BoardInterface]
-    val game: GameInterface = Game(board, players)
-    this.game = Some(game.based())
-
     this.game = Some(Game(board, players).based())
     publish(NewGame())
   }
@@ -73,11 +70,15 @@ class Controller @Inject() () extends ControllerInterface {
   }
 
   def rollDice(): Unit = {
-    this.pips = injector.instance[DiceInterface].throwing
+    pips = getDice.throwing
     newMessage(currentPlayer match {
       case Some(c) => PlayerRolledDiceMessage(c, pips)
       case None    => NoCurrentPlayerMessage
     })
+  }
+
+  def getDice: DiceInterface = {
+    injector.instance[DiceInterface]
   }
 
   def drawPin(pin: Int): Unit = {
@@ -114,11 +115,13 @@ class Controller @Inject() () extends ControllerInterface {
   }
 
   def shouldNotDraw: Boolean = {
-    (1 to 4).forall(pinNumber =>
-      game.get.board
-        .spots(currentPlayer.get.team.basePosition + pinNumber - 1)
-        .isSet
-    ) && pips != 6
+    (1 to 4).forall(pinNumber => {
+      val pos = game.get.board.spots.indexWhere(spot =>
+        spot.isSet && spot.pinNumber == pinNumber && spot.color == currentPlayer.get.team.toColorString
+      )
+      pos >= game.get.board.gameSize || pos <= game.get.board.baseSize
+    }) && pips != 6
+
   }
 
   def newMessage(message: Message): Unit = {
@@ -134,6 +137,13 @@ class Controller @Inject() () extends ControllerInterface {
     this.message.toString
   }
 
+  def pinAlreadyFinished(pinNumber: Int): Boolean = {
+    val pos = game.get.board.spots.indexWhere(spot =>
+      spot.isSet && spot.pinNumber == pinNumber
+    )
+    pos >= game.get.board.gameSize
+  }
+
   def setWinStrategy(winStrategy: WinStrategy): Unit = {
     this.winStrategy = winStrategy
   }
@@ -146,7 +156,7 @@ class Controller @Inject() () extends ControllerInterface {
 
   def isFinishedPin(pinNumber: Int): Boolean = {
     game.get
-      .findPinPosition(currentPlayer.get, pinNumber) > game.get.board.gameSize
+      .findPinPosition(currentPlayer.get, pinNumber) >= game.get.board.gameSize
   }
 
   override def save(): Unit = return
