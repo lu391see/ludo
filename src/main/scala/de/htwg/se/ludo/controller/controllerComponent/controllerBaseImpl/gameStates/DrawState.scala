@@ -14,11 +14,11 @@ case class DrawState(controller: Controller) extends State[GameState] {
           controller.newMessage(ChoosePinMessage)
           return
         }
-        if (controller.currentPlayer.get.team.isFinished(pin - 1)) {
+        if (controller.isFinishedPin(pin)) {
           controller.newMessage(PinIsAlreadyFinishedMessage(pin))
           return
         }
-        controller.drawPin(pin - 1)
+        controller.drawPin(pin)
 
       case Failure(_) =>
         controller.newMessage(ChoosePinMessage)

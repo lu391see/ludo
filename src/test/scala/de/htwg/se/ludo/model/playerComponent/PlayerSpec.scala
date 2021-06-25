@@ -18,6 +18,7 @@ class PlayerSpec extends AnyWordSpec with Matchers {
       "not be able to move for now" in {
         player.sixRolled should be(false)
       }
+      /*
       "not set to Winner yet" in {
         player.hasWon should be(false)
       }
@@ -28,6 +29,8 @@ class PlayerSpec extends AnyWordSpec with Matchers {
         player.team.position(1) should be(player.team.basePosition + 1)
         player.team.pinID(3) should be("Y4")
       }
+
+       */
     }
   }
 }

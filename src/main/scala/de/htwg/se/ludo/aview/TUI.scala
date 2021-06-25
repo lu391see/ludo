@@ -15,7 +15,7 @@ class TUI(controller: ControllerInterface) extends Reactor {
 
   reactions += {
     case NewMessage()                                       => onNewMessage()
-    case PinDrawn(_, _, _, _) | NewGame() | Undo() | Redo() => onBoardUpdate()
+    case PinDrawn(_, _) | NewGame() | Undo() | Redo() => onBoardUpdate()
   }
 
   val injector: Injector = Guice.createInjector(new LudoModule)

@@ -22,7 +22,7 @@ case class SetupState(controller: Controller) extends State[GameState] {
       controller.currentPlayer match {
         case Some(_) =>
           controller.newMessage(InvalidCurrentPlayerAtSetupMessage)
-        case None => controller.currentPlayer = Some(controller.players(0))
+        case None => controller.currentPlayer = Some(controller.players.head)
       }
       controller.newGame()
       controller.newMessage(FirstPlayerMessage(controller.currentPlayer.get))

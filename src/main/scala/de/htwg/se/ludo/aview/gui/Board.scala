@@ -29,9 +29,8 @@ case class Board(controller: ControllerInterface)
       BorderPanel.Position.East
     )
   }
-  contents += HorizontalFieldRow(
+  contents += new HorizontalFieldRow(
     teams(0).color,
-    teams(1).color,
     teams(0).startPosition,
     teams(1).startPosition,
     false,
@@ -39,16 +38,8 @@ case class Board(controller: ControllerInterface)
   )
   contents += new BorderPanel {
     add(
-      VerticalFieldRow(
-        teams(3).startPosition,
-        teams(0).homePosition,
-        true,
-        controller,
-      ),
-      BorderPanel.Position.West
-    )
-    add(
-      VerticalFieldRow(
+      new VerticalFieldRow(
+        teams(1).color,
         teams(1).startPosition,
         teams(2).startPosition,
         false,
@@ -56,11 +47,20 @@ case class Board(controller: ControllerInterface)
       ),
       BorderPanel.Position.East
     )
+    add(
+      new VerticalFieldRow(
+        teams(3).color,
+        teams(3).startPosition,
+        teams(0).homePosition,
+        true,
+        controller
+      ),
+      BorderPanel.Position.West
+    )
 
   }
-  contents += HorizontalFieldRow(
+  contents += new HorizontalFieldRow(
     teams(2).color,
-    teams(3).color,
     teams(2).startPosition,
     teams(3).startPosition,
     true,

@@ -1,6 +1,10 @@
 package de.htwg.se.ludo.aview.gui
 
-import de.htwg.se.ludo.controller.controllerComponent.{ControllerInterface, PinDrawn}
+import de.htwg.se.ludo.controller.controllerComponent.{
+  ControllerInterface,
+  PinDrawn
+}
+import de.htwg.se.ludo.model.gameComponent.BoardInterface
 
 import scala.swing._
 
@@ -12,28 +16,50 @@ case class BaseTeam(color: Color, basePos: Int, controller: ControllerInterface)
   }
   reactions += {
     case event: PinDrawn =>
-      if (event.curPos != event.nextPos) {
-        val oldPos = contents.indexWhere(c => c.name.toInt.equals(event.curPos))
-        val newPos =
-          contents.indexWhere(c => c.name.toInt.equals(event.nextPos))
+      val changedPinPositions =
+        findChangedPinPositions(event.oldBoard, event.newBoard)
+      val oldPos = changedPinPositions._1
+      val newPos = changedPinPositions._2
 
-        // println("BaseTeam", oldPos, newPos)
-        if (oldPos != -1) {
-          val newContents = contents.updated(oldPos, new StartField(event.color, event.curPos))
-          contents.clear()
-          contents ++= newContents
-
-
-        }
-        if (newPos != -1) {
-          val newContents =
-            contents.updated(newPos, Pin(event.pinId, event.color, event.nextPos, controller))
-          contents.clear()
-          contents ++= newContents
-        }
-        //repaint
+      if (isSpawned(oldPos)) {
+        val newContents =
+          contents.updated(getFieldIndex(oldPos), new StartField(color, oldPos))
+        contents.clear()
+        contents ++= newContents
+      } else if (isBased(newPos)) {
+        val pinNumber = event.newBoard.spots(newPos).pinNumber
+        val newContents = contents.updated(
+          getFieldIndex(newPos),
+          Pin(pinNumber, color, newPos, controller)
+        )
+        contents.clear()
+        contents ++= newContents
       }
 
       repaint
+  }
+
+  def findChangedPinPositions(
+      oldBoard: BoardInterface,
+      newBoard: BoardInterface
+  ): (Int, Int) = {
+    var changedPinPositions: Vector[Int] = Vector.empty
+    for (i <- 0 until oldBoard.size) {
+      if (oldBoard.spots(i).value != newBoard.spots(i).value)
+        changedPinPositions = changedPinPositions.appended(i)
+    }
+    Tuple2(changedPinPositions(0), changedPinPositions(1))
+  }
+
+  def getFieldIndex(pinPosition: Int): Int = {
+    contents.indexWhere(c => c.name.toInt.equals(pinPosition))
+  }
+
+  def isSpawned(oldPos: Int): Boolean = {
+    oldPos >= basePos + 4 && getFieldIndex(oldPos) != -1
+  }
+
+  def isBased(newPos: Int): Boolean = {
+    newPos >= basePos && newPos < basePos + 4 && getFieldIndex(newPos) != -1
   }
 }
