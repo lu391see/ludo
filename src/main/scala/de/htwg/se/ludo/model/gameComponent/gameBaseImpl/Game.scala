@@ -44,6 +44,7 @@ case class Game(board: BoardInterface, players: Vector[Player])
     val pin = currentPlayer.team.pins(pinNumber - 1)
     println("pin id", pin.id)
     println("pin number", pinNumber)
+    board.spots.filter(spot => spot.isSet).foreach(println)
     board.spots.indexWhere(cell => cell.isSet && cell.value.eq(pin.id))
   }
 
