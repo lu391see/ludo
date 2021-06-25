@@ -4,13 +4,9 @@ import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
 class CellSpec extends AnyWordSpec with Matchers {
-  /* TODO
   "A Cell" when {
     "not set to any value " should {
       val emptyCell = Cell("")
-      "have empty value" in {
-        emptyCell.getValue should be("")
-      }
       "not be set" in {
         emptyCell.isSet should be(false)
       }
@@ -21,13 +17,16 @@ class CellSpec extends AnyWordSpec with Matchers {
     "set to a specific value" should {
       val nonEmptyCell = Cell("Y1")
       "return that value" in {
-        nonEmptyCell.getValue should be("Y1")
+        nonEmptyCell.value should be("Y1")
       }
       "be set" in {
         nonEmptyCell.isSet should be(true)
       }
-      "number should be String" in {
-        nonEmptyCell.toString.isInstanceOf[String] should be(true)
+      "show the pin color at this position as char" in {
+        nonEmptyCell.color should be('Y')
+      }
+      "show the pin number at this position" in {
+        nonEmptyCell.pinNumber should be(1)
       }
 
       "show number in String" in {
@@ -35,5 +34,4 @@ class CellSpec extends AnyWordSpec with Matchers {
       }
     }
   }
-   */
 }
