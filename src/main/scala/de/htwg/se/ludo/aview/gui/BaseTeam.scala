@@ -21,10 +21,11 @@ case class BaseTeam(color: Color, basePos: Int, controller: ControllerInterface)
       val oldPos = changedPinPositions._1
       val newPos = changedPinPositions._2
 
-      if (isSpawned(oldPos)) {
+      if (isSpawned(oldPos, newPos, event.newBoard.baseSize)) {
         val newContents =
           contents.updated(getFieldIndex(oldPos), new StartField(color, oldPos))
         contents.clear()
+        newContents.foreach(content => println("base team", content.name))
         contents ++= newContents
       } else if (isBased(newPos)) {
         val pinNumber = event.newBoard.spots(newPos).pinNumber
@@ -57,11 +58,14 @@ case class BaseTeam(color: Color, basePos: Int, controller: ControllerInterface)
   }
 
   def getFieldIndex(pinPosition: Int): Int = {
-    contents.indexWhere(c => c.name.toInt.equals(pinPosition))
+    contents.indexWhere(c => {
+      println(c.name.toInt)
+      c.name.toInt.equals(pinPosition)
+    })
   }
 
-  def isSpawned(oldPos: Int): Boolean = {
-    oldPos >= basePos + 4 && getFieldIndex(oldPos) != -1
+  def isSpawned(oldPos: Int, newPos: Int, baseSize: Int): Boolean = {
+    oldPos >= basePos && oldPos < basePos + 4 && newPos >= baseSize
   }
 
   def isBased(newPos: Int): Boolean = {

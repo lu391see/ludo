@@ -1,8 +1,7 @@
 package de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.gameStates
 
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.Controller
-import de.htwg.se.ludo.util.{ChoosePinMessage, PlayerWonGameMessage, PinIsAlreadyFinishedMessage, RollDiceMessage}
-import de.htwg.se.ludo.util.State
+import de.htwg.se.ludo.util.{CanNotDrawThisPinMessage, ChoosePinMessage, PinIsAlreadyFinishedMessage, PlayerWonGameMessage, RollDiceMessage, State}
 
 import scala.util.{Failure, Success, Try}
 
@@ -18,6 +17,11 @@ case class DrawState(controller: Controller) extends State[GameState] {
           controller.newMessage(PinIsAlreadyFinishedMessage(pin))
           return
         }
+        if (controller.canNotDrawWithThisPin(pin)) {
+          controller.newMessage(CanNotDrawThisPinMessage)
+          return
+        }
+
         controller.drawPin(pin)
 
       case Failure(_) =>
