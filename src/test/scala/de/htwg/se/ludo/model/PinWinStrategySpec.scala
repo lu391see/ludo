@@ -9,7 +9,7 @@ import java.awt.Color
 class PinWinStrategySpec extends AnyWordSpec with Matchers {
   "A WinStrategy" when {
     val player = Player("dummy", new Team(Color.green,0,4,42))
-    "set to OnePin" should {
+    /*"set to OnePin" should {
       val strategy = OnePinWinStrategy()
       "return false if no pin is at the players home field" in {
         player.move(0,12)
@@ -37,6 +37,6 @@ class PinWinStrategySpec extends AnyWordSpec with Matchers {
         player.move(0, 7)
         strategy.hasWon(player) should be (false)
       }
-    }
+    }*/
   }
 }

@@ -8,7 +8,7 @@ import java.awt.Color
 
 class GameSpec extends AnyWordSpec with Matchers {
   "A game" when {
-    "created with one player and the first pin drawn with dice roll 4" should {
+    /*"created with one player and the first pin drawn with dice roll 4" should {
       val players: Array[Player] = new Array[Player](1)
       players(0) = Player("p1", new Team(Color.yellow, 0, 15, 55))
       val empty_cell = Cell("")
@@ -60,6 +60,6 @@ class GameSpec extends AnyWordSpec with Matchers {
       "the cell with the last pin position set to an empty cell" in {
         game_changed.board.spots(6 * 6) should be(empty_cell)
       }
-    }
+    }*/
   }
 }

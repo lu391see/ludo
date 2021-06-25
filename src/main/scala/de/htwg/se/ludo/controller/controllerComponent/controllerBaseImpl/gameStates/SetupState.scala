@@ -6,7 +6,6 @@ import de.htwg.se.ludo.util.{
   AddAnotherPlayerMessage,
   EnterPlayerNameMessage,
   FirstPlayerMessage,
-  InvalidCurrentPlayerAtSetupMessage,
   RollDiceMessage,
   State
 }
@@ -25,11 +24,7 @@ case class SetupState(controller: Controller) extends State[GameState] {
         controller.newMessage(AddAnotherPlayerMessage)
         return
       }
-      controller.currentPlayer match {
-        case Some(_) =>
-          controller.newMessage(InvalidCurrentPlayerAtSetupMessage)
-        case None => controller.currentPlayer = Some(controller.players.head)
-      }
+      controller.currentPlayer = Some(controller.players.head)
       controller.newGame()
       controller.newMessage(FirstPlayerMessage(controller.currentPlayer.get))
       controller.newMessage(RollDiceMessage)
