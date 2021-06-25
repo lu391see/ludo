@@ -3,17 +3,28 @@ package de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl
 import com.google.inject.name.Names
 import com.google.inject.{Guice, Inject, Injector}
 import de.htwg.se.ludo.LudoModule
-import de.htwg.se.ludo.controller.controllerComponent.{ControllerInterface, NewGame, NewMessage, NewPlayer, PinDrawn, Redo, Undo}
+import de.htwg.se.ludo.controller.controllerComponent.{
+  ControllerInterface,
+  NewGame,
+  NewMessage,
+  NewPlayer,
+  PinDrawn,
+  Redo,
+  Undo
+}
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.commands._
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.gameStates.GameState
 import de.htwg.se.ludo.model.gameComponent.gameBaseImpl.Game
 import de.htwg.se.ludo.model.diceComponent.DiceInterface
 import de.htwg.se.ludo.model.fileIoComponent.FileIOInterface
 import de.htwg.se.ludo.model.playerComponent.{Player, PlayerConstraints}
-import de.htwg.se.ludo.model.gameComponent.{BoardInterface, CellInterface, GameInterface}
+import de.htwg.se.ludo.model.gameComponent.{
+  BoardInterface,
+  CellInterface,
+  GameInterface
+}
 import de.htwg.se.ludo.util._
 import net.codingwell.scalaguice.InjectorExtensions.ScalaInjector
-
 
 class Controller @Inject() () extends ControllerInterface {
 
@@ -30,12 +41,16 @@ class Controller @Inject() () extends ControllerInterface {
   var pips: Int = 0
   var players: Vector[Player] = Vector.empty
   var message: Message = EmptyMessage
+  val teams = PlayerConstraints.teams
 
   def handleInput(input: String): Unit = {
     gameState.handle(input)
   }
 
   def newGame(): Unit = {
+    val board: BoardInterface = injector.getInstance(classOf[BoardInterface])
+    val game: GameInterface = Game(board, players)
+    this.game = Some(game.based())
     val board: BoardInterface = injector.instance[BoardInterface]
 
     this.game = Some(Game(board, players).based())
@@ -44,7 +59,7 @@ class Controller @Inject() () extends ControllerInterface {
 
   def addNewPlayer(name: String): Unit = {
     undoManager.doStep(
-      new AddPlayerCommand(name, PlayerConstraints.teams(players.size), this)
+      new AddPlayerCommand(name, teams(players.size), this)
     )
     publish(NewPlayer())
   }
@@ -67,15 +82,15 @@ class Controller @Inject() () extends ControllerInterface {
   }
 
   def drawPin(pin: Int): Unit = {
-    val curPos = currentPlayer.get.team.position(pin)
+    val oldBoard = game.get.board
     undoManager.doStep(new DrawCommand(pin, this))
-    val nextPos = currentPlayer.get.team.position(pin)
+    val newBoard = game.get.board
+    println(oldBoard.toString)
+    println(newBoard.toString)
     publish(
       PinDrawn(
-        color = currentPlayer.get.team.color,
-        pinId = pin+1,
-        curPos,
-        nextPos
+        oldBoard = oldBoard,
+        newBoard = newBoard
       )
     )
   }
@@ -91,7 +106,20 @@ class Controller @Inject() () extends ControllerInterface {
   }
 
   def isWon: Boolean = {
-    winStrategy.hasWon(currentPlayer.get)
+    winStrategy.hasWon(currentPlayer.get, game.get.board)
+  }
+
+  def isDrawing: Boolean = {
+    print(gameState.state.toString)
+    true
+  }
+
+  def shouldNotDraw: Boolean = {
+    (1 to 4).forall(pinNumber =>
+      game.get.board
+        .spots(currentPlayer.get.team.basePosition + pinNumber - 1)
+        .isSet
+    ) && pips != 6
   }
 
   def newMessage(message: Message): Unit = {
@@ -116,6 +144,11 @@ class Controller @Inject() () extends ControllerInterface {
       case Some(g) => g.board.toString
       case None    => GameBoardUninitializedMessage.toString
     })
+
+  def isFinishedPin(pinNumber: Int): Boolean = {
+    game.get
+      .findPinPosition(currentPlayer.get, pinNumber) > game.get.board.gameSize
+  }
 
   override def save(): Unit = return
 

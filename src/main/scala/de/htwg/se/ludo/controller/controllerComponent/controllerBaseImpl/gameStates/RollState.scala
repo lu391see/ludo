@@ -1,12 +1,18 @@
 package de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.gameStates
 
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.Controller
-import de.htwg.se.ludo.util.{ChoosePinMessage, State}
+import de.htwg.se.ludo.util.{ChoosePinMessage, RollDiceMessage, State}
 
 case class RollState(controller: Controller) extends State[GameState] {
-  override def handle(string: String, n: GameState): Unit = {
+  override def handle(input: String, state: GameState): Unit = {
     controller.rollDice()
+    if(controller.shouldNotDraw) {
+      controller.switchPlayer()
+      controller.newMessage(RollDiceMessage)
+      state.nextState(RollState(controller))
+      return
+    }
     controller.newMessage(ChoosePinMessage)
-    n.nextState(DrawState(controller))
+    state.nextState(DrawState(controller))
   }
 }

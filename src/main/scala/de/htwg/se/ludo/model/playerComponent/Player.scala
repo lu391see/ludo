@@ -1,44 +1,16 @@
 package de.htwg.se.ludo.model.playerComponent
 
-import java.awt.Color
-
 case class Player(name: String, team: Team) {
   var sixRolled: Boolean = false
 
-  def spawn(pin: Int): Unit = {
-    team.spawnPin(pin)
-  }
-
-  def move(pin: Int, pos: Int): Unit = {
-    team.movePin(pin, pos)
-  }
-
-  def finish(pin: Int): Unit = {
-    team.finishPin(pin)
-  }
-
-  def hasWon: Boolean = {
-    team.pins.forall(pin => team.isFinished(team.pins.indexOf(pin)))
-  }
-
-  private def toColorString: String = {
-    this.team.color match {
-      case Color.black  => "Black"
-      case Color.red    => "Red"
-      case Color.yellow => "Yellow"
-      case Color.green  => "Green"
-      case _            => ""
-    }
-  }
-
   override def toString: String = {
-    s"Player $toColorString: '$name'"
+    s"Player ${team.toColorString}: '$name'"
   }
 }
 
 case class PlayerBuilder() extends Builder {
   var name: String = ""
-  var team: Team = EmptyTeam()  // TODO: make optional instead
+  var team: Team = EmptyTeam()
 
   override def setPlayerName(name: String): PlayerBuilder = {
     this.name = name

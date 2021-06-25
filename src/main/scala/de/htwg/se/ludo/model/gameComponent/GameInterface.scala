@@ -8,6 +8,7 @@ trait GameInterface {
   def based(): GameInterface
   def draw(currentPlayer: Player, pin: Int, dice_roll: Int): GameInterface
   def drawnPin(player: Player, pin: Int, pos: Int): GameInterface
+  def findPinPosition(currentPlayer: Player, pinNumber: Int): Int
 }
 
 trait BoardInterface {
@@ -21,6 +22,8 @@ trait BoardInterface {
 }
 
 trait CellInterface {
-  def isSet:Boolean
-  def getValue:String
+  def isSet: Boolean
+  def color: Char
+  def pinNumber: Int
+  val value: String
 }
