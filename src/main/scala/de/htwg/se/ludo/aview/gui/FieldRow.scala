@@ -68,7 +68,7 @@ case class FieldRow(
         0
       )).abs > controller.getDice.pips && changedPinPositions(
         1
-      ) < newBoard.gameSize
+      ) < newBoard.gameSize && changedPinPositions(0) > oldBoard.baseSize - 1
     ) {
       return Tuple2(changedPinPositions(1), changedPinPositions(0))
     }

@@ -120,9 +120,15 @@ class Controller @Inject() () extends ControllerInterface {
       val pos = game.get.board.spots.indexWhere(spot =>
         spot.isSet && spot.pinNumber == pinNumber && spot.color == currentPlayer.get.team.toColorString
       )
-      pos >= game.get.board.gameSize || pos <= game.get.board.baseSize
-    }) && pips != 6
+      pos >= game.get.board.gameSize || pos < game.get.board.baseSize
+    }) && pips != getDice.pips
+  }
 
+  def canNotDrawWithThisPin(pinNumber: Int): Boolean = {
+    val pos = game.get.board.spots.indexWhere(spot =>
+      spot.isSet && spot.pinNumber == pinNumber && spot.color == currentPlayer.get.team.toColorString
+    )
+    pos < game.get.board.baseSize && pips != getDice.pips
   }
 
   def newMessage(message: Message): Unit = {
