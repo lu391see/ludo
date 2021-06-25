@@ -173,7 +173,8 @@ case class Game(board: BoardInterface, players: Vector[Player])
 
   private def movePosition(pinPosition: Int, steps: Int): Int = {
     var movePos = pinPosition + steps
-    if (movePos >= board.gameSize - 1) {
+    println("board.gameSize", board.gameSize)
+    if (movePos >= board.gameSize) {
       movePos = (movePos % board.gameSize) + board.baseSize
     }
     movePos

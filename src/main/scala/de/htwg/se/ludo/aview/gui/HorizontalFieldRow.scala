@@ -18,7 +18,6 @@ class HorizontalFieldRow(
       startFieldPos = startFieldPos,
       startFieldColor = startFieldColor
     ) {
-  listenTo(controller)
 
   if (!reverse) {
     contents += startField

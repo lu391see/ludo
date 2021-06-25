@@ -9,7 +9,6 @@ case class RollState(controller: Controller) extends State[GameState] {
     if(controller.shouldNotDraw) {
       controller.switchPlayer()
       controller.newMessage(RollDiceMessage)
-      state.nextState(RollState(controller))
       return
     }
     controller.newMessage(ChoosePinMessage)

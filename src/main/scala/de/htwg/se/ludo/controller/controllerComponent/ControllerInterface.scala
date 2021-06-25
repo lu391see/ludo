@@ -17,6 +17,7 @@ trait ControllerInterface extends Publisher {
   def addNewPlayer(name: String): Unit
   def switchPlayer(): Unit
   def rollDice(): Unit
+  def getDice: DiceInterface
   def drawPin(pin: Int): Unit
 
   def undo(): Unit
