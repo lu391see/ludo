@@ -12,14 +12,15 @@ import scala.io.Source
 
 class FileIO extends FileIOInterface {
   override def load(): (GameInterface, Int) = {
-    val source: String = Source.fromFile("ludo.json").getLines().mkString
-    val json: JsValue = Json.parse(source)
+    val source = Source.fromFile("ludo.json")
+    val jsonString: String = source.getLines().mkString
+    val json: JsValue = Json.parse(jsonString)
     val currentPlayerIndex = (json \ "currentPlayerIndex").get.toString().toInt
     val playerAmount = (json \ "playerAmount").get.toString().toInt
     val spots = json \\ "value"
     val players = json \ "players"
     val baseSize = 16
-
+    source.close()
     (
       Game(
         boardFromJson(spots, baseSize),
