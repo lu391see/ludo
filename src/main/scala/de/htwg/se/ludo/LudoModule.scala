@@ -34,7 +34,7 @@ class LudoModule extends AbstractModule with ScalaModule {
     bindConstant().annotatedWith(Names.named("TotalPins")).to(totalPins)
     bindConstant().annotatedWith(Names.named("MaxPlayers")).to(maxPlayers)
 
-    bind[FileIOInterface].to[fileIoXmlImpl.FileIO]
+    bind[FileIOInterface].to[fileIoJsonImpl.FileIO]
 
   }
 
