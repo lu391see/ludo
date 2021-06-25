@@ -165,7 +165,13 @@ class Controller @Inject() () extends ControllerInterface {
       .findPinPosition(currentPlayer.get, pinNumber) >= game.get.board.gameSize
   }
 
-  override def save(): Unit = return
+  override def save(): Unit = {
+    fileIo.save(currentPlayer.get, game.get)
+  }
 
-  override def load(): Unit = return
+  override def load(): Unit = {
+    val (game, currentPlayerIndex) = fileIo.load()
+    println(game.board.toString)
+    println(currentPlayerIndex)
+  }
 }
