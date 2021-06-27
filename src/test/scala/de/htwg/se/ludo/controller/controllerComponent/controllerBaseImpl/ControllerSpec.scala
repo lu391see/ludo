@@ -1,7 +1,7 @@
 package de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl
 
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.gameStates.{DrawState, RollState, SetupState}
-import de.htwg.se.ludo.util.{EnterPlayerNameMessage, NextPlayerMessage, NoCurrentPlayerMessage, PlayerRolledDiceMessage}
+import de.htwg.se.ludo.util.{EnterPlayerNameMessage, GameBoardUninitializedMessage, NextPlayerMessage, NoCurrentPlayerMessage, PlayerRolledDiceMessage}
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
@@ -54,7 +54,26 @@ class ControllerSpec extends AnyWordSpec with Matchers {
         controller.rollDice()
         controller.message should be (PlayerRolledDiceMessage(controller.players(0), controller.pips))
       }
-      "beating an enemy pin when ahead" in {
+      "use doStep when drawing a pin" in {
+        controller.pips = 6
+        controller.drawPin(2)
+        controller.game.get.findPinPosition(controller.currentPlayer.get, 2) should be (controller.currentPlayer.get.team.startPosition)
+      }
+      "undo should then revert this move" in {
+        controller.undo()
+        controller.game.get.findPinPosition(controller.currentPlayer.get, 2) should be (controller.currentPlayer.get.team.basePosition + 1)
+      }
+      "and a redo should revert the undo" in {
+        controller.redo()
+        controller.game.get.findPinPosition(controller.currentPlayer.get, 2) should be (controller.currentPlayer.get.team.startPosition)
+      }
+
+
+
+      "fail when trying to draw without a game initialized" in {
+        //controller.game = None
+        //controller.drawPin(2)
+        //controller.message should be (GameBoardUninitializedMessage)
       }
       /* fixme: next state is not predictable. Set one pin of the current player on the field first
         controller.currentPlayer = Some(controller.players(0))

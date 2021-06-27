@@ -18,6 +18,7 @@ class DrawCommand(pin: Int, controller: Controller) extends Command {
 
   override def doStep: Unit = {
     memento = (controller.game, controller.currentPlayer, controller.gameState, controller.pips, getPins)
+    // todo: move match into controller method and uncomment tests
     controller.game match {
       case Some(g) => controller.game = Some(g.draw(controller.currentPlayer.get, pin, controller.pips))
       case None => controller.newMessage(GameBoardUninitializedMessage)
