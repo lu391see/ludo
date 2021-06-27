@@ -1,7 +1,7 @@
 package de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl
 
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.gameStates.{DrawState, RollState, SetupState}
-import de.htwg.se.ludo.util.{EnterPlayerNameMessage, NoCurrentPlayerMessage}
+import de.htwg.se.ludo.util.{EnterPlayerNameMessage, NextPlayerMessage, NoCurrentPlayerMessage, PlayerRolledDiceMessage}
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
@@ -32,6 +32,15 @@ class ControllerSpec extends AnyWordSpec with Matchers {
         controller.switchPlayer()
         controller.message should be (NoCurrentPlayerMessage)
       }
+      "and switch players in a loop" in {
+        controller.currentPlayer = Some(controller.players(0))
+        controller.switchPlayer()
+        controller.message should be (NextPlayerMessage(controller.players(1)))
+        controller.switchPlayer()
+        controller.switchPlayer()
+        controller.switchPlayer()
+        controller.currentPlayer.get should be (controller.players(0))
+      }
       "show error message if current player is missing while rolling a Dice" in {
         controller.currentPlayer = None
         controller.rollDice()
@@ -40,16 +49,18 @@ class ControllerSpec extends AnyWordSpec with Matchers {
       "and return the message as string (to be used from the GUI textfield)" in {
         controller.messageToString() should be (NoCurrentPlayerMessage.toString)
       }
-      "after rolling a dice get into DrawState" in {
-        /* fixme: next state is not predictable. Set one pin of the current player on the field first
+      "after rolling a dice show message when successful" in {
+        controller.currentPlayer = Some(controller.players(0))
+        controller.rollDice()
+        controller.message should be (PlayerRolledDiceMessage(controller.players(0), controller.pips))
+      }
+      "beating an enemy pin when ahead" in {
+      }
+      /* fixme: next state is not predictable. Set one pin of the current player on the field first
         controller.currentPlayer = Some(controller.players(0))
         controller.gameState.state = RollState(controller)
         controller.handleInput("...")
         controller.gameState.state should be (DrawState(controller))*/
-      }
-      "beating an enemy pin when ahead" in {
-      }
-
 
     }
   }
