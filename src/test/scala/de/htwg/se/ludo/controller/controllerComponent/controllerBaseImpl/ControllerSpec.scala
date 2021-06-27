@@ -123,12 +123,15 @@ class ControllerSpec extends AnyWordSpec with Matchers {
         // todo: test controller.canNotDrawWithThisPin() usage in DrawState
       }
       "move to next Players RollState when input got processed successfully" in {
-        controller.currentPlayer = Some(controller.players(0))
-        controller.gameState.state should be (DrawState(controller))
-        controller.pips = 4
+        controller.currentPlayer = Some(controller.players(3))
+        controller.pips = 6
+        controller.gameState.state = DrawState(controller)
+        controller.handleInput("2")
+        controller.currentPlayer = Some(controller.players(3))
+        controller.handleInput("")
         controller.handleInput("2")
         controller.gameState.state should be (RollState(controller))
-        controller.currentPlayer.get should be (controller.players(1))
+        controller.currentPlayer.get should be (controller.players(0))
       }
       "when set to AllPinWinStrategy should be finished" in {
         /*controller.setWinStrategy(OnePinWinStrategy())
