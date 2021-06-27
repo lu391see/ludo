@@ -151,6 +151,6 @@ class Controller @Inject() () extends ControllerInterface {
 
   def isFinishedPin(pinNumber: Int): Boolean = {
     game.get
-      .findPinPosition(currentPlayer.get, pinNumber) >= game.get.board.gameSize
+      .findPinPosition(currentPlayer.get, pinNumber) >= currentPlayer.get.team.homePosition
   }
 }

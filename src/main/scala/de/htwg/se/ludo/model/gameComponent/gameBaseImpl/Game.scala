@@ -16,7 +16,7 @@ case class Game(board: BoardInterface, players: Vector[Player])
   }
 
   private def basedPins(): BoardInterface = {
-    var changed = board
+    var changed: BoardInterface = new Board(board.size, EmptyCell, board.baseSize)
     players.foreach(player => {
       player.team.pins.foreach(pin => {
         println(pin.number)

@@ -7,7 +7,7 @@ trait GameInterface {
 
   def based(): GameInterface
   def draw(currentPlayer: Player, pinNumber: Int, steps: Int): GameInterface
-  def drawnPin(player: Player, pin: Int, pos: Int): GameInterface
+  def drawnPin(player: Player, pinPosition: Int, steps: Int): GameInterface
   def findPinPosition(currentPlayer: Player, pinNumber: Int): Int
 }
 
