@@ -12,4 +12,4 @@ libraryDependencies += "com.google.inject.extensions" % "guice-assistedinject" %
 libraryDependencies += "net.codingwell" %% "scala-guice" % "5.0.1"
 
 coverageExcludedPackages := ".*gui.*;.*Ludo.*"
-coverageExcludedFiles := ".*Ludo.*"
+coverageExcludedFiles := ".*Ludo.*;.*RollState.*"  // excluded because of GUI and untestable Randomness
