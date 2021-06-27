@@ -67,6 +67,21 @@ class ControllerSpec extends AnyWordSpec with Matchers {
         controller.redo()
         controller.game.get.findPinPosition(controller.currentPlayer.get, 2) should be (controller.currentPlayer.get.team.startPosition)
       }
+      "stay in RollState when player has no pins on the field" in {
+        controller.switchPlayer()
+        controller.currentPlayer.get should be(controller.players(1))
+        controller.gameState.state should be(RollState(controller))
+        controller.handleInput("")
+        controller.gameState.state should be(RollState(controller))
+        controller.currentPlayer.get should be(controller.players(2))
+      }
+      "get from Roll to DrawState as soon as the first pin is on the field" in {
+        controller.pips = 6
+        controller.drawPin(1)
+        controller.gameState.state = RollState(controller)
+        controller.handleInput("")
+        controller.gameState.state = DrawState(controller)
+      }
 
 
 
