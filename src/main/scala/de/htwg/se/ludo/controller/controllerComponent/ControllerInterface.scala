@@ -27,5 +27,5 @@ trait ControllerInterface extends Publisher {
   def publishMessage(): Unit
   def messageToString(): String
   def setWinStrategy(winStrategy: WinStrategy): Unit
-  def isDrawing: Boolean
+  //def isDrawing: Boolean
 }

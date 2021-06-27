@@ -3,25 +3,13 @@ package de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl
 import com.google.inject.name.Names
 import com.google.inject.{Guice, Inject, Injector}
 import de.htwg.se.ludo.LudoModule
-import de.htwg.se.ludo.controller.controllerComponent.{
-  ControllerInterface,
-  NewGame,
-  NewMessage,
-  NewPlayer,
-  PinDrawn,
-  Redo,
-  Undo
-}
+import de.htwg.se.ludo.controller.controllerComponent.{ControllerInterface, NewGame, NewMessage, NewPlayer, PinDrawn, Redo, Undo}
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.commands._
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.gameStates.GameState
 import de.htwg.se.ludo.model.gameComponent.gameBaseImpl.Game
 import de.htwg.se.ludo.model.diceComponent.DiceInterface
-import de.htwg.se.ludo.model.playerComponent.{Player, PlayerConstraints}
-import de.htwg.se.ludo.model.gameComponent.{
-  BoardInterface,
-  CellInterface,
-  GameInterface
-}
+import de.htwg.se.ludo.model.playerComponent.{Player, PlayerConstraints, Team}
+import de.htwg.se.ludo.model.gameComponent.{BoardInterface, CellInterface, GameInterface}
 import de.htwg.se.ludo.util._
 import net.codingwell.scalaguice.InjectorExtensions.ScalaInjector
 
@@ -109,11 +97,11 @@ class Controller @Inject() () extends ControllerInterface {
   def isWon: Boolean = {
     winStrategy.hasWon(currentPlayer.get, game.get.board)
   }
-
-  def isDrawing: Boolean = {
-    print(gameState.state.toString)
-    true
-  }
+//
+//  def isDrawing: Boolean = {
+//    print(gameState.state.toString)
+//    true
+//  }
 
   def shouldNotDraw: Boolean = {
     (1 to 4).forall(pinNumber => {
@@ -144,12 +132,12 @@ class Controller @Inject() () extends ControllerInterface {
     this.message.toString
   }
 
-  def pinAlreadyFinished(pinNumber: Int): Boolean = {
-    val pos = game.get.board.spots.indexWhere(spot =>
-      spot.isSet && spot.pinNumber == pinNumber
-    )
-    pos >= game.get.board.gameSize
-  }
+//  def pinAlreadyFinished(player: Player, pinNumber: Int): Boolean = {
+//    val pos = game.get.board.spots.indexWhere(spot =>
+//      spot.isSet && spot.pinNumber == pinNumber
+//    )
+//    pos >= player.team.homePosition  // this should be a bit more complex!
+//  }
 
   def setWinStrategy(winStrategy: WinStrategy): Unit = {
     this.winStrategy = winStrategy
