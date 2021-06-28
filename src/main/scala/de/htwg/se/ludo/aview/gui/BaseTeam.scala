@@ -27,9 +27,6 @@ case class BaseTeam(color: Color, basePos: Int, controller: ControllerInterface)
           val to = change._2
           val from_field_idx = getFieldIndex(from)
 
-          println(from)
-          println(from_field_idx)
-
           // spawning
           if (from < event.oldBoard.gameSize && from_field_idx != -1) {
             newContents =
