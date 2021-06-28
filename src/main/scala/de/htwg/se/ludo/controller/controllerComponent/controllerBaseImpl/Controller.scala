@@ -3,13 +3,28 @@ package de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl
 import com.google.inject.name.Names
 import com.google.inject.{Guice, Inject, Injector}
 import de.htwg.se.ludo.LudoModule
-import de.htwg.se.ludo.controller.controllerComponent.{ControllerInterface, NewGame, NewMessage, NewPlayer, PinDrawn, Redo, Undo}
+import de.htwg.se.ludo.controller.controllerComponent.{
+  ControllerInterface,
+  NewGame,
+  NewMessage,
+  NewPlayer,
+  PinDrawn,
+  Redo,
+  Undo
+}
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.commands._
-import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.gameStates.{GameState, RollState}
+import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.gameStates.{
+  GameState,
+  RollState
+}
 import de.htwg.se.ludo.model.gameComponent.gameBaseImpl.Game
 import de.htwg.se.ludo.model.diceComponent.DiceInterface
 import de.htwg.se.ludo.model.playerComponent.{Player, PlayerConstraints, Team}
-import de.htwg.se.ludo.model.gameComponent.{BoardInterface, CellInterface, GameInterface}
+import de.htwg.se.ludo.model.gameComponent.{
+  BoardInterface,
+  CellInterface,
+  GameInterface
+}
 import de.htwg.se.ludo.model.fileIoComponent.FileIOInterface
 import de.htwg.se.ludo.util._
 import net.codingwell.scalaguice.InjectorExtensions.ScalaInjector
@@ -20,8 +35,10 @@ class Controller @Inject() () extends ControllerInterface {
   val injector: Injector = Guice.createInjector(new LudoModule)
   val fileIo: FileIOInterface = injector.instance[FileIOInterface]
 
-  val EmptyCell: CellInterface = injector.instance[CellInterface](Names.named("EmptyCell"))
-  var winStrategy: WinStrategy = injector.instance[WinStrategy](Names.named("OnePin"))
+  val EmptyCell: CellInterface =
+    injector.instance[CellInterface](Names.named("EmptyCell"))
+  var winStrategy: WinStrategy =
+    injector.instance[WinStrategy](Names.named("OnePin"))
 
   var currentPlayer: Option[Player] = None
   var game: Option[GameInterface] = None
@@ -95,24 +112,19 @@ class Controller @Inject() () extends ControllerInterface {
     winStrategy.hasWon(currentPlayer.get, game.get.board)
   }
 
-  def isDrawing: Boolean = {
-    print(gameState.state.toString)
-    true
-  }
-
   def shouldNotDraw: Boolean = {
     (1 to 4).forall(pinNumber => {
-      val pos = game.get.board.spots.indexWhere(spot =>
+      val pos = game.get.board.spots.indexWhere(spot => {
         spot.isSet && spot.pinNumber == pinNumber && spot.color == currentPlayer.get.team.toColorString
-      )
+      })
       pos >= game.get.board.gameSize || pos < game.get.board.baseSize
     }) && pips != getDice.pips
   }
 
   def canNotDrawWithThisPin(pinNumber: Int): Boolean = {
-    val pos = game.get.board.spots.indexWhere(spot =>
+    val pos = game.get.board.spots.indexWhere(spot => {
       spot.isSet && spot.pinNumber == pinNumber && spot.color == currentPlayer.get.team.toColorString
-    )
+    })
     pos < game.get.board.baseSize && pips != getDice.pips
   }
 
@@ -130,9 +142,9 @@ class Controller @Inject() () extends ControllerInterface {
   }
 
   def pinAlreadyFinished(pinNumber: Int): Boolean = {
-    val pos = game.get.board.spots.indexWhere(spot =>
+    val pos = game.get.board.spots.indexWhere(spot => {
       spot.isSet && spot.pinNumber == pinNumber
-    )
+    })
     pos >= game.get.board.gameSize
   }
 

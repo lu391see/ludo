@@ -4,10 +4,10 @@ import de.htwg.se.ludo.controller.controllerComponent.{
   ControllerInterface,
   PinDrawn
 }
-import de.htwg.se.ludo.model.gameComponent.{BoardInterface, CellInterface}
+import de.htwg.se.ludo.model.gameComponent.{BoardInterface}
 
-import java.awt.Color
-import scala.swing.{BoxPanel, Color, Orientation}
+import scala.collection.mutable
+import scala.swing.{BoxPanel, Color, Component, Orientation}
 
 case class FieldRow(
     orientation: Orientation.Value,
@@ -21,71 +21,67 @@ case class FieldRow(
 
   reactions += {
     case event: PinDrawn =>
-      val changedPinPositions =
-        findChangedPinPositions(event.oldBoard, event.newBoard)
-      println("changedPinPositions", changedPinPositions.toString)
-      val oldPos = changedPinPositions._1
-      val newPos = changedPinPositions._2
+      val changes = findChanges(event.oldBoard, event.newBoard)
+      var newContents = contents.clone()
+      changes.foreach(change => {
+        val from = change._1
+        val to = change._2
 
-      println("oldPos", getFieldIndex(oldPos))
-      println("newPos", getFieldIndex(newPos))
-      if (getFieldIndex(oldPos) != -1 || getFieldIndex(newPos) != -1) {
-        var newContents = contents
-        if (getFieldIndex(oldPos) != -1) {
-          val oldField =
-            if (oldPos == startFieldPos) startField
-            else new Field(oldPos)
-          newContents = newContents.updated(getFieldIndex(oldPos), oldField)
+        if (from >= event.oldBoard.baseSize && getFieldIndex(from) != -1) {
+          val field_idx = getFieldIndex(from)
+          newContents = newContents.updated(field_idx, getClearField(from))
         }
-        if (getFieldIndex(newPos) != -1) {
-          val pinNumber = event.newBoard.spots(newPos).pinNumber
-          val pinColor = event.newBoard.spots(newPos).color
-          val newField = Pin(pinNumber, toColor(pinColor), newPos, controller)
-          newContents = newContents.updated(getFieldIndex(newPos), newField)
+
+        if (to.nonEmpty && getFieldIndex(to.get) != -1) {
+          val field_idx = getFieldIndex(to.get)
+          val pin = event.newBoard.spots(to.get)
+          newContents = newContents.updated(
+            field_idx,
+            Pin(pin.pinNumber, pin.colorFromChar, to.get, controller)
+          )
         }
-        newContents.foreach(content => println(content.name, content.visible))
-        contents.clear()
-        contents ++= newContents
-        contents.foreach(content => println(content.name, content.visible))
-
-        repaint
-      }
-
+      })
+      draw(newContents)
   }
 
-  def findChangedPinPositions(
+  def draw(newContents: mutable.Buffer[Component]): Unit = {
+    contents.clear()
+    contents ++= newContents
+    repaint
+  }
+
+  def findChanges(
       oldBoard: BoardInterface,
       newBoard: BoardInterface
-  ): (Int, Int) = {
-    var changedPinPositions: Vector[Int] = Vector.empty
-    for (i <- 0 until oldBoard.size) {
-      if (oldBoard.spots(i).value != newBoard.spots(i).value)
-        changedPinPositions = changedPinPositions.appended(i)
-    }
-
-    if (
-      (changedPinPositions(1) - changedPinPositions(
-        0
-      )).abs > controller.getDice.pips && changedPinPositions(
-        1
-      ) < newBoard.gameSize && changedPinPositions(0) > oldBoard.baseSize - 1
-    ) {
-      return Tuple2(changedPinPositions(1), changedPinPositions(0))
-    }
-    Tuple2(changedPinPositions(0), changedPinPositions(1))
+  ): Vector[(Int, Option[Int])] = {
+    oldBoard.spots.zipWithIndex
+      .filter(spot => spot._2 < newBoard.gameSize && spot._1.isSet)
+      .map(spot => spot._1)
+      .map(pin =>
+        (
+          oldBoard.spots.indexOf(pin),
+          newBoard.spots.zipWithIndex
+            .filter(spot =>
+              spot._2 >= newBoard.baseSize && spot._2 < newBoard.gameSize
+            )
+            .map(spot => spot._1)
+            .find(spot => spot.value == pin.value)
+            .map(spot =>
+              newBoard.spots.indexWhere(sp => {
+                sp.value == spot.value
+              })
+            )
+        )
+      )
   }
 
-  def toColor(color: Char): Color = {
-    color match {
-      case 'B' => Color.black
-      case 'R' => Color.red
-      case 'Y' => Color.yellow
-      case 'G' => Color.green
-      case _   => Color.white
-    }
+  def getClearField(pinPosition: Int): Field = {
+    if (pinPosition == startFieldPos) startField else new Field(pinPosition)
   }
 
   def getFieldIndex(pinPosition: Int): Int = {
-    contents.indexWhere(c => c.name.toInt.equals(pinPosition))
+    contents.indexWhere(c => {
+      c.name.toInt.equals(pinPosition)
+    })
   }
 }

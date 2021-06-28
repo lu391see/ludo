@@ -2,6 +2,8 @@ package de.htwg.se.ludo.model.gameComponent
 
 import de.htwg.se.ludo.model.playerComponent.Player
 
+import java.awt.Color
+
 trait GameInterface {
   val board: BoardInterface
   val players: Vector[Player]
@@ -26,5 +28,6 @@ trait CellInterface {
   def isSet: Boolean
   def color: Char
   def pinNumber: Int
+  def colorFromChar: Color
   val value: String
 }

@@ -19,7 +19,6 @@ case class Game(board: BoardInterface, players: Vector[Player])
     var changed: BoardInterface = new Board(board.size, EmptyCell, board.baseSize)
     players.foreach(player => {
       player.team.pins.foreach(pin => {
-        println(pin.number)
         changed = changed
           .replaceCell(player.team.basePosition + pin.number - 1, Cell(pin.id))
       })
