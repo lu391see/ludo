@@ -5,15 +5,23 @@ import com.google.inject.{Guice, Inject, Injector}
 import de.htwg.se.ludo.LudoModule
 import de.htwg.se.ludo.controller.controllerComponent.{ControllerInterface, NewGame, NewMessage, NewPlayer, PinDrawn, Redo, Undo}
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.commands._
-import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.gameStates.GameState
+import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.gameStates.{GameState, RollState}
 import de.htwg.se.ludo.model.gameComponent.gameBaseImpl.Game
 import de.htwg.se.ludo.model.diceComponent.DiceInterface
 import de.htwg.se.ludo.model.playerComponent.{Player, PlayerConstraints, Team}
 import de.htwg.se.ludo.model.gameComponent.{BoardInterface, CellInterface, GameInterface}
+import de.htwg.se.ludo.model.fileIoComponent.FileIOInterface
 import de.htwg.se.ludo.util._
 import net.codingwell.scalaguice.InjectorExtensions.ScalaInjector
 
 class Controller @Inject() () extends ControllerInterface {
+
+  private val undoManager = new UndoManager
+  val injector: Injector = Guice.createInjector(new LudoModule)
+  val fileIo: FileIOInterface = injector.instance[FileIOInterface]
+
+  val EmptyCell: CellInterface = injector.instance[CellInterface](Names.named("EmptyCell"))
+  var winStrategy: WinStrategy = injector.instance[WinStrategy](Names.named("OnePin"))
 
   var currentPlayer: Option[Player] = None
   var game: Option[GameInterface] = None
@@ -23,22 +31,13 @@ class Controller @Inject() () extends ControllerInterface {
   var message: Message = EmptyMessage
   val teams = PlayerConstraints.teams
 
-  private val undoManager = new UndoManager
-  val injector: Injector = Guice.createInjector(new LudoModule)
-
-  val EmptyCell: CellInterface =
-    injector.instance[CellInterface](Names.named("EmptyCell"))
-  var winStrategy: WinStrategy =
-    injector.instance[WinStrategy](Names.named("OnePin"))
-
   def handleInput(input: String): Unit = {
     gameState.handle(input)
   }
 
   def newGame(): Unit = {
-    val board: BoardInterface = injector.getInstance(classOf[BoardInterface])
-    val game: GameInterface = Game(board, players)
-    this.game = Some(game.based())
+    val board: BoardInterface = injector.instance[BoardInterface]
+    this.game = Some(Game(board, players).based())
     publish(NewGame())
   }
 
@@ -67,15 +66,13 @@ class Controller @Inject() () extends ControllerInterface {
   }
 
   def getDice: DiceInterface = {
-    injector.getInstance(classOf[DiceInterface])
+    injector.instance[DiceInterface]
   }
 
   def drawPin(pin: Int): Unit = {
     val oldBoard = game.get.board
     undoManager.doStep(new DrawCommand(pin, this))
     val newBoard = game.get.board
-    println(oldBoard.toString)
-    println(newBoard.toString)
     publish(
       PinDrawn(
         oldBoard = oldBoard,
@@ -97,11 +94,11 @@ class Controller @Inject() () extends ControllerInterface {
   def isWon: Boolean = {
     winStrategy.hasWon(currentPlayer.get, game.get.board)
   }
-//
-//  def isDrawing: Boolean = {
-//    print(gameState.state.toString)
-//    true
-//  }
+
+  def isDrawing: Boolean = {
+    print(gameState.state.toString)
+    true
+  }
 
   def shouldNotDraw: Boolean = {
     (1 to 4).forall(pinNumber => {
@@ -132,12 +129,12 @@ class Controller @Inject() () extends ControllerInterface {
     this.message.toString
   }
 
-//  def pinAlreadyFinished(player: Player, pinNumber: Int): Boolean = {
-//    val pos = game.get.board.spots.indexWhere(spot =>
-//      spot.isSet && spot.pinNumber == pinNumber
-//    )
-//    pos >= player.team.homePosition  // this should be a bit more complex!
-//  }
+  def pinAlreadyFinished(pinNumber: Int): Boolean = {
+    val pos = game.get.board.spots.indexWhere(spot =>
+      spot.isSet && spot.pinNumber == pinNumber
+    )
+    pos >= game.get.board.gameSize
+  }
 
   def setWinStrategy(winStrategy: WinStrategy): Unit = {
     this.winStrategy = winStrategy
@@ -151,6 +148,21 @@ class Controller @Inject() () extends ControllerInterface {
 
   def isFinishedPin(pinNumber: Int): Boolean = {
     game.get
-      .findPinPosition(currentPlayer.get, pinNumber) >= currentPlayer.get.team.homePosition
+      .findPinPosition(currentPlayer.get, pinNumber) >= game.get.board.gameSize
+  }
+
+  override def save(): Unit = {
+    fileIo.save(currentPlayer.get, game.get)
+  }
+
+  override def load(): Unit = {
+    val (game, currentPlayerIndex) = fileIo.load()
+    this.game = Some(game)
+    players = game.players
+    currentPlayer = Some(players(currentPlayerIndex))
+    println(toString)
+    newMessage(RollDiceMessage)
+    gameState.state = RollState(this)
+
   }
 }

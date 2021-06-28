@@ -23,6 +23,9 @@ trait ControllerInterface extends Publisher {
   def undo(): Unit
   def redo(): Unit
 
+  def save(): Unit
+  def load(): Unit
+
   def newMessage(message: Message): Unit
   def publishMessage(): Unit
   def messageToString(): String

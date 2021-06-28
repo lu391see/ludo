@@ -14,7 +14,7 @@ object Ludo {
     val injector = Guice.createInjector(new LudoModule)
     val controller = injector.getInstance(classOf[ControllerInterface])
     val tui = new TUI(controller)
-    GUI(controller)
+    //GUI(controller)
 
     var input: String = ""
 
