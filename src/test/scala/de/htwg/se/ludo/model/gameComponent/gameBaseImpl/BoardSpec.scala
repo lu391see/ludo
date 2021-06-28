@@ -4,7 +4,6 @@ import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
 class BoardSpec extends AnyWordSpec with Matchers {
-  "Matrix is an immutable data type that contains a two-dimentional Vector of Cells."
   "A Matrix" when {
     "empty " should {
       "be created by using a demension and a sample cell" in {

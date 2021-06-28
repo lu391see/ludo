@@ -57,32 +57,36 @@ class TuiSpec extends AnyWordSpec with Matchers {
       controller.winStrategy should be(AllPinWinStrategy())
       controller.gameState.state should be(same_state)
     }
-    /*"throw a dice with any input" in {
+    "throw a dice with any input" in {
       controller.pips should be (0)
       tui.processInput("any input for dice throw")
       controller.pips should be > 0
-      controller.message should be(ChoosePinMessage)
+      if (controller.pips >= 6) {
+        controller.message should be(ChoosePinMessage)
+      } else {
+        controller.message should be (RollDiceMessage)
+      }
+
 
     }
     "retry when there is an invalid pin input" in {
       val same_player = controller.currentPlayer
-      val invalid_input = "0"
+      val invalid_input = ""
 
-      // controller.rollDice() => 4
-      controller.pips = 4
-      controller.pips should be (4)
+      controller.pips = 6
+      controller.drawPin(4)
 
+      tui.processInput(invalid_input)
       tui.processInput(invalid_input)
 
       controller.currentPlayer should be(same_player)
       controller.message should be(ChoosePinMessage)
-    }*/
-    /* TODO
+    }
     "don't move a selected pin from base when rolled a four without previous six" in {
        tui.processInput("1")
 
         controller.game should be(defined)
-        controller.game.get.board.spots(controller.players(0).team.basePosition) should be(Cell(controller.players(0).team.pinID(0)))
+        controller.game.get.board.spots(controller.players(0).team.basePosition) should be(Cell("B1"))
         controller.game.get.board.spots(controller.players(0).team.startPosition) should be(EmptyCell)
     }
     "switch player and move a pin from base to start field when rolled a 6" in {
@@ -96,7 +100,7 @@ class TuiSpec extends AnyWordSpec with Matchers {
 
       tui.processInput("3")
       val base_pin3 = controller.players(1).team.basePosition + 2
-      val id_pin3 = controller.currentPlayer.get.team.pinID(2)
+      val id_pin3 = "R3"
 
       controller.game should be (defined)
       controller.game.get.board.spots(base_pin3) should be(EmptyCell)
@@ -108,6 +112,5 @@ class TuiSpec extends AnyWordSpec with Matchers {
       val next_controller = controller
       tui.processInput("l") should be (next_controller.save())
     }
-     */
   }
 }

@@ -6,8 +6,8 @@ import org.scalatest.wordspec.AnyWordSpec
 import java.awt.HeadlessException
 import java.io.ByteArrayInputStream
 
-class LudoSpec extends AnyWordSpec with Matchers {
-  /*"A Game" when {
+/*class LudoSpec extends AnyWordSpec with Matchers {
+  "A Game" when {
     "started with 2 players" should {
       "run  without exceptions" in {
         try {
@@ -21,5 +21,5 @@ class LudoSpec extends AnyWordSpec with Matchers {
 
       }
     }
-  }*/
-}
+  }
+}*/
