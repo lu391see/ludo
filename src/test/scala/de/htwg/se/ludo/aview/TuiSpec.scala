@@ -1,7 +1,7 @@
 package de.htwg.se.ludo.aview
 
 import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.Controller
-import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.gameStates.{RollState, SetupState}
+import de.htwg.se.ludo.controller.controllerComponent.controllerBaseImpl.gameStates.{DrawState, RollState, SetupState}
 import de.htwg.se.ludo.model.gameComponent.gameBaseImpl.Cell
 import de.htwg.se.ludo.model.{AllPinWinStrategy, OnePinWinStrategy}
 import de.htwg.se.ludo.util.{AddAnotherPlayerMessage, ChoosePinMessage, RollDiceMessage, WelcomeMessage}
@@ -31,15 +31,18 @@ class TuiSpec extends AnyWordSpec with Matchers {
       controller.players(0).name should be("lukas")
       controller.players(1).name should be("alex")
     }
-    "with undo and redo to remove players" in {
+    "with undo and redo to remove a player" in {
       tui.processInput("z")
       controller.players.size should be(1)
 
-      tui.processInput("hans")
       tui.processInput("y")
+      controller.players.size should be(2)
 
+      tui.processInput("hans")
       controller.players.size should be(3)
+
       controller.players.foreach(p => p.name matches "alex|lukas|hans")
+      println(controller.players)
     }
     "until start is pressed or 4 players are added" in {
       tui.processInput("start")
@@ -69,11 +72,22 @@ class TuiSpec extends AnyWordSpec with Matchers {
 
 
     }
+    "don't move a selected pin from base when rolled a four without previous six" in {
+      // simulate a thrown 4 ***** controller.rollDice() => 4
+      controller.pips = 4
+      controller.gameState.state = DrawState(controller)
+      tui.processInput("1")
+
+      controller.game should be(defined)
+      controller.game.get.board.spots(controller.players(0).team.basePosition) should be(Cell("B1"))
+      controller.game.get.board.spots(controller.players(0).team.startPosition) should be(EmptyCell)
+    }
     "retry when there is an invalid pin input" in {
       val same_player = controller.currentPlayer
       val invalid_input = ""
 
       controller.pips = 6
+      controller.gameState.state = DrawState(controller)
       controller.drawPin(4)
 
       tui.processInput(invalid_input)
@@ -82,19 +96,12 @@ class TuiSpec extends AnyWordSpec with Matchers {
       controller.currentPlayer should be(same_player)
       controller.message should be(ChoosePinMessage)
     }
-    "don't move a selected pin from base when rolled a four without previous six" in {
-       tui.processInput("1")
-
-        controller.game should be(defined)
-        controller.game.get.board.spots(controller.players(0).team.basePosition) should be(Cell("B1"))
-        controller.game.get.board.spots(controller.players(0).team.startPosition) should be(EmptyCell)
-    }
     "switch player and move a pin from base to start field when rolled a 6" in {
       controller.currentPlayer should be(defined)
       controller.currentPlayer.get should be(controller.players(1))
 
-      tui.processInput("any input for dice throw")
-      // controller.rollDice() => 6
+      // simulate a thrown 6 ***** controller.rollDice() => 6
+      controller.gameState.state = DrawState(controller)
       controller.pips = 6
       controller.pips should be(6)
 
